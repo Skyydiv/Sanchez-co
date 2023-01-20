@@ -1,8 +1,7 @@
 class Robot:
 
   def __init__(self, orientation):
-    '''Constructeur de la classe Robot, créer un robot dans un environnement avec des coordonnées par défaut (0,0) et une orientation
-    :param environnement: Environnement dans lequel le robot sera placé
+    '''Constructeur de la classe Robot,avec des coordonnées par défaut (0,0) et une orientation
     :param orientation: Orientation du robot'''
     self.x = 0
     self.y = 0
