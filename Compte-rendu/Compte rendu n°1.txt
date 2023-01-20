@@ -1,0 +1,21 @@
+Compte rendu n°1
+Groupe: Sanchez & Co
+
+Premier rdv avec les clients:
+
+Il faut organiser ntore travail à l'aide de trello, dans lequel on mettra le gros dans backlog, puis des tâches précises dans le to do à faire dans la semaine. Lorsque l'étudiant prend une tâche, il doit le mettre dans l'onglet "En cours" pour faire savoir à ses coéquipiers qu'il s'occupe de cette tâche. Lorsque l'étudiant a fini, il fait vérifier sa tâche par une autre personne du groupe, si c'est correct,la tâche est terminée, sinon remettre dans en cours.
+
+Après le rdv:
+-On a dans un premier temps crée un Trello dans lequel nous avons mit nos tâches dans nos backlog, les tâches des to do qu'on a réparti.
+-Début de conception du github
+
+Deuxième rdv avec les clients:
+-Vérification du trello par les clients (précision sur les tâches à effectuer)
+
+Après le rdv:
+-Mise en place du temps de travail de chaque membre du groupe.
+-Révision du trello
+-Précision des tâches et temps consacré 
+
+
+
