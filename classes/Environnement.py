@@ -19,14 +19,25 @@ class Environnement() :
         '''Affiche l'environnement dans la console'''
         for ligne in self.tab:
             for elt in ligne:
-                print(elt, end=", ")
+                if isinstance(elt,Robot):
+                    print("R   ", end=", ")
+                else :
+                    print(elt, end=", ")
             print()
-
 
 
 #tests
 env=Environnement(5.3,4)
+robot=Robot("droite")
 env.afficheTab()
+print()
+robot.deposer(env,robot.x,robot.y)
+env.afficheTab()
+print()
+robot.getPos()
+print("La direction du robot est vers", robot.orientation)
+robot.tourner("bas")
+print("Le robot a tourné vers", robot.orientation)
 
 
     
