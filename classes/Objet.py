@@ -15,10 +15,10 @@ class Robot:
       :param x: ligne dans laquelle on dépose le Robot
       :param y: colonne dans laquelle on dépose le Robot
       '''
-      env.tab[x][y]=self
-      print("Le robot a été déposé dans l'environnement")
       self.x=x
       self.y=y
+      env.tab[x][y]=self
+      print("Le robot a été déposé dans l'environnement")
 
   def getPos(self):
     '''Renvoie et affiche les coordonnées du robot'''
@@ -31,7 +31,7 @@ class Robot:
     '''
     if(self.orientation!=orientation):
           self.orientation=orientation
-          print("Le robot a tourné")
+          print("Le robot a tourné vers "+self.orientation)
           
   def avancer(self, env, n):
     '''Fais avancer le robot de n cases dans env si possible, renvoie un message sinon

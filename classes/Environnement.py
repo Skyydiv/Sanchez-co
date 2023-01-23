@@ -41,7 +41,7 @@ print("Le robot a tourné vers", robot.orientation)
 
 
 robot.tourner("haut")
-print(robot.orientation)
+
 robot.avancer(env,1)
 
 print(robot.x)
