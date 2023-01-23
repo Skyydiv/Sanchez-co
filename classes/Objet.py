@@ -31,42 +31,6 @@ class Robot:
     if(self.orientation!=orientation):
           self.orientation=orientation
   
-  def avancer(self, env, n):
-    '''Fais avancer le robot de n cases dans env si possible, renvoie un message sinon
-    :param n: le nombre de case à avancer
-    '''
-    if (self.orientation=="bas"):
-      newY=self.y-n
-      if (newY>=env.nblignes | estMur(x,newY))
-        print("Le robot ne peut pas avancer")
-      else:
-        env.tab[self.x][self.y]=None
-        self.y=newY
-        deposer(env,x,newY)
-    if (self.orientation=="haut"):
-      newY=self.y+n
-      if (newY<0 || estMur(x,newY)):
-        print("Le robot ne peut pas avancer")
-      else:
-        env.tab[self.x][self.y]=None
-        self.y=newY
-        deposer(env,x,newY)
-    if (self.orientation=="droite"):
-      newX=self.x+n
-      if (newX>=env.nbcolonnes || estMur(newX,y)):
-        print("Le robot ne peut pas avancer")
-      else:
-        env.tab[self.x][self.y]=None
-        self.x=newX
-        deposer(env,newX,y)
-    if (self.orientation=="gauche"):
-      newX=self.x-n
-      if (newX<0 || estMur(newX,y)):
-        print("Le robot ne peut pas avancer")
-      else:
-        env.tab[self.x][self.y]=None
-        self.x=newX
-        deposer(env,newX,y)
 
 
   

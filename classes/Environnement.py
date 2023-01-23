@@ -27,7 +27,7 @@ class Environnement() :
 
 
 #tests
-env=Environnement(5.3,4)
+env=Environnement(5,5)
 robot=Robot("droite")
 env.afficheTab()
 print()
@@ -40,5 +40,22 @@ robot.tourner("bas")
 print("Le robot a tourné vers", robot.orientation)
 
 
-    
+robot.tourner("haut")
 
+robot.avancer(env,1)
+
+print(robot.x)
+print(robot.y)
+
+robot.tourner("gauche")
+robot.avancer(env,2)
+
+print(robot.x)
+print(robot.y)
+
+env.afficheTab()
+print()
+robot.deposer(env,robot.x,robot.y)
+env.afficheTab()
+print()
+robot.getPos()
