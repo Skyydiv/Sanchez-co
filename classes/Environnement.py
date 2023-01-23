@@ -49,6 +49,7 @@ print(robot.y)
 
 robot.tourner("gauche")
 robot.avancer(env,2)
+print(robot.orientation)
 
 print(robot.x)
 print(robot.y)
