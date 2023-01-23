@@ -30,6 +30,64 @@ class Robot:
     '''
     if(self.orientation!=orientation):
           self.orientation=orientation
+        
+  def avancer(self, env, n):
+    '''Fais avancer le robot de n cases dans env si possible, renvoie un message sinon
+    :param n: le nombre de case à avancer
+    '''
+    if (self.orientation=="bas"):
+      newY=self.y+n
+      if (self.VerifieMur(n,env)):
+        print("Le robot ne peut pas avancer")
+      else:
+        env.tab[self.x][self.y]=None
+        self.y=newY
+        self.deposer(env,self.x,newY)
+    if (self.orientation=="haut"):
+      newY=self.y-n
+      if (self.VerifieMur(n,env)):
+        print("Le robot ne peut pas avancer")
+      else:
+        env.tab[self.x][self.y]=None
+        self.y=newY
+        self.deposer(env,self.x,newY)
+    if (self.orientation=="droite"):
+      newX=self.x+n
+      if (self.VerifieMur(n,env)):
+        print("Le robot ne peut pas avancer")
+      else:
+        env.tab[self.x][self.y]=None
+        self.x=newX
+        self.deposer(env,newX,self.y)
+    if (self.orientation=="gauche"):
+      newX=self.x-n
+      if (self.VerifieMur(n,env)):
+        print("Le robot ne peut pas avancer")
+      else:
+        env.tab[self.x][self.y]=None
+        self.x=newX
+        self.deposer(env,newX,self.y)
+
+    
+  def VerifieMur(self,a,env):
+    '''Verfie si quand le robot avance de a il ya un mur
+    :param a:le nombre de case que va parcourir le robot 
+    '''
+    if ((self.orientation=="droite")and((self.x+a)>=env.nblignes)):
+      print("Attention il ya un mur!!")
+      return True
+    elif ((self.orientation=="gauche")and((self.x-a)<0)):
+      print("Attention il ya un mur!!")
+      return True
+    elif ((self.orientation=="haut")and((self.y-a)<0)):
+      print("Attention il ya un mur!!")
+      return True
+    elif ((self.orientation=="bas")and((self.y+a)>=env.nblignes)):
+       print("Attention il ya un mur!!")
+       return True
+    else:
+      print("Le robot peut avancer")
+      return False
   
 
 
