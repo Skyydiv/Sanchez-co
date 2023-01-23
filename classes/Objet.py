@@ -37,7 +37,7 @@ class Robot:
     '''
     if (self.orientation=="bas"):
       newY=self.y-n
-      if (newY>=env.nblignes || estMur(x,newY)):
+      if (newY>=env.nblignes | estMur(x,newY))
         print("Le robot ne peut pas avancer")
       else:
         env.tab[self.x][self.y]=None
