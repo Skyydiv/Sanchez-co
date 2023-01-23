@@ -39,24 +39,5 @@ print("La direction du robot est vers", robot.orientation)
 robot.tourner("bas")
 print("Le robot a tourné vers", robot.orientation)
 
-
-robot.tourner("haut")
-
-robot.avancer(env,1)
-
-print(robot.x)
-print(robot.y)
-
-robot.tourner("gauche")
-robot.avancer(env,2)
-print(robot.orientation)
-
-print(robot.x)
-print(robot.y)
-
+robot.avancer(env,3)
 env.afficheTab()
-print()
-robot.deposer(env,robot.x,robot.y)
-env.afficheTab()
-print()
-robot.getPos()

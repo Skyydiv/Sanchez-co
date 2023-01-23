@@ -33,6 +33,7 @@ class Robot:
         
   def avancer(self, env, n):
     '''Fais avancer le robot de n cases dans env si possible, renvoie un message sinon
+    :param env: l'environnement dans lequel se trouve le robot
     :param n: le nombre de case à avancer
     '''
     if (self.orientation=="bas"):
