@@ -1,0 +1,1 @@
+robot.avancer(env,3)

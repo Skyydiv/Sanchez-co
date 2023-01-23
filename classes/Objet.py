@@ -15,7 +15,6 @@ class Robot:
       :param y: colonne dans laquelle on dépose le Robot
       '''
       env.tab[x][y]=self
-      print("Le robot a été déposé dans l'environnement")
       self.x=x
       self.y=y
 
@@ -30,13 +29,14 @@ class Robot:
     '''
     if(self.orientation!=orientation):
           self.orientation=orientation
+          print("Le robot a tourné vers "+ self.orientation)
         
   def avancer(self, env, n):
     '''Fais avancer le robot de n cases dans env si possible, renvoie un message sinon
     :param env: l'environnement dans lequel se trouve le robot
     :param n: le nombre de case à avancer
     '''
-    if (self.orientation=="bas"):
+    if (self.orientation=="droite"):
       newY=self.y+n
       if (self.VerifieMur(n,env)):
         print("Le robot ne peut pas avancer")
@@ -44,7 +44,7 @@ class Robot:
         env.tab[self.x][self.y]=None
         self.y=newY
         self.deposer(env,self.x,newY)
-    if (self.orientation=="haut"):
+    if (self.orientation=="gauche"):
       newY=self.y-n
       if (self.VerifieMur(n,env)):
         print("Le robot ne peut pas avancer")
@@ -52,7 +52,7 @@ class Robot:
         env.tab[self.x][self.y]=None
         self.y=newY
         self.deposer(env,self.x,newY)
-    if (self.orientation=="droite"):
+    if (self.orientation=="bas"):
       newX=self.x+n
       if (self.VerifieMur(n,env)):
         print("Le robot ne peut pas avancer")
@@ -60,7 +60,7 @@ class Robot:
         env.tab[self.x][self.y]=None
         self.x=newX
         self.deposer(env,newX,self.y)
-    if (self.orientation=="gauche"):
+    if (self.orientation=="haut"):
       newX=self.x-n
       if (self.VerifieMur(n,env)):
         print("Le robot ne peut pas avancer")
@@ -74,16 +74,16 @@ class Robot:
     '''Verfie si quand le robot avance de a il ya un mur
     :param a:le nombre de case que va parcourir le robot 
     '''
-    if ((self.orientation=="droite")and((self.x+a)>=env.nblignes)):
+    if ((self.orientation=="droite")and((self.y+a)>=env.nblignes)):
       print("Attention il ya un mur!!")
       return True
-    elif ((self.orientation=="gauche")and((self.x-a)<0)):
+    elif ((self.orientation=="gauche")and((self.y-a)<0)):
       print("Attention il ya un mur!!")
       return True
-    elif ((self.orientation=="haut")and((self.y-a)<0)):
+    elif ((self.orientation=="haut")and((self.x-a)<0)):
       print("Attention il ya un mur!!")
       return True
-    elif ((self.orientation=="bas")and((self.y+a)>=env.nblignes)):
+    elif ((self.orientation=="bas")and((self.x+a)>=env.nblignes)):
        print("Attention il ya un mur!!")
        return True
     else:
