@@ -112,10 +112,3 @@ class Robot:
       print("Le robot peut avancer")
       return False
 
-
-
-  
-#tests
-robot1=Robot("droite")
-print(robot1.x)
-print(robot1.y)
