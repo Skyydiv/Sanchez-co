@@ -22,7 +22,12 @@ class Robot:
     '''Renvoie et affiche les coordonnées du robot'''
     print("Le robot se trouve dans la case (",self.x,",",self.y,")")
     return (self.x,self.y)
-
+    
+  def getOrientation(self):
+    '''Renvoie et affiche l'orientation du robot'''
+    print("Le robot est orienté vers",self.orientation,)
+    return (self.orientation)
+    
   def tourner(self,orientation) :
     '''Change la direction du robot
     :param direction: la nouvelle direction vers laquelle le robot tourne
@@ -69,27 +74,44 @@ class Robot:
         self.x=newX
         self.deposer(env,newX,self.y)
 
+  def reculer(self, env, n):
+    '''Fais reculer le robot de n cases dans env si possible, renvoie un message sinon
+    :param env: l'environnement dans lequel se trouve le robot
+    :param n: le nombre de case à reculer
+    '''
+    if (self.orientation=="bas"):
+        self.tourner("haut")
+        self.avancer(env,n);
+    elif (self.orientation=="gauche"):
+        self.tourner("droite")
+        self.avancer(env,n);
+    elif (self.orientation=="haut"):
+        self.tourner("bas")
+        self.avancer(env,n);
+    elif (self.orientation=="droite"):
+        self.tourner("gauche")
+        self.avancer(env,n);
     
   def VerifieMur(self,a,env):
-    '''Verfie si quand le robot avance de a il ya un mur
-    :param a:le nombre de case que va parcourir le robot 
+    '''Verfie si quand le robot avance de a il y a un mur
+    :param a: le nombre de case que va parcourir le robot 
     '''
-    if ((self.orientation=="droite")and((self.y+a)>=env.nblignes)):
-      print("Attention il ya un mur!!")
+    if ((self.orientation=="droite")and((self.y+a)>=env.nbcolonnes)):
+      print("Attention il y a un mur!!")
       return True
     elif ((self.orientation=="gauche")and((self.y-a)<0)):
-      print("Attention il ya un mur!!")
+      print("Attention il y a un mur!!")
       return True
     elif ((self.orientation=="haut")and((self.x-a)<0)):
-      print("Attention il ya un mur!!")
+      print("Attention il y a un mur!!")
       return True
     elif ((self.orientation=="bas")and((self.x+a)>=env.nblignes)):
-       print("Attention il ya un mur!!")
+       print("Attention il y a un mur!!")
        return True
     else:
       print("Le robot peut avancer")
       return False
-  
+
 
 
   
