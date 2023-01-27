@@ -20,20 +20,15 @@ class Environnement() :
         :param a: le nombre de case que va parcourir le robot 
         '''
         if ((self.orientation=="droite")and((self.y+a)>=env.nbcolonnes)):
-            print("Attention il y a un mur!!")
-            return True
-        elif ((self.orientation=="gauche")and((self.y-a)<0)):
-            print("Attention il y a un mur!!")
-            return True
-        elif ((self.orientation=="haut")and((self.x-a)<0)):
-            print("Attention il y a un mur!!")
-            return True
-        elif ((self.orientation=="bas")and((self.x+a)>=env.nblignes)):
-            print("Attention il y a un mur!!")
-            return True
-        else:
-            print("Le robot peut avancer")
             return False
+        elif ((self.orientation=="gauche")and((self.y-a)<0)):
+            return False
+        elif ((self.orientation=="haut")and((self.x-a)<0)):
+            return False
+        elif ((self.orientation=="bas")and((self.x+a)>=env.nblignes)):
+            return False
+        else:
+            return True
 
 
 
