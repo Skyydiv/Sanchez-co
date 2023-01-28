@@ -12,10 +12,11 @@ class Environnement() :
         :param y: nombre de colonnes
         :param echelle: échelle 
         '''
-        self.tab=numpy.empty((int(x),int(y)),set())
-        for i in range(x):
-            for j in range(y):
-                self.tab[i][j]=numpy.empty(set())
+        
+        self.tab=numpy.empty([int(x),int(y)],dtype=set)  
+        for i in range(int(x)):
+            for j in range(int(y)):
+                self.tab[i][j]={None}
         self.nblignes=int(x)
         self.nbcolonnes=int(y)
         self.echelle=echelle
@@ -36,8 +37,11 @@ class Environnement() :
         else:
             return True
 
+#test 
+env=Environnement(5,10,5)
+rob=Robot([2,3])
+env.tab[0][0].add(rob)
+if rob in env.tab[0][0]:
+    print('R')
 
-
-
-         
 
