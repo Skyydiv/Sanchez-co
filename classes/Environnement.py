@@ -49,8 +49,20 @@ class Environnement() :
                 if i.x==x and i.y==y:
                     return True
         return False
+    
+    def deposerRobot(self,robot):
+        if self.tab[int(robot.x)][int(robot.y)]==set():
+            self.tab[int(robot.x)][int(robot.y)].add(robot)
+        elif self.tab[int(robot.x)][int(robot.y)]!=set():
+            print("Il y a déjà un objet dans cette case veuillez changer les coordonnées du robot ou enlever les objets présents")
 
-
+#test 
+env=Environnement(5,10,5)
+rob=Robot([1.2,4])
+ob1=Obstacle(1.2,3.4,4,5.6)
+env.tab[int(ob1.x)][int(ob1.y)].add(ob1)
+print(env.verifieObstacle(1.2,3.4))
+env.deposerRobot(rob)
 
 
 
