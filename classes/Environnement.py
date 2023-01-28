@@ -1,6 +1,6 @@
 import numpy
 from Robot import Robot
-
+from Obstacle import Obstacle
 
 class Environnement() :
     ''' L'environnement dans lequel se trouve le Robot'''
@@ -16,7 +16,7 @@ class Environnement() :
         self.tab=numpy.empty([int(x),int(y)],dtype=set)  
         for i in range(int(x)):
             for j in range(int(y)):
-                self.tab[i][j]={None}
+                self.tab[i][j]=set()
         self.nblignes=int(x)
         self.nbcolonnes=int(y)
         self.echelle=echelle
@@ -37,11 +37,20 @@ class Environnement() :
         else:
             return True
 
-#test 
-env=Environnement(5,10,5)
-rob=Robot([2,3])
-env.tab[0][0].add(rob)
-if rob in env.tab[0][0]:
-    print('R')
+    def verifieObstacle(self, x, y):
+        '''Verfie s'il y a un obstacle dans la case x,y
+        :param x: indice de la ligne
+        :param y: indice de la colonne
+        '''
+        if (self.tab[int(x)][int(y)]==set()):
+            return False
+        elif self.tab[int(x)][int(y)]!=set(): 
+            for i in self.tab[int(x)][int(y)]:
+                if i.x==x and i.y==y:
+                    return True
+        return False
+
+
+
 
 
