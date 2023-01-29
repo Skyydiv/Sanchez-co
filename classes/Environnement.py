@@ -56,6 +56,24 @@ class Environnement() :
         elif self.tab[int(robot.x)][int(robot.y)]!=set():
             print("Il y a déjà un objet dans cette case veuillez changer les coordonnées du robot ou enlever les objets présents")
 
+    def deposerObstable(self,x,y,h,d):
+        i=True
+        ob=Obstacle(x,y,h,d)
+        if self.tab[int(x)][int(y)]==set():
+            self.tab[int(x)][int(y)].add(ob)
+        elif self.tab[int(x)][int(y)]!=set():
+            if self.verifieObstacle(x,y):
+                print("Il y a déjà un objet dans cette case veuillez changer les coordonnées dans les paramètres de la fonction")
+            else:
+                self.tab[int(x)][int(y)].add(ob)
+
+
+
+
+
+
+                
+
 #test 
 env=Environnement(5,10,5)
 rob=Robot([1.2,4])
@@ -63,6 +81,7 @@ ob1=Obstacle(1.2,3.4,4,5.6)
 env.tab[int(ob1.x)][int(ob1.y)].add(ob1)
 print(env.verifieObstacle(1.2,3.4))
 env.deposerRobot(rob)
+env.deposerObstable(1.2,3.5,4,5)
 
 
 
