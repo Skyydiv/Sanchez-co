@@ -66,6 +66,21 @@ class Environnement() :
                 print("Il y a déjà un objet dans cette case veuillez changer les coordonnées dans les paramètres de la fonction")
             else:
                 self.tab[int(x)][int(y)].add(ob)
+    
+
+    def deplacerRobot(self, robot):
+        """
+            Vérifie si il y a un obstacle aux coordonnés après le déplacement ou si il y a mur sur la route
+                si oui on bouge pas
+                sinon change les coordonnées x et y du robot
+            :param robot: le robot à déplacer
+        """
+        new_x = robot.x + robot.vitesse[0]
+        new_y = robot.y + robot.vitesse[1]
+        if (self.verifieObstacle(new_x,new_y)) or (self.verifieMur(new_x,new_y)):
+            return
+        robot.x = new_x
+        robot.y = new_y
 
 
 
