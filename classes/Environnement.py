@@ -22,20 +22,17 @@ class Environnement() :
         self.echelle=echelle
 
 
-    def VerifieMur(self,a,env):
-        '''Verfie si quand le robot avance de a il y a un mur
-        :param a: le nombre de case que va parcourir le robot 
+    def verifieMur(self,x,y):
         '''
-        if ((self.orientation=="droite")and((self.y+a)>=env.nbcolonnes)):
-            return False
-        elif ((self.orientation=="gauche")and((self.y-a)<0)):
-            return False
-        elif ((self.orientation=="haut")and((self.x-a)<0)):
-            return False
-        elif ((self.orientation=="bas")and((self.x+a)>=env.nblignes)):
-            return False
-        else:
+        Vérifie si les coordonée x et y sont dans l'enceinte de l'environnement. 
+        :param x: coordonné réelle
+        :param y: coordonné réelle
+        :return False si on est dans l’environnement 
+        :return True si on se prend un mur
+        '''
+        if ((x>=self.nblignes) or (y>=self.nbcolonnes) or (x<=0) or (y<=0)):
             return True
+        return False
 
     def verifieObstacle(self, x, y):
         '''Verfie s'il y a un obstacle dans la case avec les mêmes coordonnées
@@ -52,7 +49,7 @@ class Environnement() :
         return False
     
     def deposerRobot(self,robot):
-        """ Dépose le root en paramètre s'il y a aucun obstacle dans la case où on veut le poser.
+        """ Dépose le robot en paramètre s'il y a aucun obstacle dans la case où on veut le poser.
         :param robot: robot à déposer """
         if self.tab[int(robot.x)][int(robot.y)]==set():
             self.tab[int(robot.x)][int(robot.y)].add(robot)
@@ -110,3 +107,35 @@ env.deposerObstable(1.2,3.5,4,5)
 
 
 
+#test2
+#env=Environnement(10,10,1)
+#rob=Robot([2,0])
+#rob.x=0.1
+#rob.y=0.1
+#env.deposerRobot(rob)
+#print(env.tab[0][0]) #robot bien placé
+
+
+#test verifieMur
+#print("nblignes",env.nblignes)
+#print("nbcolonnes",env.nbcolonnes)
+
+#print("(3,3) ", env.VerifieMur(3,3)) #ok
+#print("(0,3) ", env.VerifieMur(0,3)) #ok
+#print("(0.1,3) ", env.VerifieMur(0.1,3)) #ok
+
+#print("(3,0) ", env.VerifieMur(3,0)) #ok
+#print("(3,10) ", env.VerifieMur(3,10)) #ok
+#print("(10,3) ", env.VerifieMur(10,3)) #ok
+
+#print("(10,10) ", env.VerifieMur(10,10)) #ok
+#print("(11,3) ", env.VerifieMur(11,3)) #ok
+
+#test deplacerRobot 
+#print("position: ", rob.x,rob.y, "direction: ",rob.vitesse)
+#env.deplacerRobot(rob)
+#rob.vitesse=[0,-3.4]
+#print("position: ", rob.x,rob.y, "direction: ",rob.vitesse)
+#env.deplacerRobot(rob)
+#rob.vitesse=[0,-3.4]
+#print("position: ", rob.x,rob.y, "direction: ",rob.vitesse)
