@@ -38,9 +38,10 @@ class Environnement() :
             return True
 
     def verifieObstacle(self, x, y):
-        '''Verfie s'il y a un obstacle dans la case x,y
+        '''Verfie s'il y a un obstacle dans la case avec les mêmes coordonnées
         :param x: indice de la ligne
         :param y: indice de la colonne
+        :returns: True s'il existe déjà un obstacle avec les mêmes coordonnées, False sinon
         '''
         if (self.tab[int(x)][int(y)]==set()):
             return False
@@ -51,12 +52,21 @@ class Environnement() :
         return False
     
     def deposerRobot(self,robot):
+        """ Dépose le root en paramètre s'il y a aucun obstacle dans la case où on veut le poser.
+        :param robot: robot à déposer """
         if self.tab[int(robot.x)][int(robot.y)]==set():
             self.tab[int(robot.x)][int(robot.y)].add(robot)
         elif self.tab[int(robot.x)][int(robot.y)]!=set():
             print("Il y a déjà un objet dans cette case veuillez changer les coordonnées du robot ou enlever les objets présents")
 
     def deposerObstable(self,x,y,h,d):
+        """ Dépose les obstacles s'il n'y a pas déjà un objet dans la case avec les mêmes coordonnées en faisant appel à la fonction verifieObstacle
+        :param x: Coordonnées x de l'obstacle qu'on va créer*
+        :param y: Coordonnées y de l'obstacle qu'on va créer
+        :param h: hauteur de l'obstacle
+        :param d: distance du sol de l'obstacle
+        """
+        
         i=True
         ob=Obstacle(x,y,h,d)
         if self.tab[int(x)][int(y)]==set():
