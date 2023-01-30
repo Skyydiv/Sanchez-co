@@ -1,4 +1,5 @@
 import numpy
+import random
 from Robot import Robot
 from Obstacle import Obstacle
 
@@ -66,7 +67,6 @@ class Environnement() :
         :param h: hauteur de l'obstacle
         :param d: distance du sol de l'obstacle
         """
-        
         i=True
         ob=Obstacle(x,y,h,d)
         if self.tab[int(x)][int(y)]==set():
@@ -79,6 +79,17 @@ class Environnement() :
 
 
 
+    def deposer(self,n):
+        i=0
+        while i<n:
+            x=round(random.uniform(0,self.nblignes),1)
+            y=round(random.uniform(0,self.nbcolonnes),1)
+            h=1
+            d=0
+            if self.verifieObstacle(x,y)==False:
+                self.deposerObstable(x,y,h,d)
+                i=i+1
+                print("Obstacle placé en",x, "et", y,"avec hauteur et distance du sol", h,"et",d)
 
 
 
@@ -92,6 +103,7 @@ env.tab[int(ob1.x)][int(ob1.y)].add(ob1)
 print(env.verifieObstacle(1.2,3.4))
 env.deposerRobot(rob)
 env.deposerObstable(1.2,3.5,4,5)
+env.deposer(3)
 
 
 
