@@ -69,7 +69,7 @@ class Environnement() :
     
 
 
-    def deplacerRobot(self, robot):
+    def deplacer(self,robot):
         """
         Vérifie si il y a un obstacle aux coordonnés après le déplacement ou si il y a mur sur la route
         si oui on bouge pas
@@ -78,10 +78,10 @@ class Environnement() :
         """
         new_x = robot.x + robot.vitesse[0]
         new_y = robot.y + robot.vitesse[1]
-        if (self.estObstacle(new_x,new_y)) or (self.estMur(new_x,new_y)):
-            return
-        robot.x = new_x
-        robot.y = new_y
+        if not (self.estObstacle(new_x,new_y) and self.estMur(new_x,new_y)):
+            robot.x = new_x
+            robot.y = new_y
+        return
 
 
 
@@ -101,7 +101,7 @@ class Environnement() :
 #tests de Haya
 
 env1=Environnement(10,5,1)
-robot1=Robot([3,3])
+robot1=Robot([6,4])
 
 #test estMur
 assert(env1.estMur(2,-1)==True)
@@ -117,6 +117,9 @@ assert(env1.estObstacle(4.14,3.6)==True)
 env1.addRobot(robot1)
 assert(robot1 in env1.tab[0][0])
 
+#test deplacer
+env1.deplacer(robot1)
+assert(robot1.x==6 and robot1.y==4)
 
                 
 
@@ -126,8 +129,8 @@ assert(robot1 in env1.tab[0][0])
 # ob1=Obstacle(1.2,3.4,4,5.6)
 # env.tab[int(ob1.x)][int(ob1.y)].add(ob1)
 # print(env.verifieObstacle(1.2,3.4))
-# env.deposerRobot(rob)
-# env.addObstable(1.2,3.5,4,5)
+# env.addRobot(rob)
+# env.addObstacle(1.2,3.5,4,5)
 # env.deposer(3)
 
 
@@ -137,7 +140,7 @@ assert(robot1 in env1.tab[0][0])
 #rob=Robot([2,0])
 #rob.x=0.1
 #rob.y=0.1
-#env.deposerRobot(rob)
+#env.addRobot(rob)
 #print(env.tab[0][0]) #robot bien placé
 
 
@@ -157,12 +160,12 @@ assert(robot1 in env1.tab[0][0])
 #print("(11,3) ", env.estMur(11,3)) #ok
 
 #test deplacerRobot 
-#print("position: ", rob.x,rob.y, "direction: ",rob.vitesse)
-#env.deplacerRobot(rob)
-#rob.vitesse=[0,-3.4]
-#print("position: ", rob.x,rob.y, "direction: ",rob.vitesse)
-#env.deplacerRobot(rob)
-#rob.vitesse=[0,-3.4]
-#print("position: ", rob.x,rob.y, "direction: ",rob.vitesse)
+# print("position: ", robot1.x,robot1.y, "direction: ",robot1.vitesse)
+# env1.deplacer(robot1)
+# robot1.vitesse=[0,-3.4]
+# print("position: ", robot1.x,robot1.y, "direction: ",robot1.vitesse)
+# env1.deplacer(robot1)
+# robot1.vitesse=[0,-3.4]
+# print("position: ", robot1.x,robot1.y, "direction: ",robot1.vitesse)
 
 
