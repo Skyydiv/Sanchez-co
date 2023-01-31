@@ -1,4 +1,4 @@
-from environnement import Environnement
+from Environnement import Environnement
 from Objet import Robot
 from Objet import Obstacle
 from time import sleep
@@ -37,6 +37,9 @@ class Simulation :
 
     def update(self):
         self.environnement.deplacer(self.robot)
+        nex_vx = round(random.uniform(0,2),1)
+        nex_vy = round(random.uniform(0,2),1)
+        self.environnement.changementVitesse(self.robot,self.robot.x+nex_vx,self.robot.y+nex_vy)
         
     def coordAlea(self) :
         '''Renvoie des coord aléatoires x et y non occupés dans l'environnement'''
@@ -68,3 +71,4 @@ simu=Simulation(10,1,robot2,env2)
 #test de addSimulation
 simu.addSimulation(10)
 assert(simu.robot in simu.environnement.tab[0][0]) 
+print(round(random.uniform(0,2),1))
