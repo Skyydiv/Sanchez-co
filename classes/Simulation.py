@@ -7,7 +7,7 @@ class Simulation :
     """Simulation qui fait interagir le Robot avec son Environnement
     """
     
-    def __init__(self, temps, pas,x,y,echelle,vitesse):
+    def __init__(self, temps, pas,robot,environnement):
         '''Constructeur de la simulation qui initailise l'environnement,le robot, le temps de la simulation et le pas de temps
         :param temps: temps de la simulation
         :param pas: pas de temps
@@ -15,8 +15,8 @@ class Simulation :
         :param y: nbcolonnes pour environnement
         :param echelle: l'échelle pour environnement
         :param vitesse: vitesse du robot'''
-        self.environnement=Environnement(x,y,echelle)
-        self.robot=Robot(vitesse)
+        self.environnement=environnement
+        self.robot=robot
         self.temps=temps
         self.delta=pas
 
@@ -30,4 +30,6 @@ class Simulation :
             return (x,y)
             
 
-  
+   
+
+
