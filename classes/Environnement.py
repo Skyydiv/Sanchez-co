@@ -86,6 +86,21 @@ class Environnement() :
         return
 
 
+    def changementVitesse(self,robot,vx,vy):
+        ''' 
+         change le vecteur de vitesse du robot 
+         :param vx
+         :param vy
+        '''
+        robot.vitesse[0]=vx
+        robot.vitesse[1]=vy
+
+
+    def distToCase(self,echelle,x, y) :
+        '''
+        renvoie la distance à la case ou se trouve le robot (:param2:,:param3:) en considérant l'échelle :param1: 
+        '''
+        return (x*echelle,y*echelle)
 
 #tests de Haya
 
