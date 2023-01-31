@@ -63,8 +63,8 @@ class Simulation :
 env2=Environnement(10,10,1)
 robot2=Robot([2,2])
 
-simu=Simulation(10,1,robot2,env2)
+simul=Simulation(10,1,robot2,env2)
 
 #test de addSimulation
-simu.addSimulation(10)
+simul.addSimulation(10)
 assert(simu.robot in simu.environnement.tab[0][0]) 
