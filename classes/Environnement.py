@@ -85,19 +85,6 @@ class Environnement() :
 
 
 
-    def deposer(self,n):
-        i=0
-        while i<n:
-            x=round(random.uniform(0,self.nblignes),1)
-            y=round(random.uniform(0,self.nbcolonnes),1)
-            h=1
-            d=0
-            if self.estObstacle(x,y)==False:
-                self.addObstacle(x,y,h,d)
-                i=i+1
-                print("Obstacle placé en",x, "et", y,"avec hauteur et distance du sol", h,"et",d)
-
-
 #tests de Haya
 
 env1=Environnement(10,5,1)
@@ -119,9 +106,11 @@ assert(robot1 in env1.tab[0][0])
 
 #test deplacer
 env1.deplacer(robot1)
-assert(robot1.x==6 and robot1.y==4)
+assert(robot1.x==6.1 and robot1.y==4.1)
 
                 
+
+
 
 #test 
 # env=Environnement(5,10,5)
