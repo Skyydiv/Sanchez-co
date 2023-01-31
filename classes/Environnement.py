@@ -86,10 +86,28 @@ class Environnement() :
         return
 
 
+    def changementVitesse(self,robot,vx,vy):
+        """
+         change le vecteur de vitesse du robot 
+         :param vx: vitesse vx
+         :param vy: vitesse vy
+        """
+        robot.vitesse[0]=vx
+        robot.vitesse[1]=vy
+
+
+    def distToCase(self,echelle,x, y) :
+        """
+        renvoie la distance du robot dans la case en considérant l'échelle
+        :param echelle: echelle de l'environnement
+        :param x: abscisse de l'objet
+        :param y: ordonnée de l'objet
+        """
+        return (x*echelle,y*echelle)
 
 #tests de Haya
 
-env1=Environnement(10,5,1)
+env1=Environnement(10,5,10)
 robot1=Robot([6,4])
 
 #test estMur
@@ -110,7 +128,9 @@ assert(robot1 in env1.tab[0][0])
 env1.deplacer(robot1)
 assert(robot1.x==6.1 and robot1.y==4.1)
 
-                
+#test distToCase
+print(env1.distToCase(env1.echelle,robot1.x,robot1.y))
+
 
 
 
