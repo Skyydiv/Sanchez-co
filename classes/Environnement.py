@@ -23,7 +23,7 @@ class Environnement() :
         self.echelle=echelle
 
 
-    def verifieMur(self,x,y):
+    def estMur(self,x,y):
         '''
         Vérifie si les coordonée x et y sont dans l'enceinte de l'environnement. 
         :param x: coordonné réelle
@@ -84,7 +84,7 @@ class Environnement() :
         """
         new_x = robot.x + robot.vitesse[0]
         new_y = robot.y + robot.vitesse[1]
-        if (self.verifieObstacle(new_x,new_y)) or (self.verifieMur(new_x,new_y)):
+        if (self.verifieObstacle(new_x,new_y)) or (self.estMur(new_x,new_y)):
             return
         robot.x = new_x
         robot.y = new_y
@@ -108,14 +108,14 @@ class Environnement() :
                 
 
 #test 
-env=Environnement(5,10,5)
-rob=Robot([1.2,4])
-ob1=Obstacle(1.2,3.4,4,5.6)
-env.tab[int(ob1.x)][int(ob1.y)].add(ob1)
-print(env.verifieObstacle(1.2,3.4))
-env.deposerRobot(rob)
-env.deposerObstable(1.2,3.5,4,5)
-env.deposer(3)
+# env=Environnement(5,10,5)
+# rob=Robot([1.2,4])
+# ob1=Obstacle(1.2,3.4,4,5.6)
+# env.tab[int(ob1.x)][int(ob1.y)].add(ob1)
+# print(env.verifieObstacle(1.2,3.4))
+# env.deposerRobot(rob)
+# env.deposerObstable(1.2,3.5,4,5)
+# env.deposer(3)
 
 
 
@@ -128,20 +128,20 @@ env.deposer(3)
 #print(env.tab[0][0]) #robot bien placé
 
 
-#test verifieMur
+#test estMur
 #print("nblignes",env.nblignes)
 #print("nbcolonnes",env.nbcolonnes)
 
-#print("(3,3) ", env.VerifieMur(3,3)) #ok
-#print("(0,3) ", env.VerifieMur(0,3)) #ok
-#print("(0.1,3) ", env.VerifieMur(0.1,3)) #ok
+#print("(3,3) ", env.estMur(3,3)) #ok
+#print("(0,3) ", env.estMur(0,3)) #ok
+#print("(0.1,3) ", env.estMur(0.1,3)) #ok
 
-#print("(3,0) ", env.VerifieMur(3,0)) #ok
-#print("(3,10) ", env.VerifieMur(3,10)) #ok
-#print("(10,3) ", env.VerifieMur(10,3)) #ok
+#print("(3,0) ", env.estMur(3,0)) #ok
+#print("(3,10) ", env.estMur(3,10)) #ok
+#print("(10,3) ", env.estMur(10,3)) #ok
 
-#print("(10,10) ", env.VerifieMur(10,10)) #ok
-#print("(11,3) ", env.VerifieMur(11,3)) #ok
+#print("(10,10) ", env.estMur(10,10)) #ok
+#print("(11,3) ", env.estMur(11,3)) #ok
 
 #test deplacerRobot 
 #print("position: ", rob.x,rob.y, "direction: ",rob.vitesse)
@@ -151,3 +151,9 @@ env.deposer(3)
 #env.deplacerRobot(rob)
 #rob.vitesse=[0,-3.4]
 #print("position: ", rob.x,rob.y, "direction: ",rob.vitesse)
+
+#tests de Haya
+
+#test estMur
+env=Environnement(10,5,1)
+assert(env.estMur(2,-1)==True)
