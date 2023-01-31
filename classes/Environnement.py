@@ -55,6 +55,7 @@ class Environnement() :
         """
         if not (self.estObstacle(robot.x,robot.y) and self.estMur(robot.x,robot.y)):
             self.tab[int(robot.x)][int(robot.y)].add(robot)
+        return 
         
 
     def addObstacle(self,x,y,h,d):
@@ -66,6 +67,7 @@ class Environnement() :
         """
         if not (self.estObstacle(x,y) and self.estMur(x,y)):
             self.tab[int(x)][int(y)].add(Obstacle(x,y,h,d))
+        return
     
 
 
