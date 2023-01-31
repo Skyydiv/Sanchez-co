@@ -35,7 +35,7 @@ class Environnement() :
             return True
         return False
 
-    def verifieObstacle(self, x, y):
+    def estObstacle(self, x, y):
         '''Verfie s'il y a un obstacle dans la case avec les mêmes coordonnées
         :param x: indice de la ligne
         :param y: indice de la colonne
@@ -51,40 +51,35 @@ class Environnement() :
     
     def deposerRobot(self,robot):
         """ Dépose le robot en paramètre s'il y a aucun obstacle dans la case où on veut le poser.
-        :param robot: robot à déposer """
+        :param robot: robot à déposer 
+        """
         if self.tab[int(robot.x)][int(robot.y)]==set():
             self.tab[int(robot.x)][int(robot.y)].add(robot)
         elif self.tab[int(robot.x)][int(robot.y)]!=set():
             print("Il y a déjà un objet dans cette case veuillez changer les coordonnées du robot ou enlever les objets présents")
 
-    def deposerObstable(self,x,y,h,d):
-        """ Dépose les obstacles s'il n'y a pas déjà un objet dans la case avec les mêmes coordonnées en faisant appel à la fonction verifieObstacle
-        :param x: Coordonnées x de l'obstacle qu'on va créer*
+    def addObstacle(self,x,y,h,d):
+        """Créer et dépose l'obstacle s'il n'y a pas déjà un objet dans la case avec les mêmes coordonnées en faisant appel à la fonction estObstacle
+        :param x: Coordonnées x de l'obstacle qu'on va créer
         :param y: Coordonnées y de l'obstacle qu'on va créer
         :param h: hauteur de l'obstacle
         :param d: distance du sol de l'obstacle
         """
-        i=True
-        ob=Obstacle(x,y,h,d)
-        if self.tab[int(x)][int(y)]==set():
-            self.tab[int(x)][int(y)].add(ob)
-        elif self.tab[int(x)][int(y)]!=set():
-            if self.verifieObstacle(x,y):
-                print("Il y a déjà un objet dans cette case veuillez changer les coordonnées dans les paramètres de la fonction")
-            else:
-                self.tab[int(x)][int(y)].add(ob)
+        if not (self.estObstacle(x,y) and self.estMur(x,y)):
+            self.tab[int(x)][int(y)].add(Obstacle(x,y,h,d))
     
+
 
     def deplacerRobot(self, robot):
         """
-            Vérifie si il y a un obstacle aux coordonnés après le déplacement ou si il y a mur sur la route
-                si oui on bouge pas
-                sinon change les coordonnées x et y du robot
-            :param robot: le robot à déplacer
+        Vérifie si il y a un obstacle aux coordonnés après le déplacement ou si il y a mur sur la route
+        si oui on bouge pas
+        sinon change les coordonnées x et y du robot
+        :param robot: le robot à déplacer
         """
         new_x = robot.x + robot.vitesse[0]
         new_y = robot.y + robot.vitesse[1]
-        if (self.verifieObstacle(new_x,new_y)) or (self.estMur(new_x,new_y)):
+        if (self.estObstacle(new_x,new_y)) or (self.estMur(new_x,new_y)):
             return
         robot.x = new_x
         robot.y = new_y
@@ -98,8 +93,8 @@ class Environnement() :
             y=round(random.uniform(0,self.nbcolonnes),1)
             h=1
             d=0
-            if self.verifieObstacle(x,y)==False:
-                self.deposerObstable(x,y,h,d)
+            if self.estObstacle(x,y)==False:
+                self.addObstacle(x,y,h,d)
                 i=i+1
                 print("Obstacle placé en",x, "et", y,"avec hauteur et distance du sol", h,"et",d)
 
@@ -114,7 +109,7 @@ class Environnement() :
 # env.tab[int(ob1.x)][int(ob1.y)].add(ob1)
 # print(env.verifieObstacle(1.2,3.4))
 # env.deposerRobot(rob)
-# env.deposerObstable(1.2,3.5,4,5)
+# env.addObstable(1.2,3.5,4,5)
 # env.deposer(3)
 
 
@@ -155,5 +150,12 @@ class Environnement() :
 #tests de Haya
 
 #test estMur
-env=Environnement(10,5,1)
-assert(env.estMur(2,-1)==True)
+env1=Environnement(10,5,1)
+assert(env1.estMur(2,-1)==True)
+
+#test addObstacle
+env1.addObstacle(4.14,3.6,1,0)
+assert(env1.tab[4][3]!=set())
+
+#test estObstacle
+assert(env1.estObstacle(4.14,3.6)==True)
