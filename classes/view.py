@@ -1,29 +1,39 @@
 from tkinter import *    
-
+from Objet import Robot
+from Objet import Obstacle
+from Environnement import Environnement 
+from Simulation import Simulation
 """
 Création de la fenêtre d'affichage
 """
+env=Environnement(500,500,5)
+Largeur=env.nbcolonnes
+Hauteur=env.nblignes
 
-Largeur =600
-Hauteur=500
 root = Tk()
 canvas=Canvas(root, width=Largeur , height=Hauteur , background="black")
 canvas.pack(fill="both",expand=True)
 
 
+"""creation de notre robot et de l'obstacle 
+"""
 
-x0,y0=100,100
-dx=+5
-dy=+2
+rob=Robot([5,2])
+x0=rob.x
+y0=rob.y
+dx=rob.vitesse[0]
+dy=rob.vitesse[1]
 
-x1,y1=200,200
+
+ob1=Obstacle(200,200,4,5.6)
+x1=ob1.x
+y1=ob1.y
 
 """
     creation de nos 2 rectangles avec 4 cordonnées pour chaque sommets, les deux sont des carrés de 20*20
 """
 rect=canvas.create_rectangle(x0,y0,x0+20,y0+20,width=2,fill="red")
 rect1=canvas.create_rectangle(x1,y1,x1+20,y1+20,width=2,fill="yellow")
-
 
 def deplacer():
     """
@@ -40,9 +50,9 @@ def deplacer():
     canvas.coords(rect,x0,y0,x0+20,y0+20)
     
     if x0<0 or x0>Largeur:
-        dx=-dx
+        return
     if y0<0 or y0>Hauteur:
-        dy=-dy
+        return
     
     
     canvas.after(50,deplacer)
