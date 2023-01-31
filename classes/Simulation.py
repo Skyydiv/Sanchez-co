@@ -48,6 +48,22 @@ class Simulation :
             return (x,y)
             
 
-   
+    def addSimulation(self,nbObstacles):
+        '''Depose le robot et nbObstacles obstacles dans des positions aléatoires dans l'environnement
+        :param nbObstacles: nombre d'obstacles a déposer
+        '''
+        self.environnement.addRobot(self.robot)
+        i=0
+        for i in range(nbObstacles) :
+            newCoord=self.coordAlea
+            self.environnement.addObstacle(newCoord[0],newCoord[1],1,0)
 
+#tests de Haya
 
+env2=Environnement(10,10,1)
+robot2=Robot([2,2])
+
+simu=Simulation(10,1,robot2,env2)
+
+#test de addSimulation
+simu.addSimulation(10)
