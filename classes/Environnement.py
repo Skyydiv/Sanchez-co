@@ -154,6 +154,8 @@ env1=Environnement(10,5,1)
 assert(env1.estMur(2,-1)==True)
 
 #test addObstacle
-env1.addObstacle(3.14,4.2,2,0)
 env1.addObstacle(4.14,3.6,1,0)
 assert(env1.tab[4][3]!=set())
+
+#test estObstacle
+assert(env1.estObstacle(4.14,3.6)==True)
