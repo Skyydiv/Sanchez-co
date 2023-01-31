@@ -1,4 +1,4 @@
-from Environnement import Environnement
+from environnement import Environnement
 from Objet import Robot
 from Objet import Obstacle
 from time import sleep
@@ -8,7 +8,7 @@ class Simulation :
     """Simulation qui fait interagir le Robot avec son Environnement
     """
     
-    def __init__(self, temps, pas,robot,environnement):
+    def __init__(self, temps, pas,robot:Robot,environnement:Environnement):
         '''Constructeur de la simulation qui initailise l'environnement,le robot, le temps de la simulation et le pas de temps
         :param temps: temps de la simulation
         :param pas: pas de temps
@@ -55,7 +55,7 @@ class Simulation :
         self.environnement.addRobot(self.robot)
         i=0
         for i in range(nbObstacles) :
-            newCoord=self.coordAlea
+            newCoord=self.coordAlea()
             self.environnement.addObstacle(newCoord[0],newCoord[1],1,0)
 
 #tests de Haya
@@ -67,3 +67,4 @@ simu=Simulation(10,1,robot2,env2)
 
 #test de addSimulation
 simu.addSimulation(10)
+assert(simu.robot in simu.environnement.tab[0][0]) 
