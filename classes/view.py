@@ -70,7 +70,7 @@ def action():
         creation d'un bouton qui lance la commande action() permettant de lancer l'affichage et deplacer le carré
     """
 
-<<<<<<< HEAD
+
 def afficher(simu):
     """
     Affiche l'environnemment en mettant 'R' s'il y a un robot, 'O' s'il y a un obstacle et ' ' si rien.
@@ -87,12 +87,7 @@ def afficher(simu):
                     elif obj isinstance Obstacle:
                         print('O')
         print()
-=======
-
->>>>>>> fbab4e1cafc4c1cf4bc027bac3cf9747043c328a
-            
-                        
-             
+                   
 bouton=Button(root,text="Lancer simu", width=20,command=action)
 bouton.pack(pady=10)
 

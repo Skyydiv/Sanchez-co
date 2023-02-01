@@ -114,12 +114,13 @@ class Environnement() :
             for j in range (simu.environnement.nbcolonnes):
                 if simu.environnement.tab[i][j]==set():
                     print(' ')
-            else:
+            elif simu.environnement.tab[i][j]!=set():
                 for obj in simu.environnement.tab[i][j]:
                     if isinstance(obj,Robot):
                         print('R')
                     elif isinstance(obj,Obstacle) :
                         print('O')
+            print()
 
 #tests de Haya
 
