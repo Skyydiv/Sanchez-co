@@ -2,6 +2,7 @@ from Environnement import Environnement
 from Objet import Robot
 from Objet import Obstacle
 from time import sleep
+from view import afficherEnv
 import random
 
 class Simulation :
@@ -32,6 +33,7 @@ class Simulation :
             #appel d'affichage à changer si besoin et import view
             #view.action(self) #je donne la simulation en paramètre pour permettre de récupérer les attributs de la simulation
             date+=self.delta
+            afficherEnv(env)
             
             sleep(1) #attends 1 seconde
 
@@ -72,3 +74,4 @@ simul=Simulation(10,1,robot2,env2)
 simul.addSimulation(10)
 assert(simu.robot in simu.environnement.tab[0][0]) 
 print(round(random.uniform(0,2),1))
+self.simu()
