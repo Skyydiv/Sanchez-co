@@ -1,4 +1,4 @@
-from environnement import Environnement
+from Environnement import Environnement
 from Objet import Robot
 from Objet import Obstacle
 from time import sleep
