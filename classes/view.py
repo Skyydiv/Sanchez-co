@@ -4,16 +4,11 @@ from Objet import Obstacle
 from Environnement import Environnement 
 
 
-"""
-Création de la fenêtre d'affichage
-"""
-env=Environnement(500,500,5)
-Largeur=env.nbcolonnes
-Hauteur=env.nblignes
+def afficherFenetre(simu):
+    root = Tk()
+    canvas=Canvas(root, width=simu.environnement.nbcolonnes , height=simu.environnement.nblignes , background="black")
+    canvas.pack(fill="both",expand=True)
 
-root = Tk()
-canvas=Canvas(root, width=Largeur , height=Hauteur , background="black")
-canvas.pack(fill="both",expand=True)
 
 """creation de notre robot et de l'obstacle 
 """
