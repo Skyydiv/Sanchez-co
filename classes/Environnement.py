@@ -105,6 +105,22 @@ class Environnement() :
         """
         return (x*echelle,y*echelle)
 
+
+    def afficher(simu):
+        """
+        Affiche l'environnemment en mettant 'R' s'il y a un robot, 'O' s'il y a un obstacle et ' ' si rien.
+        """
+        for i in range (simu.environnement.nblignes):
+            for j in range (simu.environnement.nbcolonnes):
+                if simu.environnement.tab[i][j]==set():
+                    print(' ')
+            else:
+                for obj in simu.environnement.tab[i][j]:
+                    if isinstance(obj,Robot):
+                        print('R')
+                    elif isinstance(obj,Obstacle) :
+                        print('O')
+
 #tests de Haya
 
 env1=Environnement(10,5,10)
@@ -129,7 +145,7 @@ env1.deplacer(robot1)
 assert(robot1.x==6.1 and robot1.y==4.1)
 
 #test distToCase
-print(env1.distToCase(env1.echelle,robot1.x,robot1.y))
+# print(env1.distToCase(env1.echelle,robot1.x,robot1.y))
 
 
 

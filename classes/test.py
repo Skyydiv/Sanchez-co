@@ -1,9 +1,11 @@
-from Environnement import Environnement
+from environnement import Environnement
 from Objet import Robot
 from Objet import Obstacle
-from Simulation import Simulation
+from simulation import Simulation
 
-env=Environnement(10,5,1)
+env=Environnement(10,10,1)
 robot=Robot([0.5,0.5])
 
-simu=Simulation(10,1,robot,env)
+sim=Simulation(10,1,robot,env)
+sim.addSimulation(3)
+sim.simu()
