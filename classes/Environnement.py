@@ -166,49 +166,5 @@ assert(robot1.x==6.1 and robot1.y==4.1)
 
 
 
-#test 
-# env=Environnement(5,10,5)
-# rob=Robot([1.2,4])
-# ob1=Obstacle(1.2,3.4,4,5.6)
-# env.tab[int(ob1.x)][int(ob1.y)].add(ob1)
-# print(env.verifieObstacle(1.2,3.4))
-# env.addRobot(rob)
-# env.addObstacle(1.2,3.5,4,5)
-# env.deposer(3)
-
-
-
-#test2
-#env=Environnement(10,10,1)
-#rob=Robot([2,0])
-#rob.x=0.1
-#rob.y=0.1
-#env.addRobot(rob)
-#print(env.tab[0][0]) #robot bien placé
-
-
-#test estMur
-#print("nblignes",env.nblignes)
-#print("nbcolonnes",env.nbcolonnes)
-
-#print("(3,3) ", env.estMur(3,3)) #ok
-#print("(0,3) ", env.estMur(0,3)) #ok
-#print("(0.1,3) ", env.estMur(0.1,3)) #ok
-
-#print("(3,0) ", env.estMur(3,0)) #ok
-#print("(3,10) ", env.estMur(3,10)) #ok
-#print("(10,3) ", env.estMur(10,3)) #ok
-
-#print("(10,10) ", env.estMur(10,10)) #ok
-#print("(11,3) ", env.estMur(11,3)) #ok
-
-#test deplacerRobot 
-# print("position: ", robot1.x,robot1.y, "direction: ",robot1.vitesse)
-# env1.deplacer(robot1)
-# robot1.vitesse=[0,-3.4]
-# print("position: ", robot1.x,robot1.y, "direction: ",robot1.vitesse)
-# env1.deplacer(robot1)
-# robot1.vitesse=[0,-3.4]
-# print("position: ", robot1.x,robot1.y, "direction: ",robot1.vitesse)
 
 
