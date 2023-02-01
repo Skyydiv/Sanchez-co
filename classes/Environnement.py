@@ -81,8 +81,10 @@ class Environnement() :
         new_x = robot.x + robot.vitesse[0]
         new_y = robot.y + robot.vitesse[1]
         if not (self.estObstacle(new_x,new_y) and self.estMur(new_x,new_y)):
+            self.tab[int(robot.x)][int(robot.y)].remove(robot)
             robot.x = new_x
             robot.y = new_y
+            self.tab[int(robot.x)][int(robot.y)].add(robot)
         return
 
 
@@ -113,6 +115,7 @@ class Environnement() :
         for i in range (simu.environnement.nblignes):
             for j in range (simu.environnement.nbcolonnes):
                 if simu.environnement.tab[i][j]==set():
+<<<<<<< HEAD
                     print(' ')
             elif simu.environnement.tab[i][j]!=set():
                 for obj in simu.environnement.tab[i][j]:
@@ -121,6 +124,18 @@ class Environnement() :
                     elif isinstance(obj,Obstacle) :
                         print('O')
             print()
+=======
+                    print("*", end=" ")
+                else:
+                    for obj in simu.environnement.tab[i][j]:
+                        if isinstance(obj,Robot):
+                            print('R', end=" ")
+                        elif isinstance(obj,Obstacle) :
+                            print('O',end=" ")
+            print()
+        print("-------------")
+
+>>>>>>> aa6744c70376b413d89795c24180dd456617dc20
 
 #tests de Haya
 

@@ -36,10 +36,11 @@ class Simulation :
             sleep(1) #attends 1 seconde
 
     def update(self):
-        self.environnement.deplacer(self.robot)
         nex_vx = round(random.uniform(0,2),1)
         nex_vy = round(random.uniform(0,2),1)
-        self.environnement.changementVitesse(self.robot,self.robot.x+nex_vx,self.robot.y+nex_vy)
+        self.environnement.changementVitesse(self.robot,nex_vx,nex_vy)
+        self.environnement.deplacer(self.robot)
+        
         
     def coordAlea(self) :
         '''Renvoie des coord aléatoires x et y non occupés dans l'environnement'''
