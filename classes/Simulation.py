@@ -74,4 +74,4 @@ simul=Simulation(10,1,robot2,env2)
 simul.addSimulation(10)
 assert(simu.robot in simu.environnement.tab[0][0]) 
 print(round(random.uniform(0,2),1))
-self.simu()
+

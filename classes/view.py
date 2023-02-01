@@ -85,7 +85,7 @@ def afficher(simu):
                         print('R')
                     elif obj isinstance Obstacle:
                         print('O')
-            print()
+        print()
             
                         
              
