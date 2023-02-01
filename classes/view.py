@@ -2,18 +2,15 @@ from tkinter import *
 from Objet import Robot
 from Objet import Obstacle
 from environnement import Environnement 
-from Simulation import Simulation
-"""
-Création de la fenêtre d'affichage
-"""
-env=Environnement(500,500,5)
-Largeur=env.nbcolonnes
-Hauteur=env.nblignes
+from simulation import Simulation
 
-root = Tk()
-canvas=Canvas(root, width=Largeur , height=Hauteur , background="black")
-canvas.pack(fill="both",expand=True)
 
+def afficheFenêtre(simu:Simulation):
+    '''Création de la fenêtre d'affichage 
+    :param simu: la simulation a représenter graphiquement'''
+    root = Tk()
+    canvas=Canvas(root, width=(simu.environnement.nbcolonnes)*10 , height=(simu.environnement.nblignes)*10 , background="black")
+    canvas.pack(fill="both",expand=True)
 
 """creation de notre robot et de l'obstacle 
 """
@@ -73,6 +70,8 @@ bouton=Button(root,text="Lancer simu", width=20,command=action)
 bouton.pack(pady=10)
 
 root.mainloop()
+
+
 
 
 
