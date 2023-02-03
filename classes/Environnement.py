@@ -6,20 +6,18 @@ from Objet import Obstacle
 class Environnement() :
     ''' L'environnement dans lequel se trouve le Robot'''
 
-    def __init__(self,x,y,echelle):
-        '''Constructeur de la classe Environnement, creer un tableau d'ensemble vide de x lignes et y colonnes
+    def __init__(self,coordsmax,robot,precision):
+        '''Constructeur de la classe Environnement : avec des valeurs flottantes pour la taille de l'environnement. 
+        L'environnement possede un ensemble d'obstacle qui contient tous les obstacles présents.
         
-        :param x: nombre de lignes
-        :param y: nombre de colonnes
-        :param echelle: échelle 
+        :param coordsmax: coordsmax[0] représente la longueur et coordsmax[1] représente la largeur de l'espace (en cm)
+        :param precision: le plus petit écart entre 2 points pour les considérer distincts (en cm)
+        :param robot: le robot unique présent dans l'environnement
         '''
-        self.tab=numpy.empty([int(x),int(y)],dtype=set)  
-        for i in range(int(x)):
-            for j in range(int(y)):
-                self.tab[i][j]=set()
-        self.nblignes=int(x)
-        self.nbcolonnes=int(y)
-        self.echelle=echelle
+        self.coordsmax=coordsmax
+        self.robot=robot
+        self.precision=precision
+        self.ensemble_obstacles= set()
 
 
     def estMur(self,x,y):
