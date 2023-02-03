@@ -107,6 +107,22 @@ class Environnement() :
         return (x*echelle,y*echelle)
 
 
+    def afficher(simu):
+        """
+        Affiche l'environnemment en mettant 'R' s'il y a un robot, 'O' s'il y a un obstacle et ' ' si rien.
+        """
+        for i in range (simu.environnement.nblignes):
+            for j in range (simu.environnement.nbcolonnes):
+                if simu.environnement.tab[i][j]==set():
+                    print("*", end=" ")
+                else:
+                    for obj in simu.environnement.tab[i][j]:
+                        if isinstance(obj,Robot):
+                            print('R', end=" ")
+                        elif isinstance(obj,Obstacle) :
+                            print('O',end=" ")
+            print()
+        print("-------------")
 
 
 #tests de Haya
