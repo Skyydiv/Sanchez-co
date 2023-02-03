@@ -1,7 +1,12 @@
 import numpy
+<<<<<<< HEAD
+from Robot import Robot
+
+=======
 import random
 from Objet import Robot
 from Objet import Obstacle
+>>>>>>> f5f8ffabb1c629a7d445fcc1e63b8aad8b7c8b7e
 
 class Environnement() :
     ''' L'environnement dans lequel se trouve le Robot'''
@@ -13,16 +18,39 @@ class Environnement() :
         :param y: nombre de colonnes
         :param echelle: échelle 
         '''
+<<<<<<< HEAD
+        self.tab=numpy.empty((int(x),int(y)),set())
+        for i in range(x):
+            for j in range(y):
+                self.tab[i][j]=numpy.empty(set())
+=======
         
         self.tab=numpy.empty([int(x),int(y)],dtype=set)  
         for i in range(int(x)):
             for j in range(int(y)):
                 self.tab[i][j]=set()
+>>>>>>> f5f8ffabb1c629a7d445fcc1e63b8aad8b7c8b7e
         self.nblignes=int(x)
         self.nbcolonnes=int(y)
         self.echelle=echelle
 
 
+<<<<<<< HEAD
+    def VerifieMur(self,a,env):
+        '''Verfie si quand le robot avance de a il y a un mur
+        :param a: le nombre de case que va parcourir le robot 
+        '''
+        if ((self.orientation=="droite")and((self.y+a)>=env.nbcolonnes)):
+            return False
+        elif ((self.orientation=="gauche")and((self.y-a)<0)):
+            return False
+        elif ((self.orientation=="haut")and((self.x-a)<0)):
+            return False
+        elif ((self.orientation=="bas")and((self.x+a)>=env.nblignes)):
+            return False
+        else:
+            return True
+=======
     def estMur(self,x,y):
         '''
         Vérifie si les coordonée x et y sont dans l'enceinte de l'environnement. 
@@ -152,8 +180,13 @@ assert(robot1.x==6.1 and robot1.y==4.1)
 #test distToCase
 # print(env1.distToCase(env1.echelle,robot1.x,robot1.y))
 
+>>>>>>> f5f8ffabb1c629a7d445fcc1e63b8aad8b7c8b7e
 
 
 
 
+<<<<<<< HEAD
+         
+=======
+>>>>>>> f5f8ffabb1c629a7d445fcc1e63b8aad8b7c8b7e
 
