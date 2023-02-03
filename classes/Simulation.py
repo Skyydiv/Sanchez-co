@@ -33,7 +33,6 @@ class Simulation :
             #appel d'affichage à changer si besoin et import view
             #view.action(self) #je donne la simulation en paramètre pour permettre de récupérer les attributs de la simulation
             date+=self.delta
-            Environnement.afficher(self)
             sleep(1) #attends 1 seconde
 
     def update(self):
