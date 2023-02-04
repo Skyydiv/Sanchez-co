@@ -1,20 +1,20 @@
 class Robot:
 
-  def __init__(self, vitesseRoueGauche, vitesseRoueDroite, rayon, angle=0, vitesseMax=50, vitesseMin=0):
+  def __init__(self, vitesseRoueGauche, vitesseRoueDroite, rayon):
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) , vitesse de la roue gauche et droite, un rayon une orientation (angle en radian), une vitesse max et min
     :param vitesseRoueGauche: vitesse de la roue gauche du robot
     :param vitesseRoueDroite: vitesse de la roue droite du robot
     :param rayon: rayon de l'objet (en cm)
     :param orientation(optionel): angle (en radian) (par défaut, orientation=0) 
     '''
-    self.x = rayon + 0.1 #pour être dans l'env
-    self.y = rayon + 0.1
+    self.x =0.1 #pour être dans l'env
+    self.y = 0.1
     self.rayon = rayon
-    self.orientation=angle
+    self.orientation=0
     self.vitesseRoueDroite=vitesseRoueDroite
     self.vitesseRoueGauche=vitesseRoueGauche
-    self.vitesseMax=vitesseMax
-    self.vitesseMin=vitesseMin
+    self.vitesseMax=50
+    self.vitesseMin=0
 
   def setVitesseRoueGauche(self,vg):
     """Modifie la vitesse de la roue gauche
