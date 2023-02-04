@@ -12,7 +12,7 @@ class Simulation :
     
     def __init__(self, pas, environnement:Environnement):
         '''Constructeur de la simulation qui initailise l'environnement,l e robot et le pas de temps
-        :param pas: pas de temps
+        :param pas: pas de temps en millieseconde
         :param environnement: environnement dans lequel se déroule la simulation
         '''
         self.environnement=environnement
