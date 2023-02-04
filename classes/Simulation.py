@@ -68,8 +68,17 @@ robot2=Robot([2,2])
 simul=Simulation(10,1,robot2,env2)
 
 #test de addSimulation
+
+simul.addSimulation(10)
+assert(simu.robot in simu.environnement.tab[0][0]) 
+print(round(random.uniform(0,2),1))
+
+
 # simul.addSimulation(10)
 # assert(simu.robot in simu.environnement.tab[0][0]) 
 # print(round(random.uniform(0,2),1))
+<<<<<<< HEAD
+=======
 # self.simu()
 
+>>>>>>> 97284e3f8162a85a5512b8e46cd7c76b108dcfea
