@@ -28,7 +28,7 @@ class Environnement() :
         :return False si on est dans l’environnement 
         :return True si on se prend un mur
         '''
-        if ((x>=self.nblignes) or (y>=self.nbcolonnes) or (x<=0) or (y<=0)):
+        if ((x>=self.coordsmax[0]) or (y>=self.coordsmax[1]) or (x<=0) or (y<=0)):
             return True
         return False
 
