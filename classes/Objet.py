@@ -1,6 +1,6 @@
 class Robot:
 
-  def __init__(self, vitesseRoueGauche, vitesseRoueDroit, rayon, angle=0, vitesseMax=50, vitesseMin=0):
+  def __init__(self, vitesseRoueGauche, vitesseRoueDroite, rayon, angle=0, vitesseMax=50, vitesseMin=0):
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) , vitesse de la roue gauche et droite, un rayon une orientation (angle en radian), une vitesse max et min
     :param vitesseRoueGauche: vitesse de la roue gauche du robot
     :param vitesseRoueDroite: vitesse de la roue droite du robot

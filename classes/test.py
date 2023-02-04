@@ -2,7 +2,7 @@ from Environnement import Environnement
 from Objet import Robot
 from Objet import Obstacle
 from Simulation import Simulation
-
+from view import View
 
 robot=Robot([1,1], 4)
 

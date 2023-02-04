@@ -30,6 +30,7 @@ class Simulation :
         while nbPas<self.temps:
             self.update1pas()
             #view.action(self) #je donne la simulation en paramètre pour permettre de récupérer les attributs de la simulation
+            View.updateAffichage()
             nbPas+=self.delta
             sleep(1) #attends 1 seconde
 
