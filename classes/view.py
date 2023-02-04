@@ -1,7 +1,6 @@
 from tkinter import *
 from tkinter import ttk
 
-
 class View :
     '''L'interface graphique de la simulation'''
 
