@@ -17,8 +17,17 @@ class View :
         self.longueur=simu.environnement.coordsmax[0]
         self.largeur=simu.environnement.coordsmax[1]
 
-        #create canva
+        #create canvas
         self.can=Canvas(self.root, bg="black",highlightbackground='white',highlightthickness=4, height=self.largeur, width=self.longueur)
 
         #draw robot
-        can.create_arc(self.robot.x,self.robot.y,self.robot.rayon, self.robot.rayon, start=45, extent=270,fill="yellow")
+        self.can.create_arc(self.robot.x,self.robot.y,self.robot.x+self.robot.rayon,self.robot.y+self.robot.rayon, start=45, extent=270,fill="yellow")
+
+        #draw obstacle
+        for obs in self.obstacles:
+            self.can.create_oval(obs.x,obs.y,obs.x+obs.rayon,obs.y+obs.rayon, fill='white')
+
+    
+    def updateAffichage(self):
+        self.can.update()
+        self.root.mainloop()

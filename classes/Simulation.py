@@ -3,39 +3,37 @@ from Environnement import Environnement
 from Objet import Robot
 from Objet import Obstacle
 from time import sleep
+from view import View
 import random
 
 class Simulation :
     """Simulation qui fait interagir le Robot avec son Environnement
     """
     
-    def __init__(self, temps, pas,robot:Robot,environnement:Environnement):
+    def __init__(self, temps, pas,environnement:Environnement):
         '''Constructeur de la simulation qui initailise l'environnement,le robot, le temps de la simulation et le pas de temps
         :param temps: temps de la simulation
         :param pas: pas de temps
-        :param x: nblignes pour environnement
-        :param y: nbcolonnes pour environnement
-        :param echelle: l'échelle pour environnement
-        :param vitesse: vitesse du robot'''
+        :param environnement: environnement dans lequel se déroule la simulation
+        '''
         self.environnement=environnement
-        self.robot=robot
+        self.robot=environnement.robot
         self.temps=temps
         self.delta=pas
 
 
-    def simu(self):
+    def updateArene(self):
         '''
         Gère la simulation, c'est à dire le temps, et les appels aux fonctions de déplacement du robot et d'affichage de la simulation
         '''
-        date=0
-        while date<self.temps:
-            self.update()
-            #appel d'affichage à changer si besoin et import view
+        nbPas=0
+        while nbPas<self.temps:
+            self.update1pas()
             #view.action(self) #je donne la simulation en paramètre pour permettre de récupérer les attributs de la simulation
-            date+=self.delta
+            nbPas+=self.delta
             sleep(1) #attends 1 seconde
 
-    def update(self):
+    def update1pas(self):
         nex_vx = round(random.uniform(0,2),1)
         nex_vy = round(random.uniform(0,2),1)
         self.environnement.changementVitesse(self.robot,nex_vx,nex_vy)
