@@ -1,4 +1,5 @@
 from Environnement import Environnement
+
 from Objet import Robot
 from Objet import Obstacle
 from time import sleep
@@ -32,7 +33,6 @@ class Simulation :
             #appel d'affichage à changer si besoin et import view
             #view.action(self) #je donne la simulation en paramètre pour permettre de récupérer les attributs de la simulation
             date+=self.delta
-            Environnement.afficher(self)
             sleep(1) #attends 1 seconde
 
     def update(self):
@@ -79,3 +79,8 @@ print(round(random.uniform(0,2),1))
 # simul.addSimulation(10)
 # assert(simu.robot in simu.environnement.tab[0][0]) 
 # print(round(random.uniform(0,2),1))
+<<<<<<< HEAD
+=======
+# self.simu()
+
+>>>>>>> 97284e3f8162a85a5512b8e46cd7c76b108dcfea

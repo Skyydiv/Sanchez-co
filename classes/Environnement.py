@@ -6,21 +6,18 @@ from Objet import Obstacle
 class Environnement() :
     ''' L'environnement dans lequel se trouve le Robot'''
 
-    def __init__(self,x,y,echelle):
-        '''Constructeur de la classe Environnement, creer un tableau d'ensemble vide de x lignes et y colonnes
+    def __init__(self,coordsmax,robot,precision):
+        '''Constructeur de la classe Environnement : avec des valeurs flottantes pour la taille de l'environnement. 
+        L'environnement possede un ensemble d'obstacle qui contient tous les obstacles présents.
         
-        :param x: nombre de lignes
-        :param y: nombre de colonnes
-        :param echelle: échelle 
+        :param coordsmax: coordsmax[0] représente la longueur et coordsmax[1] représente la largeur de l'espace (en cm)
+        :param robot: le robot unique présent dans l'environnement
+        :param precision: le plus petit écart entre 2 points pour les considérer distincts (en cm)
         '''
-        
-        self.tab=numpy.empty([int(x),int(y)],dtype=set)  
-        for i in range(int(x)):
-            for j in range(int(y)):
-                self.tab[i][j]=set()
-        self.nblignes=int(x)
-        self.nbcolonnes=int(y)
-        self.echelle=echelle
+        self.coordsmax=coordsmax
+        self.robot=robot
+        self.precision=precision
+        self.ensemble_obstacles= set()
 
 
     def estMur(self,x,y):
@@ -31,7 +28,7 @@ class Environnement() :
         :return False si on est dans l’environnement 
         :return True si on se prend un mur
         '''
-        if ((x>=self.nblignes) or (y>=self.nbcolonnes) or (x<=0) or (y<=0)):
+        if ((x>=self.coordsmax[0]) or (y>=self.coordsmax[1]) or (x<=0) or (y<=0)):
             return True
         return False
 
@@ -139,32 +136,28 @@ class Environnement() :
 
 #tests de Haya
 
-env1=Environnement(10,5,10)
-robot1=Robot([6,4])
+#env1=Environnement(10,5,10)
+#robot1=Robot([6,4])
 
 #test estMur
-assert(env1.estMur(2,-1)==True)
+#assert(env1.estMur(2,-1)==True)
 
 #test addObstacle
-env1.addObstacle(4.14,3.6,1,0)
-assert(env1.tab[4][3]!=set())
+#env1.addObstacle(4.14,3.6,1,0)
+#assert(env1.tab[4][3]!=set())
 
 #test estObstacle
-assert(env1.estObstacle(4.14,3.6)==True)
+#assert(env1.estObstacle(4.14,3.6)==True)
 
 #test addRobot
-env1.addRobot(robot1)
-assert(robot1 in env1.tab[0][0])
+#env1.addRobot(robot1)
+#assert(robot1 in env1.tab[0][0])
 
 #test deplacer
-env1.deplacer(robot1)
-assert(robot1.x==6.1 and robot1.y==4.1)
+#env1.deplacer(robot1)
+#assert(robot1.x==6.1 and robot1.y==4.1)
 
 #test distToCase
 # print(env1.distToCase(env1.echelle,robot1.x,robot1.y))
-
-
-
-
 
 
