@@ -1,9 +1,5 @@
 from Environnement import Environnement
-
-from Objet import Robot
-from Objet import Obstacle
 from time import sleep
-from view import View
 import random
 
 class Simulation :
@@ -68,10 +64,10 @@ class Simulation :
 
 #tests de Haya
 
-env2=Environnement(10,10,1)
-robot2=Robot([2,2])
+# env2=Environnement(10,10,1)
+# robot2=Robot([2,2])
 
-simul=Simulation(10,1,robot2,env2)
+# simul=Simulation(10,1,robot2,env2)
 
 #test de addSimulation
 
