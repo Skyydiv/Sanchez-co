@@ -20,7 +20,7 @@ class Robot:
     """Modifie la vitesse de la roue gauche
     :param vg: nouvelle vitesse de la roue gauche
     """
-    if (vg<=vitesseMin or vg>vitesseMax):
+    if (vg<=self.vitesseMin or vg>self.vitesseMax):
       raise ValueError("La vitesse doit être supérieur à vitesseMin et inférieur à vitesseMax.")
     self.vitesseRoueGauche=vg
 
@@ -28,17 +28,17 @@ class Robot:
     """Modifie la vitesse de la roue droite
     :param vd: nouvelle vitesse de la roue droite
     """
-    if (vd<=vitesseMin or vd>vitesseMax):
+    if (vd<=self.vitesseMin or vd>self.vitesseMax):
       raise ValueError("La vitesse doit être supérieur à vitesseMin et inférieur à vitesseMax.")
     self.vitesseRoueDroite=vd
 
   def tournerDroite(self):
     """Arrête la roue droite pour tourner à droite"""
-    setVitesseRoueDroite(0)
+    self.setVitesseRoueDroite(0)
 
   def tournerGauche(self):
     """Arrête la roue gauche pour tourner à gauche"""
-    setVitesseRoueGauche(0)
+    self.setVitesseRoueGauche(0)
 
   def stop(self):
     """ Arrête le robot en mettant la vitesse de ses deux roues à 0 """
