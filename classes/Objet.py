@@ -40,7 +40,7 @@ class Robot:
     """Arrête la roue gauche pour tourner à gauche"""
     self.setVitesseRoueGauche(0)
 
-  def stop(self):
+  def arret(self):
     """ Arrête le robot en mettant la vitesse de ses deux roues à 0 """
     self.vitesseRoueDroite=0
     self.vitesseRoueGauche=0

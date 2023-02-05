@@ -27,16 +27,16 @@ class Simulation :
             sleep(self.delta) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
 
     def update1pas(self):
-        nex_vx = round(random.uniform(0,2),1)
-        nex_vy = round(random.uniform(0,2),1)
-        self.environnement.changementVitesse(self.robot,nex_vx,nex_vy)
-        self.environnement.deplacer(self.robot)
+        nex_vdroite = round(random.uniform(robot.vitesseMin,robot.vitesseMax),1)
+        nex_vgauche = round(random.uniform(robot.vitesseMin,robot.vitesseMax),1)
+        self.robot.changerVitesse(nex_vgauche,nex_vdroite)
+        self.robot.deplacer()
         
         
     def coordAlea(self) :
         '''Renvoie des coord aléatoires x et y non occupés dans l'environnement'''
-        x=round(random.uniform(0,self.environnement.nblignes),1)
-        y=round(random.uniform(0,self.environnement.nbcolonnes),1)
+        x=round(random.uniform(0,self.environnement.coordsmax[0]-1),1)
+        y=round(random.uniform(0,self.environnement.coordsmax[1]-1),1)
         if(self.environnement.estObstacle(x,y)  or self.environnement.estMur(x,y) or (self.robot.x==x and self.robot.y==y)):
             return self.coordAlea()  
         else:
