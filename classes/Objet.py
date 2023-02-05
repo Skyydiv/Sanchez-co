@@ -45,6 +45,10 @@ class Robot:
     self.vitesseRoueDroite=0
     self.vitesseRoueGauche=0
 
+  def changerVitesse(self, vRoueGauche, vRoueDroite):
+    self.vitesseRoueDroite=vRoueDroite
+    self.vitesseRoueGauche=vRoueGauche
+
 
 class Obstacle :
   '''Obstacle qui peuvent être présent dans l'environnement'''
