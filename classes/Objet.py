@@ -1,16 +1,54 @@
 class Robot:
 
-  def __init__(self,vitesse, rayon, angle=0):
-    '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) , une vitesse en forme d'un vecteur, un rayon une orientation (angle en radiant)
-    :param vitesse: liste de 2 élements [vx,vy] qui représente le vecteur de la vitesse du robot
+  def __init__(self, vitesseRoueGauche, vitesseRoueDroite, rayon):
+    '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) , vitesse de la roue gauche et droite, un rayon une orientation (angle en radian), une vitesse max et min
+    :param vitesseRoueGauche: vitesse de la roue gauche du robot
+    :param vitesseRoueDroite: vitesse de la roue droite du robot
     :param rayon: rayon de l'objet (en cm)
     :param orientation(optionel): angle (en radian) (par défaut, orientation=0) 
     '''
-    self.x = rayon + 0.1 #pour être dans l'env
-    self.y = rayon + 0.1
+    self.x =0.1 #pour être dans l'env
+    self.y = 0.1
     self.rayon = rayon
-    self.orientation=angle
-    self.vitesse=vitesse
+    self.orientation=0
+    self.vitesseRoueDroite=vitesseRoueDroite
+    self.vitesseRoueGauche=vitesseRoueGauche
+    self.vitesseMax=50
+    self.vitesseMin=0
+
+  def setVitesseRoueGauche(self,vg):
+    """Modifie la vitesse de la roue gauche
+    :param vg: nouvelle vitesse de la roue gauche
+    """
+    if (vg<=self.vitesseMin or vg>self.vitesseMax):
+      raise ValueError("La vitesse doit être supérieur à vitesseMin et inférieur à vitesseMax.")
+    self.vitesseRoueGauche=vg
+
+  def setVitesseRoueDroite(self,vd):
+    """Modifie la vitesse de la roue droite
+    :param vd: nouvelle vitesse de la roue droite
+    """
+    if (vd<=self.vitesseMin or vd>self.vitesseMax):
+      raise ValueError("La vitesse doit être supérieur à vitesseMin et inférieur à vitesseMax.")
+    self.vitesseRoueDroite=vd
+
+  def tournerDroite(self):
+    """Arrête la roue droite pour tourner à droite"""
+    self.setVitesseRoueDroite(0)
+
+  def tournerGauche(self):
+    """Arrête la roue gauche pour tourner à gauche"""
+    self.setVitesseRoueGauche(0)
+
+  def stop(self):
+    """ Arrête le robot en mettant la vitesse de ses deux roues à 0 """
+    self.vitesseRoueDroite=0
+    self.vitesseRoueGauche=0
+
+  def changerVitesse(self, vRoueGauche, vRoueDroite):
+    self.vitesseRoueDroite=vRoueDroite
+    self.vitesseRoueGauche=vRoueGauche
+
 
 class Obstacle :
   '''Obstacle qui peuvent être présent dans l'environnement'''

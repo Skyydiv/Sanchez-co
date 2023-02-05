@@ -4,21 +4,62 @@ from tkinter import ttk
 class View :
     '''L'interface graphique de la simulation'''
 
-    def __init__(self,simu):
+    def __init__(self, master, simulation):
         '''Constructeur de l'interface graphique de la simulation
-        :param simu: simulation qu'on veut représenter graphiquement
+        :param master: la fenetre de l'affichage
+        :param simulation: simulation qu'on veut représenter graphiquement
         '''
-        self.root=Tk()
-        self.root.title("Simulation de Dexter")
+    
+        self.root=master
 
-        self.simu=simu
-        self.robot=simu.environnement.robot
-        self.obstacles=simu.environnement.ensemble_obstacles
-        self.longueur=simu.environnement.coordsmax[0]
-        self.largeur=simu.environnement.coordsmax[1]
+        self.sim=simulation
+        self.delta=simulation.delta
+        self.robot=simulation.environnement.robot
+        self.obstacles=simulation.environnement.ensemble_obstacles
+        self.longueur=simulation.environnement.coordsmax[0]
+        self.largeur=simulation.environnement.coordsmax[1]
 
-        #create canva
-        self.can=Canvas(self.root, bg="black",highlightbackground='white',highlightthickness=4, height=self.largeur, width=self.longueur)
 
-        #draw robot
-        can.create_arc(self.robot.x,self.robot.y,self.robot.rayon, self.robot.rayon, start=45, extent=270,fill="yellow")
+        self.canv=Canvas(self.root, bg="black",highlightbackground='white',highlightthickness=4, height=self.largeur, width=self.longueur)
+        self.canv.pack()
+
+        self.Start_Stop_button=Button(self.root, text="Start/Stop", command=self.toggle)
+        self.Start_Stop_button.pack()
+        
+        self.updateCanvas()
+
+        
+    def toggle(self):
+        '''Lance ou arrête l'éxécution selon l'état de la simulation avec le click sur le boutton'''
+        if self.sim.en_cours:
+            self.sim.stop()
+        else:
+             self.sim.start()
+
+    def updateCanvas(self):
+        '''Initialise la canvas a chaque pas'''
+        self.canv.delete("all") 
+        self.drawRobot()
+        self.drawObstacles()
+        self.root.after(self.delta,self.updateCanvas)
+        
+    
+    def drawRobot(self):
+        '''dessine le Robot'''
+        x=self.robot.x
+        y=self.robot.y
+        r=self.robot.rayon
+        self.can.create_arc(x-r,y-r,x+r,y+r, start=45, extent=270,fill="yellow")
+
+    def drawObstacles(self):
+        '''dessine l'ensemble des obstacles'''
+        for obs in self.obstacles:
+            x=obs.x
+            y=obs.y
+            r=obs.rayon
+            self.can.create_oval(x-r,y-r,x+r,y+r, fill='white')
+
+    
+  
+
+

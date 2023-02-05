@@ -45,16 +45,7 @@ class Environnement() :
                 if i.x==x and i.y==y:
                     return True
         return False
-    
-    def addRobot(self,robot):
-        """ Dépose le robot en paramètre s'il y a aucun obstacle dans la case où on veut le poser.
-        :param robot: robot à déposer 
-        """
-        if not (self.estObstacle(robot.x,robot.y) and self.estMur(robot.x,robot.y)):
-            self.tab[int(robot.x)][int(robot.y)].add(robot)
-        return 
         
-
     def addObstacle(self,x,y,h,d):
         """Créer et dépose l'obstacle s'il n'y a pas déjà un objet dans la case avec les mêmes coordonnées en faisant appel à la fonction estObstacle
         :param x: Coordonnées x de l'obstacle qu'on va créer
@@ -84,43 +75,6 @@ class Environnement() :
             self.tab[int(robot.x)][int(robot.y)].add(robot)
         return
 
-
-    def changementVitesse(self,robot,vx,vy):
-        """
-         change le vecteur de vitesse du robot 
-         :param vx: vitesse vx
-         :param vy: vitesse vy
-        """
-        robot.vitesse[0]=vx
-        robot.vitesse[1]=vy
-
-
-    def distToCase(self,echelle,x, y) :
-        """
-        renvoie la distance du robot dans la case en considérant l'échelle
-        :param echelle: echelle de l'environnement
-        :param x: abscisse de l'objet
-        :param y: ordonnée de l'objet
-        """
-        return (x*echelle,y*echelle)
-
-
-    def afficher(simu):
-        """
-        Affiche l'environnemment en mettant 'R' s'il y a un robot, 'O' s'il y a un obstacle et ' ' si rien.
-        """
-        for i in range (simu.environnement.nblignes):
-            for j in range (simu.environnement.nbcolonnes):
-                if simu.environnement.tab[i][j]==set():
-                    print("*", end=" ")
-                else:
-                    for obj in simu.environnement.tab[i][j]:
-                        if isinstance(obj,Robot):
-                            print('R', end=" ")
-                        elif isinstance(obj,Obstacle) :
-                            print('O',end=" ")
-            print()
-        print("-------------")
 
 
     def calculDistance(objet1, objet2):
