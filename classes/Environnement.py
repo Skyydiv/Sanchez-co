@@ -56,26 +56,6 @@ class Environnement() :
         if not (self.estObstacle(x,y) and self.estMur(x,y)):
             self.tab[int(x)][int(y)].add(Obstacle(x,y,h,d))
         return
-    
-
-
-    def deplacer(self,robot):
-        """
-        Vérifie si il y a un obstacle aux coordonnés après le déplacement ou si il y a mur sur la route
-        si oui on bouge pas
-        sinon change les coordonnées x et y du robot
-        :param robot: le robot à déplacer
-        """
-        new_x = robot.x + robot.vitesse[0]
-        new_y = robot.y + robot.vitesse[1]
-        if not (self.estObstacle(new_x,new_y) and self.estMur(new_x,new_y)):
-            self.tab[int(robot.x)][int(robot.y)].remove(robot)
-            robot.x = new_x
-            robot.y = new_y
-            self.tab[int(robot.x)][int(robot.y)].add(robot)
-        return
-
-
 
     def calculDistance(self, objet1, objet2):
         '''

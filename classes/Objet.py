@@ -1,3 +1,4 @@
+from math import cos, sin, sqrt
 class Robot:
 
   def __init__(self, vitesseRoueGauche, vitesseRoueDroite, rayon):
@@ -5,7 +6,6 @@ class Robot:
     :param vitesseRoueGauche: vitesse de la roue gauche du robot
     :param vitesseRoueDroite: vitesse de la roue droite du robot
     :param rayon: rayon de l'objet (en cm)
-    :param orientation(optionel): angle (en radian) (par défaut, orientation=0) 
     '''
     self.x =0.1 #pour être dans l'env
     self.y = 0.1
@@ -48,6 +48,14 @@ class Robot:
   def changerVitesse(self, vRoueGauche, vRoueDroite):
     self.vitesseRoueDroite=vRoueDroite
     self.vitesseRoueGauche=vRoueGauche
+
+  def deplacer(self):
+    """
+    Change les coordonnées x et y du robot selon sa vitesse et son angle avec un pas de temps
+    :param robot: le robot à déplacer
+    """
+    self.x = self.x + (self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * cos(self.orientation)
+    self.y = self.y + (self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * sin(self.orientation)
 
 
 class Obstacle :
