@@ -27,8 +27,8 @@ class Simulation :
             sleep(self.delta) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
 
     def update1pas(self):
-        nex_vdroite = round(random.uniform(robot.vitesseMin,robot.vitesseMax),1)
-        nex_vgauche = round(random.uniform(robot.vitesseMin,robot.vitesseMax),1)
+        nex_vdroite = round(random.uniform(self.robot.vitesseMin,self.robot.vitesseMax),1)
+        nex_vgauche = round(random.uniform(self.robot.vitesseMin,self.robot.vitesseMax),1)
         self.robot.changerVitesse(nex_vgauche,nex_vdroite)
         self.robot.deplacer()
         
