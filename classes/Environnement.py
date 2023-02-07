@@ -39,10 +39,8 @@ class Environnement() :
         :returns: True s'il existe déjà un obstacle avec les mêmes coordonnées, False sinon
         '''
         for i in self.ensemble_obstacles:
-                if i.x==x and i.y==y:
-                    return True
-        else:
-            return False
+                return (i.x==x and i.y==y)
+
         
     def addObstacle(self,x,y,h,d,rayon):
         """Créer et dépose l'obstacle s'il n'y a pas déjà un objet dans la case avec les mêmes coordonnées en faisant appel à la fonction estObstacle
@@ -64,15 +62,22 @@ class Environnement() :
         :return : sinon valeur positive correspondant à la distance en valeur absolue la plus petite entre les 2 rayons (distance générale, ne pdonne pas la direction)
         '''
 <<<<<<< HEAD
+<<<<<<< HEAD
         return ((abs(objet1.x-objet2.x) + abs(objet1.y-objet2.y)) - (objet1.rayon + objet2.rayon))
 =======
         return ( (abs(objet1.x-objet2.x) + abs(objet1.y-objet2.y)) - (objet1.rayon + objet2.rayon) )
+=======
+
+        return ((abs(objet1.x-objet2.x) + abs(objet1.y-objet2.y)) - (objet1.rayon + objet2.rayon))
+        
+>>>>>>> f1e1920a0a456af9bbb91ce138fbf1f5d78df641
     
     def detectCollision(self):
         '''
         verifie si les coordonnes du robot sont identiques a un obstacle de l’environnement ou s’il a pris un mur selon une precision
         '''
         if self.estObstacle(Robot.x,Robot.y) or self.estMur(Robot.x,Robot.y):
+<<<<<<< HEAD
             return " Collision detectée"
         
         
@@ -105,3 +110,6 @@ class Environnement() :
 # print(env1.distToCase(env1.echelle,robot1.x,robot1.y))
 
 
+=======
+            return " Collision detectée"
+>>>>>>> f1e1920a0a456af9bbb91ce138fbf1f5d78df641

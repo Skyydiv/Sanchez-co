@@ -62,20 +62,4 @@ class Simulation :
         '''Methode qui permet l'arrêt de la simulation'''
         self.en_cours=False
 
-#tests de Haya
 
-# env2=Environnement(10,10,1)
-# robot2=Robot([2,2])
-
-# simul=Simulation(10,1,robot2,env2)
-
-#test de addSimulation
-
-# simul.addSimulation(10)
-# assert(simu.robot in simu.environnement.tab[0][0]) 
-# print(round(random.uniform(0,2),1))
-
-
-# simul.addSimulation(10)
-# assert(simu.robot in simu.environnement.tab[0][0]) 
-# print(round(random.uniform(0,2),1))
