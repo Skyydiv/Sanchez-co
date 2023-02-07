@@ -33,20 +33,18 @@ class Environnement() :
         return False
 
     def estObstacle(self, x, y):
-        '''Verfie s'il y a un obstacle dans la case avec les mêmes coordonnées
+        '''Verfie s'il y a un obstacle dans l'environnement avec les mêmes coordonnées
         :param x: indice de la ligne
         :param y: indice de la colonne
         :returns: True s'il existe déjà un obstacle avec les mêmes coordonnées, False sinon
         '''
-        if (self.tab[int(x)][int(y)]==set()):
-            return False
-        elif self.tab[int(x)][int(y)]!=set(): 
-            for i in self.tab[int(x)][int(y)]:
+        for i in self.ensemble_obstacles:
                 if i.x==x and i.y==y:
                     return True
-        return False
+        else:
+            return False
         
-    def addObstacle(self,x,y,h,d):
+    def addObstacle(self,x,y,h,d,rayon):
         """Créer et dépose l'obstacle s'il n'y a pas déjà un objet dans la case avec les mêmes coordonnées en faisant appel à la fonction estObstacle
         :param x: Coordonnées x de l'obstacle qu'on va créer
         :param y: Coordonnées y de l'obstacle qu'on va créer
@@ -54,7 +52,7 @@ class Environnement() :
         :param d: distance du sol de l'obstacle
         """
         if not (self.estObstacle(x,y) and self.estMur(x,y)):
-            self.tab[int(x)][int(y)].add(Obstacle(x,y,h,d))
+            self.ensemble_obstacles.add(Obstacle(x,y,h,d,rayon))
         return
 
     def calculDistance(self, objet1, objet2):
@@ -65,7 +63,20 @@ class Environnement() :
         :return : valeur négative ou égale à 0 si les objects sont en collision (ne gère pas la hauteur)
         :return : sinon valeur positive correspondant à la distance en valeur absolue la plus petite entre les 2 rayons (distance générale, ne pdonne pas la direction)
         '''
+<<<<<<< HEAD
         return ((abs(objet1.x-objet2.x) + abs(objet1.y-objet2.y)) - (objet1.rayon + objet2.rayon))
+=======
+        return ( (abs(objet1.x-objet2.x) + abs(objet1.y-objet2.y)) - (objet1.rayon + objet2.rayon) )
+    
+    def detectCollision(self):
+        '''
+        verifie si les coordonnes du robot sont identiques a un obstacle de l’environnement ou s’il a pris un mur selon une precision
+        '''
+        if self.estObstacle(Robot.x,Robot.y) or self.estMur(Robot.x,Robot.y):
+            return " Collision detectée"
+        
+        
+>>>>>>> 590e454113df826660f053194898b6ffc949aa2a
 
 #tests de Haya
 

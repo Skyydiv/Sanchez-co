@@ -20,16 +20,16 @@ class Robot:
     """Modifie la vitesse de la roue gauche
     :param vg: nouvelle vitesse de la roue gauche
     """
-    if (vg<=self.vitesseMin or vg>self.vitesseMax):
-      raise ValueError("La vitesse doit être supérieur à vitesseMin et inférieur à vitesseMax.")
+    if (vg<self.vitesseMin or vg>self.vitesseMax):
+      raise ValueError("La vitesse doit être supérieur ou égal à vitesseMin et inférieur à vitesseMax.")
     self.vitesseRoueGauche=vg
 
   def setVitesseRoueDroite(self,vd):
     """Modifie la vitesse de la roue droite
     :param vd: nouvelle vitesse de la roue droite
     """
-    if (vd<=self.vitesseMin or vd>self.vitesseMax):
-      raise ValueError("La vitesse doit être supérieur à vitesseMin et inférieur à vitesseMax.")
+    if (vd<self.vitesseMin or vd>self.vitesseMax):
+      raise ValueError("La vitesse doit être supérieur ou égal à vitesseMin et inférieur à vitesseMax.")
     self.vitesseRoueDroite=vd
 
   def tournerDroite(self):
