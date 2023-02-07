@@ -39,7 +39,9 @@ class Environnement() :
         :returns: True s'il existe déjà un obstacle avec les mêmes coordonnées, False sinon
         '''
         for i in self.ensemble_obstacles:
-                return (i.x==x and i.y==y)
+            if i.x==x and i.y==y:
+                return True
+        return False
 
         
     def addObstacle(self,x,y,h,d,rayon):
@@ -63,7 +65,7 @@ class Environnement() :
         '''
 
         return ((abs(objet1.x-objet2.x) + abs(objet1.y-objet2.y)) - (objet1.rayon + objet2.rayon))
-        
+
     
     def detectCollision(self):
         '''
