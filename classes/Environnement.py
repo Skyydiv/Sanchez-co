@@ -41,8 +41,8 @@ class Environnement() :
         for i in self.ensemble_obstacles:
                 if i.x==x and i.y==y:
                     return True
-        else:
-            return False
+        
+        return False
         
     def addObstacle(self,x,y,h,d,rayon):
         """Créer et dépose l'obstacle s'il n'y a pas déjà un objet dans la case avec les mêmes coordonnées en faisant appel à la fonction estObstacle
