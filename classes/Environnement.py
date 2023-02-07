@@ -39,8 +39,7 @@ class Environnement() :
         :returns: True s'il existe déjà un obstacle avec les mêmes coordonnées, False sinon
         '''
         for i in self.ensemble_obstacles:
-            if i.x==x and i.y==y:
-
+            if i.x+i.rayon>=x and i.x-i.rayon<=x and i.y+i.rayon>=y and i.y-i.rayon<=y:
                 return True
         return False
 
