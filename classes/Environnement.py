@@ -72,32 +72,3 @@ class Environnement() :
         if self.estObstacle(Robot.x,Robot.y) or self.estMur(Robot.x,Robot.y):
             return " Collision detectée"
         
-        
-
-#tests de Haya
-
-#env1=Environnement(10,5,10)
-#robot1=Robot([6,4])
-
-#test estMur
-#assert(env1.estMur(2,-1)==True)
-
-#test addObstacle
-#env1.addObstacle(4.14,3.6,1,0)
-#assert(env1.tab[4][3]!=set())
-
-#test estObstacle
-#assert(env1.estObstacle(4.14,3.6)==True)
-
-#test addRobot
-#env1.addRobot(robot1)
-#assert(robot1 in env1.tab[0][0])
-
-#test deplacer
-#env1.deplacer(robot1)
-#assert(robot1.x==6.1 and robot1.y==4.1)
-
-#test distToCase
-# print(env1.distToCase(env1.echelle,robot1.x,robot1.y))
-
-
