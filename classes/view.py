@@ -49,7 +49,7 @@ class View :
         x=self.robot.x
         y=self.robot.y
         r=self.robot.rayon
-        self.can.create_arc(x-r,y-r,x+r,y+r, start=45, extent=270,fill="yellow")
+        self.canv.create_arc(x-r,y-r,x+r,y+r, start=45, extent=270,fill="yellow")
 
     def drawObstacles(self):
         '''dessine l'ensemble des obstacles'''
@@ -57,7 +57,7 @@ class View :
             x=obs.x
             y=obs.y
             r=obs.rayon
-            self.can.create_oval(x-r,y-r,x+r,y+r, fill='white')
+            self.canv.create_oval(x-r,y-r,x+r,y+r, fill='white')
 
     
   

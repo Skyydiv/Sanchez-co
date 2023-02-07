@@ -7,8 +7,8 @@ class Robot:
     :param vitesseRoueDroite: vitesse de la roue droite du robot
     :param rayon: rayon de l'objet (en mm)
     '''
-    self.x =0.1 #pour être dans l'env
-    self.y = 0.1
+    self.x =0.1+rayon #pour être dans l'env
+    self.y = 0.1+rayon
     self.rayon = rayon
     self.orientation=0
     self.vitesseRoueDroite=vitesseRoueDroite

@@ -43,13 +43,13 @@ class Simulation :
             
 
     def addSimulation(self,nbObstacles):
-        '''Depose le robot et nbObstacles obstacles dans des positions aléatoires dans l'environnement
+        '''Depose nbObstacles obstacles dans des positions aléatoires dans l'environnement
         :param nbObstacles: nombre d'obstacles a déposer
         '''
         i=0
         for i in range(nbObstacles) :
             newCoord=self.coordAlea()
-            self.environnement.addObstacle(newCoord[0],newCoord[1],1,0)
+            self.environnement.addObstacle(newCoord[0],newCoord[1],1,0,30)
 
     def start(self) : 
         '''Methode qui permet le lancement de la simulation'''

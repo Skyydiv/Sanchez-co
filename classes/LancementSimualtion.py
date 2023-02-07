@@ -3,16 +3,16 @@ from tkinter import ttk
 from Simulation import Simulation
 from view import View 
 from Objet import Robot
+from Environnement import Environnement
 
-rob=Robot(0,0,50) # initialiser le robot
-# initialiser l'environment
-#ajouter le robot a l'emvironnement
-#ajoouer des obstcales a l'environnement
-
+rob=Robot(0,0,30) # initialiser le robot
+env=Environnement([1000,500],rob,5) # initialiser l'environment
 simulation = Simulation(10000,env)
-simulation.run() #lancer la simulation
+simulation.addSimulation(5) #ajouter des obstcales a l'environnement
+
+#simulation.start() #lancer la simulation
     
 root = Tk() # initialiser la fenetre tkinter
-Affichage = View(root, simulation)
+View(root, simulation)
 root.mainloop()
 simulation.stop()
