@@ -2,8 +2,9 @@ from tkinter import *
 from tkinter import ttk
 from Simulation import Simulation
 from view import View 
+from Objet import Robot
 
-# initialiser le robot
+rob=Robot(0,0,50) # initialiser le robot
 # initialiser l'environment
 #ajouter le robot a l'emvironnement
 #ajoouer des obstcales a l'environnement

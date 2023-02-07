@@ -46,7 +46,6 @@ class Simulation :
         '''Depose le robot et nbObstacles obstacles dans des positions aléatoires dans l'environnement
         :param nbObstacles: nombre d'obstacles a déposer
         '''
-        self.environnement.addRobot(self.robot)
         i=0
         for i in range(nbObstacles) :
             newCoord=self.coordAlea()
