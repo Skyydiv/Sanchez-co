@@ -23,7 +23,6 @@ class Simulation :
         '''
         while self.en_cours:
             self.update1pas()
-            #view.action(self) #je donne la simulation en paramètre pour permettre de récupérer les attributs de la simulation
             sleep(self.delta) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
 
     def update1pas(self):
