@@ -20,7 +20,7 @@ class Environnement() :
         self.ensemble_obstacles= set()
 
 
-    def estMur(self,x,y):
+    def estMur(self,x,y,rayon):
         '''
         Vérifie si les coordonée x et y sont dans l'enceinte de l'environnement. 
         :param x: coordonné réelle
@@ -28,7 +28,7 @@ class Environnement() :
         :return False si on est dans l’environnement 
         :return True si on se prend un mur
         '''
-        if ((x>=self.coordsmax[0]) or (y>=self.coordsmax[1]) or (x<=0) or (y<=0)):
+        if ((x+rayon>=self.coordsmax[0]) or (y+rayon>=self.coordsmax[1]) or (x-rayon<=0) or (y-rayon<=0)):
             return True
         return False
 
@@ -53,7 +53,7 @@ class Environnement() :
         :param h: hauteur de l'obstacle
         :param d: distance du sol de l'obstacle
         """
-        if not (self.estObstacle(x,y,rayon) and self.estMur(x,y)):
+        if not (self.estObstacle(x,y,rayon) and self.estMur(x,y,rayon)):
             self.ensemble_obstacles.add(Obstacle(x,y,h,d,rayon))
         return
 
@@ -73,5 +73,5 @@ class Environnement() :
         '''
         verifie si les coordonnes du robot sont identiques a un obstacle de l’environnement ou s’il a pris un mur selon une precision
         '''
-        if self.estObstacle(Robot.x,Robot.y) or self.estMur(Robot.x,Robot.y):
+        if self.estObstacle(self.robot.x,self.robot.y,self.robot.rayon) or self.estMur(self.robot.x,self.robot.y,self.robot.rayon):
             return " Collision detectée"
