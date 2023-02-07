@@ -47,16 +47,16 @@ class Robot:
     self.vitesseRoueGauche=0
 
   def changerVitesse(self, vRoueGauche, vRoueDroite):
+    """Set la vitesse des roues"""
     self.vitesseRoueDroite=vRoueDroite
     self.vitesseRoueGauche=vRoueGauche
 
   def deplacer(self):
     """
     Change les coordonnées x et y du robot selon sa vitesse et son angle avec un pas de temps
-    :param robot: le robot à déplacer
     """
-    self.x = self.x + (self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * cos(self.orientation)
-    self.y = self.y + (self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * sin(self.orientation)
+    self.x +=(self.vitesseRoueGauche+self.vitesseRoueDroite)/2 #vitesse linéare moyenne du robot
+    self.y +=(self.vitesseRoueGauche+self.vitesseRoueDroite)/2 
 
 
 class Obstacle :
