@@ -44,7 +44,7 @@ class Environnement() :
         else:
             return False
         
-    def addObstacle(self,x,y,h,d):
+    def addObstacle(self,x,y,h,d,rayon):
         """Créer et dépose l'obstacle s'il n'y a pas déjà un objet dans la case avec les mêmes coordonnées en faisant appel à la fonction estObstacle
         :param x: Coordonnées x de l'obstacle qu'on va créer
         :param y: Coordonnées y de l'obstacle qu'on va créer
@@ -52,7 +52,7 @@ class Environnement() :
         :param d: distance du sol de l'obstacle
         """
         if not (self.estObstacle(x,y) and self.estMur(x,y)):
-            self.ensemble_obstacles.add(Obstacle(x,y,h,d))
+            self.ensemble_obstacles.add(Obstacle(x,y,h,d,rayon))
         return
 
     def calculDistance(self, objet1, objet2):
