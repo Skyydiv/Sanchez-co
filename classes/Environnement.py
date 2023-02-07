@@ -57,13 +57,15 @@ class Environnement() :
 
     def calculDistance(self, objet1, objet2):
         '''
-        Calcule la distance entre deux objets passer en paramètre, en prenant compte le rayon le rayon deces objets. Les objets peuvent être des robots ou des obstacles.
+        Calcule la distance entre deux objets passer en paramètre, en prenant compte le rayon le rayon des objets. Les objets peuvent être des robots ou des obstacles.
         :param objet1 : robot/obstacle
         :param objet2 : robot/obstacle
         :return : valeur négative ou égale à 0 si les objects sont en collision (ne gère pas la hauteur)
         :return : sinon valeur positive correspondant à la distance en valeur absolue la plus petite entre les 2 rayons (distance générale, ne pdonne pas la direction)
         '''
-        return ( (abs(objet1.x-objet2.x) + abs(objet1.y-objet2.y)) - (objet1.rayon + objet2.rayon) )
+
+        return ((abs(objet1.x-objet2.x) + abs(objet1.y-objet2.y)) - (objet1.rayon + objet2.rayon))
+        return ( (abs(objet1.x-objet2.x) + abs(objet1.y-objet2.y)) - (objet1.rayon + objet2.rayon))
     
     def detectCollision(self):
         '''
@@ -71,4 +73,3 @@ class Environnement() :
         '''
         if self.estObstacle(Robot.x,Robot.y) or self.estMur(Robot.x,Robot.y):
             return " Collision detectée"
-        
