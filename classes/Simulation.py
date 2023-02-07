@@ -36,7 +36,7 @@ class Simulation :
         '''Renvoie des coord aléatoires x et y non occupés dans l'environnement'''
         x=round(random.uniform(0,self.environnement.coordsmax[0]-1),1)
         y=round(random.uniform(0,self.environnement.coordsmax[1]-1),1)
-        if(self.environnement.estObstacle(x,y)  or self.environnement.estMur(x,y) or (self.robot.x==x and self.robot.y==y)):
+        if(self.environnement.estObstacle(x,y,31)  or self.environnement.estMur(x,y) or (self.robot.x==x and self.robot.y==y)):
             return self.coordAlea()  
         else:
             return (x,y)

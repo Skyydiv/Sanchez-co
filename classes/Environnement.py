@@ -32,14 +32,16 @@ class Environnement() :
             return True
         return False
 
-    def estObstacle(self, x, y):
+    def estObstacle(self, x, y,r):
         '''Verfie s'il y a un obstacle dans l'environnement avec les mêmes coordonnées
         :param x: indice de la ligne
         :param y: indice de la colonne
         :returns: True s'il existe déjà un obstacle avec les mêmes coordonnées, False sinon
         '''
+        if(self.robot.x+self.robot.rayon>=x+r and self.robot.x-self.robot.rayon<=x+r and self.robot.y+self.robot.rayon>=y+r and self.robot.y-self.robot.rayon<=y+r):
+            return True
         for i in self.ensemble_obstacles:
-            if i.x+i.rayon>=x and i.x-i.rayon<=x and i.y+i.rayon>=y and i.y-i.rayon<=y:
+            if i.x+i.rayon>=x+r and i.x-i.rayon<=x+r and i.y+i.rayon>=y+r and i.y-i.rayon<=y+r:
                 return True
         return False
 
@@ -51,7 +53,7 @@ class Environnement() :
         :param h: hauteur de l'obstacle
         :param d: distance du sol de l'obstacle
         """
-        if not (self.estObstacle(x,y) and self.estMur(x,y)):
+        if not (self.estObstacle(x,y,rayon) and self.estMur(x,y)):
             self.ensemble_obstacles.add(Obstacle(x,y,h,d,rayon))
         return
 
