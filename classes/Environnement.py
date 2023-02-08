@@ -33,13 +33,19 @@ class Environnement() :
         return False
     
     def estRobot(self,x, y,r):
+        """Verifie si les coordonnées passées en parametre se trouve sur la surface du robot
+        :param x: coordonnées en x
+        :param y: coordonnées en y
+        :param r:rayon en mm
+        """
         if(self.robot.x+self.robot.rayon>=x-r and self.robot.x-self.robot.rayon<=x+r and self.robot.y+self.robot.rayon>=y-r and self.robot.y-self.robot.rayon<=y+r):
             return True
 
     def estObstacle(self, x, y,r):
         '''Verfie s'il y a un obstacle dans l'environnement avec les mêmes coordonnées
-        :param x: indice de la ligne
-        :param y: indice de la colonne
+        :param x: coordonnées en x
+        :param y: coordonnées en y
+        :param r:rayon en mm
         :returns: True s'il existe déjà un obstacle avec les mêmes coordonnées, False sinon
         '''
         for i in self.ensemble_obstacles:
