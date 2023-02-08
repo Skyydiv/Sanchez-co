@@ -18,7 +18,8 @@ assert( (not(env.estMur(3,30))) and (env.estMur(53, -10)) and (env.estMur(-13,95
 
 #test méthode calculDistance de Environnement
 assert((env.calculDistance(robot, obs) > 0) and (env.calculDistance(robot, obs3) < 0 ))
+assert((env.calculDistance(robot, obs) > 0) and (env.calculDistance(robot, obs3) < 0))
 
 #sim=Simulation(3,1,robot,env)
 #sim.addSimulation(4)
-#sim.simu()
+#sim.simu()&
