@@ -9,11 +9,11 @@ from Simulation import Simulation
 class TestRobot(unittest.TestCase):
         
     def test_r_is_instanceof_Robot(self):
-        r=Robot(4,3,10);
+        r=Robot(4,3,10)
         self.assertIsInstance(r,Robot)
         
     def test_setVitesseRoueGauche(self):
-        r=Robot(1,3,10);
+        r=Robot(1,3,10)
         r.setVitesseRoueGauche(6)
         self.assertEqual(r.vitesseRoueGauche,6)
         
