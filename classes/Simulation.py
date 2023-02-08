@@ -23,7 +23,6 @@ class Simulation :
         '''
         while self.en_cours:
             self.update1pas()
-            #view.action(self) #je donne la simulation en paramètre pour permettre de récupérer les attributs de la simulation
             sleep(self.delta) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
 
     def update1pas(self):
@@ -32,31 +31,33 @@ class Simulation :
         self.robot.changerVitesse(nex_vgauche,nex_vdroite)
         self.robot.deplacer()
         
-        
     def coordAlea(self) :
         '''Renvoie des coord aléatoires x et y non occupés dans l'environnement'''
         x=round(random.uniform(0,self.environnement.coordsmax[0]-1),1)
         y=round(random.uniform(0,self.environnement.coordsmax[1]-1),1)
-        if(self.environnement.estObstacle(x,y)  or self.environnement.estMur(x,y) or (self.robot.x==x and self.robot.y==y)):
+        if(self.environnement.estObstacle(x,y,31)  or self.environnement.estMur(x,y,31) or (self.robot.x==x and self.robot.y==y)):
             return self.coordAlea()  
         else:
             return (x,y)
             
 
     def addSimulation(self,nbObstacles):
-        '''Depose le robot et nbObstacles obstacles dans des positions aléatoires dans l'environnement
+        '''Depose nbObstacles obstacles dans des positions aléatoires dans l'environnement
         :param nbObstacles: nombre d'obstacles a déposer
         '''
-        self.environnement.addRobot(self.robot)
         i=0
         for i in range(nbObstacles) :
             newCoord=self.coordAlea()
-            self.environnement.addObstacle(newCoord[0],newCoord[1],1,0)
+            self.environnement.addObstacle(newCoord[0],newCoord[1],1,0,30)
 
     def start(self) : 
         '''Methode qui permet le lancement de la simulation'''
         self.en_cours=True
-        self.simu()
+        try:
+            self.simu()
+        except Exception as e:
+            self.en_cours=False
+            print("Simulation failed with error:", e)
 
     def stop(self):
         '''Methode qui permet l'arrêt de la simulation'''

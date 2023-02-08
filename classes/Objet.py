@@ -5,14 +5,15 @@ class Robot:
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) , vitesse de la roue gauche et droite, un rayon une orientation (angle en radian), une vitesse max et min
     :param vitesseRoueGauche: vitesse de la roue gauche du robot
     :param vitesseRoueDroite: vitesse de la roue droite du robot
-    :param rayon: rayon de l'objet (en cm)
+    :param rayon: rayon de l'objet (en mm)
     '''
-    self.x =0.1 #pour être dans l'env
-    self.y = 0.1
+    self.x =0.1+rayon #pour être dans l'env
+    self.y = 0.1+rayon
     self.rayon = rayon
     self.orientation=0
     self.vitesseRoueDroite=vitesseRoueDroite
     self.vitesseRoueGauche=vitesseRoueGauche
+    self.distanceRoues=117 #donné dans l'API du robot
     self.vitesseMax=50
     self.vitesseMin=0
 
@@ -46,16 +47,16 @@ class Robot:
     self.vitesseRoueGauche=0
 
   def changerVitesse(self, vRoueGauche, vRoueDroite):
+    """Set la vitesse des roues"""
     self.vitesseRoueDroite=vRoueDroite
     self.vitesseRoueGauche=vRoueGauche
 
   def deplacer(self):
     """
     Change les coordonnées x et y du robot selon sa vitesse et son angle avec un pas de temps
-    :param robot: le robot à déplacer
     """
-    self.x = self.x + (self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * cos(self.orientation)
-    self.y = self.y + (self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * sin(self.orientation)
+    self.x +=(self.vitesseRoueGauche+self.vitesseRoueDroite)/2 #vitesse linéare moyenne du robot
+    self.y +=(self.vitesseRoueGauche+self.vitesseRoueDroite)/2 
 
 
 class Obstacle :
