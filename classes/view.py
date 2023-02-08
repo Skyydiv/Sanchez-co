@@ -1,5 +1,8 @@
 from tkinter import *
 from tkinter import ttk
+from Simulation import Simulation
+from Objet import Robot
+from Environnement import Environnement
 
 class View :
     '''L'interface graphique de la simulation'''
@@ -59,7 +62,5 @@ class View :
             r=obs.rayon
             self.canv.create_oval(x-r,y-r,x+r,y+r, fill='white')
 
-    
-  
 
 

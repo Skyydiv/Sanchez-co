@@ -31,7 +31,6 @@ class Simulation :
         self.robot.changerVitesse(nex_vgauche,nex_vdroite)
         self.robot.deplacer()
         
-        
     def coordAlea(self) :
         '''Renvoie des coord aléatoires x et y non occupés dans l'environnement'''
         x=round(random.uniform(0,self.environnement.coordsmax[0]-1),1)
@@ -54,7 +53,11 @@ class Simulation :
     def start(self) : 
         '''Methode qui permet le lancement de la simulation'''
         self.en_cours=True
-        self.simu()
+        try:
+            self.simu()
+        except Exception as e:
+            self.en_cours=False
+            print("Simulation failed with error:", e)
 
     def stop(self):
         '''Methode qui permet l'arrêt de la simulation'''
