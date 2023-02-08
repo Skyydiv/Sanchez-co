@@ -76,14 +76,14 @@ class TestEnvironnement(unittest.TestCase):
         
     def test_estMur(self):
         
-        self.assertTrue(self.env.estMur(2,-1))
-        self.assertFalse(self.env.estMur(100,76))
+        self.assertTrue(self.env.estMur(200,210,5))
+        self.assertFalse(self.env.estMur(100,76,5))
     
     def test_estObstacle(self):
-        self.assertFalse(self.env.estObstacle(140,21))
-        self.assertTrue(self.env.estObstacle(140,20))
-        self.assertTrue(self.env.estObstacle(80,170))
-        self.assertFalse(self.env.estObstacle(80,171))
+        self.assertTrue(self.env.estObstacle(140,21,3))
+        self.assertTrue(self.env.estObstacle(140,20,3))
+        self.assertTrue(self.env.estObstacle(80,170,3))
+        self.assertFalse(self.env.estObstacle(60,20,5))
         
     def test_calculDistance(self):
         obs1=Obstacle(140,20,5,0,3)
