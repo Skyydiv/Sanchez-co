@@ -17,7 +17,7 @@ assert( (env.coordsmax[0] == 100) and (env.coordsmax[1] == 120) and (env.robot =
 assert( (not(env.estMur(3,30))) and (env.estMur(53, -10)) and (env.estMur(-13,95)) and (env.estMur(0,1)) and (env.estMur(3,0)) and (env.estMur(5,120)) and (env.estMur(100,50)))
 
 #test méthode calculDistance de Environnement
-assert((env.calculDistance(robot, obs) > 0) and (env.calculDistance(robot, obs3) < 0 )
+assert((env.calculDistance(robot, obs) > 0) and (env.calculDistance(robot, obs3) < 0 ))
 
 #sim=Simulation(3,1,robot,env)
 #sim.addSimulation(4)
