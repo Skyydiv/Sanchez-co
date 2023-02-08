@@ -81,6 +81,8 @@ class TestEnvironnement(unittest.TestCase):
     def test_estObstacle(self):
         self.assertFalse(self.env.estObstacle(140,21))
         self.assertTrue(self.env.estObstacle(140,20))
+        self.assertTrue(self.env.estObstacle(80,170))
+        self.assertFalse(self.env.estObstacle(80,171))
         
     def test_calculDistance(self):
         obs1=Obstacle(140,20,5,0,3)
