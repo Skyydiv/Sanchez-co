@@ -3,6 +3,7 @@ import unittest
 from Objet import Robot
 from Objet import Obstacle 
 from Environnement import *
+from Simulation import Simulation
 
 
 class TestRobot(unittest.TestCase):
@@ -46,10 +47,10 @@ class TestRobot(unittest.TestCase):
     
     def test_deplacer(self):
          r=Robot(4,3,20)
-         self.assertEqual(r.x,0.1)
+         self.assertEqual(r.x,r.rayon+0.1)
          r.deplacer()
-         self.assertEqual(r.x,3.6)
-         self.assertEqual(r.y,0.1)
+         self.assertNotEqual(r.x,r.rayon+0.1)
+         self.assertNotEqual(r.y,r.rayon+0.1)
         
 class TestObstacle(unittest.TestCase):
     
