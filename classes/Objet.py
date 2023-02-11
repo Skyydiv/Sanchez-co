@@ -38,6 +38,9 @@ class Robot:
   # self.y +=(self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * math.sin(self.orientation)*delta_t
 
   def deplacer(self, vitesseAngulaireDroite, vitesseAngulaireGauche, delta_t):
+    """
+    Change les coordonnées x et y du robot selon sa vitesse et son angle avec un pas de temps
+    """
     vitesseAngulaire = (self.diametreRoue/2 * (vitesseAngulaireDroite - vitesseAngulaireGauche)) / self.distanceRoues
         
     self.x += (self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * math.cos(self.orientation)*delta_t 
@@ -46,11 +49,15 @@ class Robot:
 
 
   def distanceParcourue(self,delta_t):
+    """Distance parcourue après un déplacement du robot"""
     old_x=self.x
     old_y=self.y
     self.deplacer(self,delta_t)
     return math.sqrt(abs(self.x-old_x)^2+abs(self.y-old_y)^2)
 
+  def get_motor_position(self):
+    """Retourne un couple de couple de position des roues du robot grâce à la distance des deux roues et à l'orientation et position du robot"""
+    return ((self.x-self.distanceRoue/2*math.sin(self.oriention),self.y+self.distanceRoue/2*math.cos(self.oriention)),(self.x+self.distanceRoue/2*math.sin(self.oriention),self.y-self.distanceRoue/2*math.cos(self.oriention)))
 
 class Obstacle :
   '''Obstacle qui peuvent être présent dans l'environnement'''
