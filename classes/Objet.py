@@ -18,47 +18,23 @@ class Robot:
     self.vitesseRoueDroite=vitesseRoueDroite
     self.vitesseRoueGauche=vitesseRoueGauche
 
-
-  def setVitesseRoueGauche(self,vg):
-    """Modifie la vitesse de la roue gauche
-    :param vg: nouvelle vitesse de la roue gauche
-    """
-    if (vg<self.vitesseMin or vg>self.vitesseMax):
-      raise ValueError("La vitesse doit être supérieur ou égal à vitesseMin et inférieur à vitesseMax.")
-    self.vitesseRoueGauche=vg
-
-  def setVitesseRoueDroite(self,vd):
-    """Modifie la vitesse de la roue droite
-    :param vd: nouvelle vitesse de la roue droite
-    """
-    if (vd<self.vitesseMin or vd>self.vitesseMax):
-      raise ValueError("La vitesse doit être supérieur ou égal à vitesseMin et inférieur à vitesseMax.")
-    self.vitesseRoueDroite=vd
-
-  def tournerDroite(self):
-    """Arrête la roue droite pour tourner à droite"""
-    self.setVitesseRoueDroite(0)
-
-  def tournerGauche(self):
-    """Arrête la roue gauche pour tourner à gauche"""
-    self.setVitesseRoueGauche(0)
-
-  def arret(self):
-    """ Arrête le robot en mettant la vitesse de ses deux roues à 0 """
-    self.vitesseRoueDroite=0
-    self.vitesseRoueGauche=0
-
-  def changerVitesse(self, vRoueGauche, vRoueDroite):
+  def setVitesse(self, vRoueGauche, vRoueDroite):
     """Set la vitesse des roues"""
     self.vitesseRoueDroite=vRoueDroite
     self.vitesseRoueGauche=vRoueGauche
 
-  def deplacer(self):
+  def deplacer(self,delta_t):
     """
     Change les coordonnées x et y du robot selon sa vitesse et son angle avec un pas de temps
     """
-    self.x +=(self.vitesseRoueGauche+self.vitesseRoueDroite)/2 #vitesse linéare moyenne du robot
-    self.y +=(self.vitesseRoueGauche+self.vitesseRoueDroite)/2 
+    self.x +=(self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * math.cos(self.orientation)*delta_t #vitesse linéare moyenne du robot
+    self.y +=(self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * math.sin(self.orientation)*delta_t
+
+  def distanceParcourue(self,delta_t):
+    old_x=self.x
+    old_y=self.y
+    self.deplacer(self,delta_t)
+    return math.sqrt(abs(self.x-old_x)^2+abs(self.y-old_y)^2)
 
 
 class Obstacle :
