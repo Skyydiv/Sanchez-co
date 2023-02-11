@@ -1,7 +1,9 @@
-from math import cos, sin, sqrt
+import math
 class Robot:
 
-  def __init__(self, vitesseRoueGauche, vitesseRoueDroite, rayon):
+  MAXDPS=1000
+  
+  def __init__(self, moteurGauche, moteurDroite, rayon):
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) , vitesse de la roue gauche et droite, un rayon une orientation (angle en radian), une vitesse max et min
     :param vitesseRoueGauche: vitesse de la roue gauche du robot
     :param vitesseRoueDroite: vitesse de la roue droite du robot
@@ -11,11 +13,12 @@ class Robot:
     self.y = 0.1+rayon
     self.rayon = rayon
     self.orientation=0
-    self.vitesseRoueDroite=vitesseRoueDroite
-    self.vitesseRoueGauche=vitesseRoueGauche
+    self.moteurDroite=moteurDroite
+    self.moteurGauche=moteurGauche
     self.distanceRoues=117 #donné dans l'API du robot
-    self.vitesseMax=50
-    self.vitesseMin=0
+    self.diametreRoue=66.5
+    self.perimetreRotation=self.distanceRoue * math.pi
+    self.perimetreRoue=self.diametreRoue * math.pi
 
   def setVitesseRoueGauche(self,vg):
     """Modifie la vitesse de la roue gauche
