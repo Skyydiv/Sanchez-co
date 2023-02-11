@@ -42,7 +42,7 @@ class Robot:
         
     self.x += (self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * math.cos(self.orientation)*delta_t 
     self.y += (self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * math.sin(self.orientation)*delta_t
-    self.theta += vitesseAngulaire * delta_t
+    self.orientation += vitesseAngulaire * delta_t
 
 
   def distanceParcourue(self,delta_t):
