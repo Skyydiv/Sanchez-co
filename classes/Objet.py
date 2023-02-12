@@ -12,7 +12,7 @@ class Robot:
     self.x =0.1+rayon #pour être dans l'env
     self.y = 0.1+rayon
     self.rayon = rayon #(mm)
-    self.orientation=0 #(degree)
+    self.orientation=0 #(radians)
 
     self.WHEEL_BASE_WIDTH=117 # distance (mm) de la roue gauche a la roue droite.
     self.WHEEL_DIAMETER=66.5 # diametre de la roue (mm)
@@ -24,8 +24,11 @@ class Robot:
     self.MOTOR_RIGHT=None
 
 
-    self.vitesseRoueDroite=2
-    self.vitesseRoueGauche=1
+    self.vitesseRoueDroite=0.4
+    self.vitesseRoueGauche=0.3
+
+    self.v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
+    self.w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
 
     # self.roueGauche=Roue(self.WHEEL_BASE_WIDTH/2)
     # self.roueDroite=Roue(self.WHEEL_BASE_WIDTH/2)
@@ -45,48 +48,22 @@ class Robot:
     if(port==self.MOTOR_LEFT):
       self.MOTOR_LEFT=dps
 
+  def deplacer(self, time_interval):
+      
+      #calcul la vitesse des roues
+      right_wheel_velocity = self.v + self.w * self.WHEEL_BASE_WIDTH / 2
+      left_wheel_velocity = self.v - self.w * self.WHEEL_BASE_WIDTH / 2
 
-  def deplacer(self):
-    """Deplace le robot en fonction de la vitesse des roues"""
+      #calul la distance parcourue par chaque roue
+      right_wheel_distance = right_wheel_velocity * time_interval
+      left_wheel_distance = left_wheel_velocity * time_interval
 
-    #Calcul des vitesses lineire et angulaire
-    v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
-    w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
+      orientation_change = (right_wheel_distance - left_wheel_distance) / self.WHEEL_BASE_WIDTH
+      self.orientation += orientation_change
 
-    wheel_parameter= self.WHEEL_DIAMETER/2 #rayon de la roue
-
-    #set vitesse des roues
-    self.vitesseRoueGauche = (v - (w * self.WHEEL_BASE_WIDTH)) / wheel_parameter #calcul vitesseRoueGauche
-    self.vitesseRoueDroite = (v + (w * self.WHEEL_BASE_WIDTH)) / wheel_parameter #calcul vitesseRoueGauche
-
-    #set vitesse des moteurs 
-    self.set_motor_dps(self.MOTOR_RIGHT,self.vitesseRoueDroite)
-    self.set_motor_dps(self.MOTOR_LEFT,self.vitesseRoueGauche)
-
-    #update les coord du robot
-    self.UpdatePosition(v, w, delta_t=1/1000)
-
-    time.sleep(1/1000)
-     
-  
-
-  def UpdatePosition(self, v, w, delta_t):
-    """
-    Change les coordonnées x et y du robot selon sa vitesse et son angle avec un pas de temps
-    :param v: vitesse linaire
-    :param w: vitesse angualire
-    :param delta_t : pas de temps
-    """
-    #update l'angle d'orientation
-    self.orientation += w * delta_t 
-
-    #conversion de l'angle en radians
-    theta=math.radians(self.orientation) 
-    
-    #modification des coordonnées du robot
-    self.x += v * math.cos(theta) * delta_t 
-    self.y += v * math.sin(theta) * delta_t
-    
+      # linear_distance = (right_wheel_distance + left_wheel_distance) / 2
+      self.x += self.linear_distance * math.cos(self.orientation)
+      self.y += self.linear_distance * math.sin(self.orientation)
 
   def get_motor_position(self):
     """Retourne un couple de couple de position des roues du robot grâce à la distance des deux roues et à l'orientation et position du robot"""
@@ -100,13 +77,7 @@ class Robot:
   #   self.deplacer(self,delta_t)
   #   return math.sqrt(abs(self.x-old_x)^2+abs(self.y-old_y)^2)
 
-  def changerVitesse(self,Vr,Vg):
-    self.vitesseRoueDroite=Vr
-    self.vitesseRoueGauche=Vg
-
-  def FAUXdeplacer(self):
-    self.x+=(self.vitesseRoueDroite+self.vitesseRoueGauche)/2
-    self.y+=(self.vitesseRoueDroite+self.vitesseRoueGauche)/2
+ 
 
   
 class Obstacle :
