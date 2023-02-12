@@ -51,16 +51,16 @@ class Robot:
   def deplacer(self, intervalle_temps):
         """deplace le robot dans un intervalle de temps
         :param intervalle_temps: intervalle de temps dans lequel le robot avance"""
-        right_wheel_velocity = self.v + self.w * self.WHEEL_BASE_WIDTH / 2
-        left_wheel_velocity = self.v - self.w * self.WHEEL_BASE_WIDTH / 2
+        self.vitesseRoueDroite = self.v + self.w * self.WHEEL_BASE_WIDTH / 2
+        self.vitesseRoueGauche = self.v - self.w * self.WHEEL_BASE_WIDTH / 2
 
-        right_wheel_distance = right_wheel_velocity * intervalle_temps
-        left_wheel_distance = left_wheel_velocity * intervalle_temps
+        distance_parcourue_droite = self.vitesseRoueDroite* intervalle_temps
+        distance_parcourue_gauche = self.vitesseRoueGauche * intervalle_temps
 
-        orientation_change = (right_wheel_distance - left_wheel_distance) / self.WHEEL_BASE_WIDTH
-        self.orientation += orientation_change
+        newOrientation = (distance_parcourue_droite - distance_parcourue_gauche) / self.WHEEL_BASE_WIDTH
+        self.orientation += newOrientation
 
-        newV = (right_wheel_distance + left_wheel_distance) / 2
+        newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #recalcul vitesse lineare
         self.x += newV * math.cos(self.orientation)
         self.y += newV * math.sin(self.orientation)
 
