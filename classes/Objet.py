@@ -1,12 +1,12 @@
 import math
 import Roue
+import time
+
 class Robot:
 
   
-  def __init__(self, vitesseRoueGauche, vitesseRoueDroite, rayon):
-    '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) , vitesse de la roue gauche et droite, un rayon une orientation (angle en radian), une vitesse max et min
-    :param vitesseRoueGauche: vitesse de la roue gauche du robot
-    :param vitesseRoueDroite: vitesse de la roue droite du robot
+  def __init__(self, rayon):
+    '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) 
     :param rayon: rayon de l'objet (en mm)
     '''
     self.x =0.1+rayon #pour être dans l'env
@@ -19,37 +19,65 @@ class Robot:
     self.WHEEL_BASE_CIRCUMFERENCE =self.WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
     self.WHEEL_CIRCUMFERENCE = self.WHEEL_DIAMETER * math.pi # perimetre de la roue (mm)
 
-    self.roueGauche=Roue(self.WHEEL_BASE_WIDTH/2)
-    self.roueDroite=Roue(self.WHEEL_BASE_WIDTH/2)
 
-    self.vitesseRoueDroite=vitesseRoueDroite
-    self.vitesseRoueGauche=vitesseRoueGauche
-
-    self.vitesseAngulaireDroite=self.roueDroite.vitesse_angulaire(vitesseRoueDroite)
-    self.vitesseAngulaireGauche=self.roueGauche.vitesse_angulaire(vitesseRoueGauche)
-
-  def setVitesse(self, vRoueGauche, vRoueDroite):
-    """Set la vitesse des roues"""
-    self.vitesseRoueDroite=vRoueDroite
-    self.vitesseRoueGauche=vRoueGauche
+    self.MOTOR_LEFT=None
+    self.MOTOR_RIGHT=None
 
 
-  #def deplacer(self,delta_t):
-  #  """
-  #  Change les coordonnées x et y du robot selon sa vitesse et son angle avec un pas de temps
-  #  """
-  # self.x +=(self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * math.cos(self.orientation)*delta_t #vitesse linéare moyenne du robot
-  # self.y +=(self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * math.sin(self.orientation)*delta_t
+    self.vitesseRoueDroite=0
+    self.vitesseRoueGauche=0
 
-  def deplacer(self, vitesseAngulaireDroite, vitesseAngulaireGauche, delta_t):
+    
+  def set_motor_dps(self, port, dps):
+    """
+    Fixe la vitesse d'un moteur en nombre de degres par seconde
+    :port: une constante moteur,  MOTOR_LEFT ou MOTOR_RIGHT (ou les deux MOTOR_LEFT+MOTOR_RIGHT).
+    :dps: la vitesse cible en nombre de degres par seconde
+    """
+
+    if(port==self.MOTOR_RIGHT):
+      self.MOTOR_RIGHT=dps
+    if(port==self.MOTOR_LEFT):
+      self.MOTOR_LEFT=dps
+
+
+  def deplacer(self):
+    """Deplace le robot en fonction de la vitesse des roues"""
+
+    #Calcul des vitesses lineire et angulaire
+    v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
+    w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
+
+    wheel_parameter= self.WHEEL_DIAMETER/2
+
+    #set vitesse des roues
+    self.vitesseRoueGauche = (v - (w * self.WHEEL_BASE_WIDTH)) / wheel_parameter #calcul vitesseRoueGauche
+    self.vitesseRoueDroite = (v + (w * self.WHEEL_BASE_WIDTH)) / wheel_parameter #calcul vitesseRoueGauche
+
+    #set vitesse des moteurs 
+    self.set_motor_dps(self.MOTOR_RIGHT,self.vitesseRoueDroite)
+    self.set_motor_dps(self.MOTOR_LEFT,self.vitesseRoueGauche)
+
+    #update les coord du robot
+    self.UpdatePosition(v, w, delta_t=1/1000)
+
+    time.sleep(1/1000)
+     
+  
+
+  def UpdatePosition(self, v, w, delta_t):
     """
     Change les coordonnées x et y du robot selon sa vitesse et son angle avec un pas de temps
+    :param v: vitesse linaire
+    :param w: vitesse angualire
+    :param delta_t : pas de temps
     """
-    vitesseAngulaire = (self.WHEEL_DIAMETER/2 * (vitesseAngulaireDroite - vitesseAngulaireGauche)) / self.WHEEL_BASE_WIDTH
+
+    self.orientation += w * delta_t 
         
-    self.x += (self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * math.cos(self.orientation)*delta_t 
-    self.y += (self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * math.sin(self.orientation)*delta_t
-    self.orientation += vitesseAngulaire * delta_t
+    self.x += v * math.cos(self.orientation) * delta_t 
+    self.y += v * math.sin(self.orientation) * delta_t
+    
 
 
   def distanceParcourue(self,delta_t):
