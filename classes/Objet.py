@@ -27,7 +27,12 @@ class Robot:
     self.vitesseRoueDroite=0
     self.vitesseRoueGauche=0
 
-    
+    # self.roueGauche=Roue(self.WHEEL_BASE_WIDTH/2)
+    # self.roueDroite=Roue(self.WHEEL_BASE_WIDTH/2)
+
+    # self.vitesseAngulaireDroite=self.roueDroite.vitesse_angulaire(vitesseRoueDroite)
+    # self.vitesseAngulaireGauche=self.roueGauche.vitesse_angulaire(vitesseRoueGauche)
+
   def set_motor_dps(self, port, dps):
     """
     Fixe la vitesse d'un moteur en nombre de degres par seconde
@@ -79,18 +84,17 @@ class Robot:
     self.y += v * math.sin(self.orientation) * delta_t
     
 
-
-  def distanceParcourue(self,delta_t):
-    """Distance parcourue après un déplacement du robot"""
-    old_x=self.x
-    old_y=self.y
-    self.deplacer(self,delta_t)
-    return math.sqrt(abs(self.x-old_x)^2+abs(self.y-old_y)^2)
-
   def get_motor_position(self):
     """Retourne un couple de couple de position des roues du robot grâce à la distance des deux roues et à l'orientation et position du robot"""
     return ((self.x-self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y+self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)),(self.x+self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y-self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)))
 
+
+  # def distanceParcourue(self,delta_t):
+  #   """Distance parcourue après un déplacement du robot"""
+  #   old_x=self.x
+  #   old_y=self.y
+  #   self.deplacer(self,delta_t)
+  #   return math.sqrt(abs(self.x-old_x)^2+abs(self.y-old_y)^2)
 
 
   
