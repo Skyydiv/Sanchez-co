@@ -11,8 +11,8 @@ class Robot:
     '''
     self.x =0.1+rayon #pour être dans l'env
     self.y = 0.1+rayon
-    self.rayon = rayon
-    self.orientation=0
+    self.rayon = rayon #(mm)
+    self.orientation=0 #(degree)
 
     self.WHEEL_BASE_WIDTH=117 # distance (mm) de la roue gauche a la roue droite.
     self.WHEEL_DIAMETER=66.5 # diametre de la roue (mm)
@@ -53,7 +53,7 @@ class Robot:
     v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
     w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
 
-    wheel_parameter= self.WHEEL_DIAMETER/2
+    wheel_parameter= self.WHEEL_DIAMETER/2 #rayon de la roue
 
     #set vitesse des roues
     self.vitesseRoueGauche = (v - (w * self.WHEEL_BASE_WIDTH)) / wheel_parameter #calcul vitesseRoueGauche
@@ -77,11 +77,15 @@ class Robot:
     :param w: vitesse angualire
     :param delta_t : pas de temps
     """
-
+    #update l'angle d'orientation
     self.orientation += w * delta_t 
-        
-    self.x += v * math.cos(self.orientation) * delta_t 
-    self.y += v * math.sin(self.orientation) * delta_t
+
+    #conversion de l'angle en radians
+    theta=math.radians(self.orientation) 
+    
+    #modification des coordonnées du robot
+    self.x += v * math.cos(theta) * delta_t 
+    self.y += v * math.sin(theta) * delta_t
     
 
   def get_motor_position(self):
