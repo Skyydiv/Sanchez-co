@@ -6,14 +6,12 @@ class Simulation :
     """Simulation qui fait interagir le Robot avec son Environnement
     """
     
-    def __init__(self, pas, environnement:Environnement):
-        '''Constructeur de la simulation qui initailise l'environnement,l e robot et le pas de temps
-        :param pas: pas de temps en millieseconde
+    def __init__(self, environnement:Environnement):
+        '''Constructeur de la simulation qui initailise l'environnement et le robot 
         :param environnement: environnement dans lequel se déroule la simulation
         '''
         self.environnement=environnement
         self.robot=environnement.robot
-        self.delta=pas
         self.en_cours=False
         
 
@@ -23,7 +21,7 @@ class Simulation :
         '''
         while self.en_cours:
             self.update1pas()
-            sleep(self.delta) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
+            sleep(1/1000) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
 
     def update1pas(self):
         nex_vdroite = round(random.uniform(self.robot.vitesseMin,self.robot.vitesseMax),1)
