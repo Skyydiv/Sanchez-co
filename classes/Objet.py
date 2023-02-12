@@ -13,16 +13,20 @@ class Robot:
     self.y = 0.1+rayon
     self.rayon = rayon
     self.orientation=0
-    self.distanceRoues=117
-    self.diametreRoue=66.5
-    self.perimetreRotation =self.distanceRoues * math.pi # perimetre du cercle de rotation (mm)
-    self.perimetreRoue = self.diametreRoue * math.pi 
-    self.roueGauche=Roue(self.diametreRoue/2)
-    self.roueDroite=Roue(self.diametreRoue/2)
+
+    self.WHEEL_BASE_WIDTH=117 # distance (mm) de la roue gauche a la roue droite.
+    self.WHEEL_DIAMETER=66.5 # diametre de la roue (mm)
+    self.perimetreRotation =self.WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
+    self.WHEEL_CIRCUMFERENCE = self.WHEEL_DIAMETER * math.pi # perimetre de la roue (mm)
+
+    self.roueGauche=Roue(self.WHEEL_BASE_WIDTH/2)
+    self.roueDroite=Roue(self.WHEEL_BASE_WIDTH/2)
+
     self.vitesseRoueDroite=vitesseRoueDroite
     self.vitesseRoueGauche=vitesseRoueGauche
-    self.vitesseAngulaireDroite=self.roueDroite.vitesseAngulaire(vitesseRoueDroite)
-    self.vitesseAngulaireGauche=self.roueGauche.vitesseAngulaire(vitesseRoueGauche)
+
+    self.vitesseAngulaireDroite=self.roueDroite.vitesse_angulaire(vitesseRoueDroite)
+    self.vitesseAngulaireGauche=self.roueGauche.vitesse_angulaire(vitesseRoueGauche)
 
   def setVitesse(self, vRoueGauche, vRoueDroite):
     """Set la vitesse des roues"""
@@ -41,7 +45,7 @@ class Robot:
     """
     Change les coordonnées x et y du robot selon sa vitesse et son angle avec un pas de temps
     """
-    vitesseAngulaire = (self.diametreRoue/2 * (vitesseAngulaireDroite - vitesseAngulaireGauche)) / self.distanceRoues
+    vitesseAngulaire = (self.WHEEL_DIAMETER/2 * (vitesseAngulaireDroite - vitesseAngulaireGauche)) / self.WHEEL_BASE_WIDTH
         
     self.x += (self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * math.cos(self.orientation)*delta_t 
     self.y += (self.vitesseRoueGauche+self.vitesseRoueDroite)/2 * math.sin(self.orientation)*delta_t
@@ -57,8 +61,11 @@ class Robot:
 
   def get_motor_position(self):
     """Retourne un couple de couple de position des roues du robot grâce à la distance des deux roues et à l'orientation et position du robot"""
-    return ((self.x-self.distanceRoue/2*math.sin(self.oriention),self.y+self.distanceRoue/2*math.cos(self.oriention)),(self.x+self.distanceRoue/2*math.sin(self.oriention),self.y-self.distanceRoue/2*math.cos(self.oriention)))
+    return ((self.x-self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y+self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)),(self.x+self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y-self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)))
 
+
+
+  
 class Obstacle :
   '''Obstacle qui peuvent être présent dans l'environnement'''
     
