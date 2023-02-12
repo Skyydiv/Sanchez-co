@@ -31,12 +31,8 @@ class Simulation :
             sleep(1./self.delta_t) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
 
 
-
     def update1pas(self):
-        vx=round(random.uniform(0,10),1)
-        vy=round(random.uniform(0,10),1)
-        self.robot.changerVitesse(vx,vy)
-        self.robot.updatePosition(1./self.delta_t)
+        self.robot.deplacer(1./self.delta_t)
 
     def coordAlea(self) :
         '''Renvoie des coord aléatoires x et y non occupés dans l'environnement'''
@@ -62,14 +58,7 @@ class Simulation :
         self.en_cours=False
 
 
-    # def start(self) : 
-    #     '''Methode qui permet le lancement de la simulation'''
-    #     self.en_cours=True
-    #     try:
-    #         self.simu()
-    #     except Exception as e:
-    #         self.en_cours=False
-    #         print("Simulation failed with error:", e)
+  
 
     
 
