@@ -16,7 +16,7 @@ class Robot:
 
     self.WHEEL_BASE_WIDTH=117 # distance (mm) de la roue gauche a la roue droite.
     self.WHEEL_DIAMETER=66.5 # diametre de la roue (mm)
-    self.perimetreRotation =self.WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
+    self.WHEEL_BASE_CIRCUMFERENCE =self.WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
     self.WHEEL_CIRCUMFERENCE = self.WHEEL_DIAMETER * math.pi # perimetre de la roue (mm)
 
     self.roueGauche=Roue(self.WHEEL_BASE_WIDTH/2)
