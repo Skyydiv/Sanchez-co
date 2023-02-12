@@ -1,34 +1,45 @@
 from Environnement import Environnement
 from time import sleep
 import random
-
+from threading import Thread
 class Simulation :
     """Simulation qui fait interagir le Robot avec son Environnement
     """
     
-    def __init__(self, environnement:Environnement):
+    def __init__(self, environnement:Environnement, delta_t):
         '''Constructeur de la simulation qui initailise l'environnement et le robot 
         :param environnement: environnement dans lequel se déroule la simulation
         '''
         self.environnement=environnement
         self.robot=environnement.robot
+        self.delta_t=delta_t
         self.en_cours=False
-        
+    
 
-    def simu(self):
+    def run_simu(self):
+        """lance la simulation"""
+        self.en_cours=True
+        threadSimu=Thread(target=self.boucle)
+        threadSimu.start()
+
+    def boucle(self):
         '''
-        Gère la simulation, c'est à dire le temps, et les appels aux fonctions de déplacement du robot 
+        La boucle qui avance la simulation chaque pas de temps
         '''
         while self.en_cours:
             self.update1pas()
-            sleep(1/1000) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
+            sleep(1./self.delta_t) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
+
+    # def update1pas(self):
+    #     self.robot.deplacer()
 
     def update1pas(self):
-        nex_vdroite = round(random.uniform(self.robot.vitesseMin,self.robot.vitesseMax),1)
-        nex_vgauche = round(random.uniform(self.robot.vitesseMin,self.robot.vitesseMax),1)
+        nex_vdroite = round(random.uniform(0,4),1)
+        nex_vgauche = round(random.uniform(0,4),1)
         self.robot.changerVitesse(nex_vgauche,nex_vdroite)
-        self.robot.deplacer()
-        
+        self.robot.FAUXdeplacer()
+        # self.robot.deplacer()
+
     def coordAlea(self) :
         '''Renvoie des coord aléatoires x et y non occupés dans l'environnement'''
         x=round(random.uniform(0,self.environnement.coordsmax[0]-1),1)
@@ -48,16 +59,16 @@ class Simulation :
             newCoord=self.coordAlea()
             self.environnement.addObstacle(newCoord[0],newCoord[1],1,0,30)
 
-    def start(self) : 
-        '''Methode qui permet le lancement de la simulation'''
-        self.en_cours=True
-        try:
-            self.simu()
-        except Exception as e:
-            self.en_cours=False
-            print("Simulation failed with error:", e)
+    # def start(self) : 
+    #     '''Methode qui permet le lancement de la simulation'''
+    #     self.en_cours=True
+    #     try:
+    #         self.simu()
+    #     except Exception as e:
+    #         self.en_cours=False
+    #         print("Simulation failed with error:", e)
 
-    def stop(self):
+    def stop_simu(self):
         '''Methode qui permet l'arrêt de la simulation'''
         self.en_cours=False
 

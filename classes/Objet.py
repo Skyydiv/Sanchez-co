@@ -24,8 +24,8 @@ class Robot:
     self.MOTOR_RIGHT=None
 
 
-    self.vitesseRoueDroite=0
-    self.vitesseRoueGauche=0
+    self.vitesseRoueDroite=2
+    self.vitesseRoueGauche=1
 
     # self.roueGauche=Roue(self.WHEEL_BASE_WIDTH/2)
     # self.roueDroite=Roue(self.WHEEL_BASE_WIDTH/2)
@@ -100,6 +100,13 @@ class Robot:
   #   self.deplacer(self,delta_t)
   #   return math.sqrt(abs(self.x-old_x)^2+abs(self.y-old_y)^2)
 
+  def changerVitesse(self,Vr,Vg):
+    self.vitesseRoueDroite=Vr
+    self.vitesseRoueGauche=Vg
+
+  def FAUXdeplacer(self):
+    self.x+=(self.vitesseRoueDroite+self.vitesseRoueGauche)/2
+    self.y+=(self.vitesseRoueDroite+self.vitesseRoueGauche)/2
 
   
 class Obstacle :
