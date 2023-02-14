@@ -16,7 +16,7 @@ class View :
         self.root=master
 
         self.sim=simulation
-        self.delta=simulation.delta
+        self.delta=simulation.delta_t
         self.robot=simulation.environnement.robot
         self.obstacles=simulation.environnement.ensemble_obstacles
         self.longueur=simulation.environnement.coordsmax[0]
@@ -26,18 +26,18 @@ class View :
         self.canv=Canvas(self.root, bg="black",highlightbackground='white',highlightthickness=4, height=self.largeur, width=self.longueur)
         self.canv.pack()
 
-        self.Start_Stop_button=Button(self.root, text="Start/Stop", command=self.toggle)
-        self.Start_Stop_button.pack()
+        # self.Start_Stop_button=Button(self.root, text="Start/Stop", command=self.toggle)
+        # self.Start_Stop_button.pack()
         
         self.updateCanvas()
 
         
-    def toggle(self):
-        '''Lance ou arrête l'éxécution selon l'état de la simulation avec le click sur le boutton'''
-        if self.sim.en_cours:
-            self.sim.stop()
-        else:
-             self.sim.start()
+    # def toggle(self):
+    #     '''Lance ou arrête l'éxécution selon l'état de la simulation avec le click sur le boutton'''
+    #     if self.sim.en_cours:
+    #         self.start_sim()
+    #     else:
+    #          self.stop_sim()
 
     def updateCanvas(self):
         '''Initialise la canvas a chaque pas'''
@@ -62,5 +62,10 @@ class View :
             r=obs.rayon
             self.canv.create_oval(x-r,y-r,x+r,y+r, fill='white')
 
+    def start_sim(self):
+        self.sim.run_simu()
+
+    def stop_sim(self):
+        self.sim.stop_simu()
 
 
