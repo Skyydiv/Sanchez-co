@@ -44,7 +44,7 @@ class View :
         self.canv.delete("all") 
         self.drawRobot()
         self.drawObstacles()
-        self.root.after(self.delta*10,self.updateCanvas)
+        self.root.after(self.delta,self.updateCanvas)
         
     
     def drawRobot(self):
