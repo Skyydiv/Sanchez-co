@@ -23,8 +23,8 @@ class Robot:
     self.MOTOR_LEFT=None
     self.MOTOR_RIGHT=None
 
-    self.MOTOR_LEFT_Offset=None
-    self.MOTOR_RIGHT_Offset=None
+    self.MOTOR_LEFT_Offset=0
+    self.MOTOR_RIGHT_Offset=0
 
     self.vitesseRoueDroite=4
     self.vitesseRoueGauche=3
