@@ -4,6 +4,7 @@ from Roue import Wheel
 from Objet import Robot
 from Objet import Obstacle 
 from Environnement import *
+from Simulation import Simulation
 
 
 

@@ -23,6 +23,8 @@ class Robot:
     self.MOTOR_LEFT=None
     self.MOTOR_RIGHT=None
 
+    self.MOTOR_LEFT_Offset=None
+    self.MOTOR_RIGHT_Offset=None
 
     self.vitesseRoueDroite=4
     self.vitesseRoueGauche=3
@@ -75,7 +77,18 @@ class Robot:
     """Retourne un couple de couple de position des roues du robot grâce à la distance des deux roues et à l'orientation et position du robot"""
     return ((self.x-self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y+self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)),(self.x+self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y-self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)))
 
-
+   
+  def offset_motor_encoder(self, port, offset):
+    """
+    Fixe l'offset des moteurs (en degres)   
+    :port: un des deux moteurs MOTOR_LEFT ou MOTOR_RIGHT (ou les deux avec +)
+    :offset: l'offset de decalage en degre.
+    """
+    if(port==self.MOTOR_RIGHT):
+      self.MOTOR_RIGHT_Offset=offset
+    if(port==self.MOTOR_LEFT):
+      self.MOTOR_LEFT_Offset=offset
+  
   # def distanceParcourue(self,delta_t):
   #   """Distance parcourue après un déplacement du robot"""
   #   old_x=self.x
