@@ -3,7 +3,7 @@ import math
 
 class Robot:
 
-  def __init__(self, rayon):
+  def __init__(self, rayon, capteur):
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) 
     :param rayon: rayon de l'objet (en mm)
     '''
@@ -11,6 +11,7 @@ class Robot:
     self.y = 0.1+rayon
     self.rayon = rayon #(mm)
     self.orientation=0 #(radians)
+    self.capteur=capteur #Capteur du robot
 
     self.WHEEL_BASE_WIDTH=117 # distance (mm) de la roue gauche a la roue droite.
     self.WHEEL_DIAMETER=66.5 # diametre de la roue (mm)
