@@ -1,8 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from Simulation import Simulation
-from Objet import Robot
-from Environnement import Environnement
+
 
 class View :
     '''L'interface graphique de la simulation'''
