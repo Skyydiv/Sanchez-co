@@ -1,10 +1,8 @@
 import math
-import Roue
-import time
+
 
 class Robot:
 
-  
   def __init__(self, rayon):
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) 
     :param rayon: rayon de l'objet (en mm)
@@ -23,18 +21,15 @@ class Robot:
     self.MOTOR_LEFT=None
     self.MOTOR_RIGHT=None
 
+    self.MOTOR_LEFT_Offset=0
+    self.MOTOR_RIGHT_Offset=0
 
-    self.vitesseRoueDroite=4
-    self.vitesseRoueGauche=3
+    self.vitesseRoueDroite=20
+    self.vitesseRoueGauche=14
 
     self.v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
     self.w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
 
-    # self.roueGauche=Roue(self.WHEEL_BASE_WIDTH/2)
-    # self.roueDroite=Roue(self.WHEEL_BASE_WIDTH/2)
-
-    # self.vitesseAngulaireDroite=self.roueDroite.vitesse_angulaire(vitesseRoueDroite)
-    # self.vitesseAngulaireGauche=self.roueGauche.vitesse_angulaire(vitesseRoueGauche)
 
   def set_motor_dps(self, port, dps):
     """
@@ -75,14 +70,18 @@ class Robot:
     """Retourne un couple de couple de position des roues du robot grâce à la distance des deux roues et à l'orientation et position du robot"""
     return ((self.x-self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y+self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)),(self.x+self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y-self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)))
 
-
-  # def distanceParcourue(self,delta_t):
-  #   """Distance parcourue après un déplacement du robot"""
-  #   old_x=self.x
-  #   old_y=self.y
-  #   self.deplacer(self,delta_t)
-  #   return math.sqrt(abs(self.x-old_x)^2+abs(self.y-old_y)^2)
-
+   
+  def offset_motor_encoder(self, port, offset):
+    """
+    Fixe l'offset des moteurs (en degres)   
+    :port: un des deux moteurs MOTOR_LEFT ou MOTOR_RIGHT (ou les deux avec +)
+    :offset: l'offset de decalage en degre.
+    """
+    if(port==self.MOTOR_RIGHT):
+      self.MOTOR_RIGHT_Offset=offset
+    if(port==self.MOTOR_LEFT):
+      self.MOTOR_LEFT_Offset=offset
+  
   
 class Obstacle :
   '''Obstacle qui peuvent être présent dans l'environnement'''
