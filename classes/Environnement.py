@@ -78,7 +78,7 @@ class Environnement() :
 
         return ( math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y),2) - (objet1.rayon + objet2.rayon) )
 
-    
+
     def detectCollision(self):
         '''
         verifie si les coordonnes du robot sont identiques a un obstacle de l’environnement ou s’il a pris un mur selon une precision
