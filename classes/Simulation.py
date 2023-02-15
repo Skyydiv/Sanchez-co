@@ -34,8 +34,8 @@ class Simulation :
 
     def update1pas(self):
         self.robot.deplacer(1./self.delta_t)
-        # if(Environnement.detectCollision()):
-        #     self.stop_simu()
+        if(self.environnement.detectCollision()):
+            self.stop_simu()
 
 
     def coordAlea(self) :
