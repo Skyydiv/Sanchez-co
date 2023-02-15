@@ -23,8 +23,8 @@ class Robot:
     self.MOTOR_LEFT_Offset=0
     self.MOTOR_RIGHT_Offset=0
 
-    self.vitesseRoueDroite=20
-    self.vitesseRoueGauche=14
+    self.vitesseRoueDroite=50
+    self.vitesseRoueGauche=43
 
     self.v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
     self.w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
