@@ -1,6 +1,5 @@
 import math
-import Roue
-import time
+
 
 class Robot:
 
@@ -32,11 +31,6 @@ class Robot:
     self.v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
     self.w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
 
-    # self.roueGauche=Roue(self.WHEEL_BASE_WIDTH/2)
-    # self.roueDroite=Roue(self.WHEEL_BASE_WIDTH/2)
-
-    # self.vitesseAngulaireDroite=self.roueDroite.vitesse_angulaire(vitesseRoueDroite)
-    # self.vitesseAngulaireGauche=self.roueGauche.vitesse_angulaire(vitesseRoueGauche)
 
   def set_motor_dps(self, port, dps):
     """
