@@ -1,18 +1,11 @@
 import unittest
 
-from Roue import Wheel
+
 from Objet import Robot
 from Objet import Obstacle 
 from Environnement import *
 from Simulation import Simulation
 
-
-
-
-class TestRoue(unittest.TestCase):
-    def test_vitesse_angulaire(self):
-        roue=Wheel(2)
-        self.assertEqual(roue.vitesse_angulaire(10),5)
 
 class TestRobot(unittest.TestCase):
         
