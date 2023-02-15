@@ -3,7 +3,6 @@ import math
 
 class Robot:
 
-  
   def __init__(self, rayon):
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) 
     :param rayon: rayon de l'objet (en mm)
@@ -25,8 +24,8 @@ class Robot:
     self.MOTOR_LEFT_Offset=0
     self.MOTOR_RIGHT_Offset=0
 
-    self.vitesseRoueDroite=4
-    self.vitesseRoueGauche=3
+    self.vitesseRoueDroite=20
+    self.vitesseRoueGauche=14
 
     self.v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
     self.w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
@@ -83,13 +82,6 @@ class Robot:
     if(port==self.MOTOR_LEFT):
       self.MOTOR_LEFT_Offset=offset
   
-  # def distanceParcourue(self,delta_t):
-  #   """Distance parcourue après un déplacement du robot"""
-  #   old_x=self.x
-  #   old_y=self.y
-  #   self.deplacer(self,delta_t)
-  #   return math.sqrt(abs(self.x-old_x)^2+abs(self.y-old_y)^2)
-
   
 class Obstacle :
   '''Obstacle qui peuvent être présent dans l'environnement'''
