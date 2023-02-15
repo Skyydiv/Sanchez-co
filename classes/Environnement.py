@@ -2,8 +2,8 @@
 import numpy
 import random
 import math
-from Virtuel.Objet import Robot
-from Virtuel.Objet import Obstacle
+from Objet import Robot
+from Objet import Obstacle
 
 class Environnement() :
     ''' L'environnement dans lequel se trouve le Robot'''
