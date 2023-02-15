@@ -17,7 +17,6 @@ class Robot:
     self.WHEEL_BASE_CIRCUMFERENCE =self.WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
     self.WHEEL_CIRCUMFERENCE = self.WHEEL_DIAMETER * math.pi # perimetre de la roue (mm)
 
-
     self.MOTOR_LEFT=None
     self.MOTOR_RIGHT=None
 
