@@ -14,10 +14,6 @@ root = Tk() # initialiser la fenetre tkinter
 view=View(root, simulation)
 view.start_sim()
 root.mainloop()
-<<<<<<< HEAD
-
 view.stop_sim()
 
-=======
-view.stop_sim()
->>>>>>> 26dbab3380f65ceaffe6b6b62f649f5db799b8d0
+
