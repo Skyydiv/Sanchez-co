@@ -1,64 +1,88 @@
-from math import cos, sin, sqrt
+import math
+
+
 class Robot:
 
-  def __init__(self, vitesseRoueGauche, vitesseRoueDroite, rayon):
-    '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) , vitesse de la roue gauche et droite, un rayon une orientation (angle en radian), une vitesse max et min
-    :param vitesseRoueGauche: vitesse de la roue gauche du robot
-    :param vitesseRoueDroite: vitesse de la roue droite du robot
+  def __init__(self, rayon):
+    '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) 
     :param rayon: rayon de l'objet (en mm)
     '''
     self.x =0.1+rayon #pour être dans l'env
     self.y = 0.1+rayon
-    self.rayon = rayon
-    self.orientation=0
-    self.vitesseRoueDroite=vitesseRoueDroite
-    self.vitesseRoueGauche=vitesseRoueGauche
-    self.distanceRoues=117 #donné dans l'API du robot
-    self.vitesseMax=50
-    self.vitesseMin=0
+    self.rayon = rayon #(mm)
+    self.orientation=0 #(radians)
 
-  def setVitesseRoueGauche(self,vg):
-    """Modifie la vitesse de la roue gauche
-    :param vg: nouvelle vitesse de la roue gauche
+    self.WHEEL_BASE_WIDTH=117 # distance (mm) de la roue gauche a la roue droite.
+    self.WHEEL_DIAMETER=66.5 # diametre de la roue (mm)
+    self.WHEEL_BASE_CIRCUMFERENCE =self.WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
+    self.WHEEL_CIRCUMFERENCE = self.WHEEL_DIAMETER * math.pi # perimetre de la roue (mm)
+
+
+    self.MOTOR_LEFT=None
+    self.MOTOR_RIGHT=None
+
+    self.MOTOR_LEFT_Offset=0
+    self.MOTOR_RIGHT_Offset=0
+
+    self.vitesseRoueDroite=20
+    self.vitesseRoueGauche=14
+
+    self.v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
+    self.w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
+
+
+  def set_motor_dps(self, port, dps):
     """
-    if (vg<self.vitesseMin or vg>self.vitesseMax):
-      raise ValueError("La vitesse doit être supérieur ou égal à vitesseMin et inférieur à vitesseMax.")
-    self.vitesseRoueGauche=vg
-
-  def setVitesseRoueDroite(self,vd):
-    """Modifie la vitesse de la roue droite
-    :param vd: nouvelle vitesse de la roue droite
+    Fixe la vitesse d'un moteur en nombre de degres par seconde
+    :port: une constante moteur,  MOTOR_LEFT ou MOTOR_RIGHT (ou les deux MOTOR_LEFT+MOTOR_RIGHT).
+    :dps: la vitesse cible en nombre de degres par seconde
     """
-    if (vd<self.vitesseMin or vd>self.vitesseMax):
-      raise ValueError("La vitesse doit être supérieur ou égal à vitesseMin et inférieur à vitesseMax.")
-    self.vitesseRoueDroite=vd
 
-  def tournerDroite(self):
-    """Arrête la roue droite pour tourner à droite"""
-    self.setVitesseRoueDroite(0)
+    if(port==self.MOTOR_RIGHT):
+      self.MOTOR_RIGHT=dps
+    if(port==self.MOTOR_LEFT):
+      self.MOTOR_LEFT=dps
 
-  def tournerGauche(self):
-    """Arrête la roue gauche pour tourner à gauche"""
-    self.setVitesseRoueGauche(0)
+  def deplacer(self, intervalle_temps):
+        """deplace le robot dans un intervalle de temps
+        :param intervalle_temps: intervalle de temps dans lequel le robot avance"""
+        self.vitesseRoueDroite = self.v + self.w * self.WHEEL_BASE_WIDTH / 2
+        self.vitesseRoueGauche = self.v - self.w * self.WHEEL_BASE_WIDTH / 2
 
-  def arret(self):
-    """ Arrête le robot en mettant la vitesse de ses deux roues à 0 """
-    self.vitesseRoueDroite=0
-    self.vitesseRoueGauche=0
+        distance_parcourue_droite = self.vitesseRoueDroite* intervalle_temps
+        distance_parcourue_gauche = self.vitesseRoueGauche * intervalle_temps
 
-  def changerVitesse(self, vRoueGauche, vRoueDroite):
-    """Set la vitesse des roues"""
-    self.vitesseRoueDroite=vRoueDroite
-    self.vitesseRoueGauche=vRoueGauche
+        newOrientation = (distance_parcourue_droite - distance_parcourue_gauche) / self.WHEEL_BASE_WIDTH
+        self.orientation += newOrientation
 
-  def deplacer(self):
+        newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #recalcul vitesse lineare
+        self.x += newV * math.cos(self.orientation)
+        self.y += newV * math.sin(self.orientation)
+
+  def setVitesse(self,Vr,Vg):
+    """set la vitesse des roues
+    :param Vr : vitesse de la roue droite
+    :param Vg : vitesse de la roue gauche"""
+    self.vitesseRoueDroite=Vr
+    self.vitesseRoueGauche=Vg
+
+  def get_motor_position(self):
+    """Retourne un couple de couple de position des roues du robot grâce à la distance des deux roues et à l'orientation et position du robot"""
+    return ((self.x-self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y+self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)),(self.x+self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y-self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)))
+
+   
+  def offset_motor_encoder(self, port, offset):
     """
-    Change les coordonnées x et y du robot selon sa vitesse et son angle avec un pas de temps
+    Fixe l'offset des moteurs (en degres)   
+    :port: un des deux moteurs MOTOR_LEFT ou MOTOR_RIGHT (ou les deux avec +)
+    :offset: l'offset de decalage en degre.
     """
-    self.x +=(self.vitesseRoueGauche+self.vitesseRoueDroite)/2 #vitesse linéare moyenne du robot
-    self.y +=(self.vitesseRoueGauche+self.vitesseRoueDroite)/2 
-
-
+    if(port==self.MOTOR_RIGHT):
+      self.MOTOR_RIGHT_Offset=offset
+    if(port==self.MOTOR_LEFT):
+      self.MOTOR_LEFT_Offset=offset
+  
+  
 class Obstacle :
   '''Obstacle qui peuvent être présent dans l'environnement'''
     

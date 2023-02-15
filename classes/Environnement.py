@@ -1,5 +1,7 @@
+
 import numpy
 import random
+import math
 from Objet import Robot
 from Objet import Obstacle
 
@@ -74,7 +76,7 @@ class Environnement() :
         :return : sinon valeur positive correspondant à la distance en valeur absolue la plus petite entre les 2 rayons (distance générale, ne pdonne pas la direction)
         '''
 
-        return ((abs(objet1.x-objet2.x) + abs(objet1.y-objet2.y)) - (objet1.rayon + objet2.rayon))
+        return ( math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y),2) - (objet1.rayon + objet2.rayon) )
 
     
     def detectCollision(self):
