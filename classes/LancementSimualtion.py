@@ -15,3 +15,5 @@ view=View(root, simulation)
 view.start_sim()
 root.mainloop()
 view.stop_sim()
+
+
