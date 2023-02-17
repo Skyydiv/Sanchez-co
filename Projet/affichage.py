@@ -1,9 +1,7 @@
 from tkinter import *
 from tkinter import ttk
-from Simulation import Simulation
-from view import View 
-from Objet import Robot
-from Environnement import Environnement
+from simu import *
+#import simu (peut être remplacé par ça)
 
 rob=Robot(30,NONE) # initialiser le robot
 env=Environnement([1000,500],rob,5) # initialiser l'environment

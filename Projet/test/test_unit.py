@@ -1,10 +1,5 @@
 import unittest
-
-
-from Objet import Robot
-from Objet import Obstacle 
-from Environnement import *
-from Simulation import Simulation
+from simu import *
 
 
 class TestRobot(unittest.TestCase):
