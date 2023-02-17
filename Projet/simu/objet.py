@@ -2,6 +2,12 @@ import math
 
 class Robot:
 
+  WHEEL_BASE_WIDTH=117 # distance (mm) de la roue gauche a la roue droite.
+  WHEEL_DIAMETER=66.5 # diametre de la roue (mm)
+  WHEEL_BASE_CIRCUMFERENCE =WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
+  WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * math.pi # perimetre de la roue (mm)
+
+
   def __init__(self, rayon, capteur):
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) 
     :param rayon: rayon de l'objet (en mm)
@@ -12,11 +18,6 @@ class Robot:
     self.orientation=0 #(radians)
     self.capteur=capteur #Capteur du robot
 
-    self.WHEEL_BASE_WIDTH=117 # distance (mm) de la roue gauche a la roue droite.
-    self.WHEEL_DIAMETER=66.5 # diametre de la roue (mm)
-    self.WHEEL_BASE_CIRCUMFERENCE =self.WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
-    self.WHEEL_CIRCUMFERENCE = self.WHEEL_DIAMETER * math.pi # perimetre de la roue (mm)
-
     self.MOTOR_LEFT=None
     self.MOTOR_RIGHT=None
 
@@ -26,8 +27,6 @@ class Robot:
     self.vitesseRoueDroite=50
     self.vitesseRoueGauche=43
 
-    self.v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
-    self.w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
 
 
   def set_motor_dps(self, port, dps):
@@ -45,8 +44,12 @@ class Robot:
   def deplacer(self, intervalle_temps):
         """deplace le robot dans un intervalle de temps
         :param intervalle_temps: intervalle de temps dans lequel le robot avance"""
-        self.vitesseRoueDroite = self.v + self.w * self.WHEEL_BASE_WIDTH / 2
-        self.vitesseRoueGauche = self.v - self.w * self.WHEEL_BASE_WIDTH / 2
+
+        v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
+        w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
+
+        self.vitesseRoueDroite = v + w * self.WHEEL_BASE_WIDTH / 2
+        self.vitesseRoueGauche = v - w * self.WHEEL_BASE_WIDTH / 2
 
         distance_parcourue_droite = self.vitesseRoueDroite* intervalle_temps
         distance_parcourue_gauche = self.vitesseRoueGauche * intervalle_temps
