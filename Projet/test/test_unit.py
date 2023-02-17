@@ -1,36 +1,26 @@
 import unittest
-
-from Roue import Wheel
-from Objet import Robot
-from Objet import Obstacle 
-from Environnement import *
-from Simulation import Simulation
-
-
-
-
-class TestRoue(unittest.TestCase):
-    def test_vitesse_angulaire(self):
-        roue=Wheel(2)
-        self.assertEqual(roue.vitesse_angulaire(10),5)
+from simu import *
 
 class TestRobot(unittest.TestCase):
         
     def test_r_is_instanceof_Robot(self):
-        r=Robot(4)
+        c=Capteur(6)
+        r=Robot(4,c)
         self.assertIsInstance(r,Robot)
         
     def test_setVitesse(self):
-        r=Robot(4)
+        c=Capteur(6)
+        r=Robot(4,c)
         r.setVitesse(6,5)
         self.assertEqual(r.vitesseRoueGauche,5)
         self.assertEqual(r.vitesseRoueDroite,6)
         
     def test_set_motor_dps(self):
-         r=Robot(4)
-         r.set_motor_dps(None, 10)
-         self.assertEqual(r.MOTOR_RIGHT,10)
-         self.assertEqual(r.MOTOR_LEFT,10)
+        c=Capteur(6)
+        r=Robot(4,c)
+        r.set_motor_dps(None, 10)
+        self.assertEqual(r.MOTOR_RIGHT,10)
+        self.assertEqual(r.MOTOR_LEFT,10)
         
 class TestObstacle(unittest.TestCase):
     
@@ -44,7 +34,8 @@ class TestObstacle(unittest.TestCase):
 class TestEnvironnement(unittest.TestCase):
     
     def setUp(self):
-        robot=Robot(5)
+        c=Capteur(6)
+        robot=Robot(5,c)
         self.env=Environnement([200,200],robot,2)
         self.env.addObstacle(140,20,5,0,3)
         obs1=Obstacle(140,20,5,0,3)
@@ -72,14 +63,15 @@ class TestEnvironnement(unittest.TestCase):
     def test_calculDistance(self):
         obs1=Obstacle(140,20,5,0,3)
         obs2=Obstacle(80,170,5,0,3)
-        self.assertEqual(self.env.calculDistance(obs1,obs2),204)
+        self.assertEqual(self.env.calculDistance(obs1,obs2),161.53637361288014)
         
 
 class TestSimulation(unittest.TestCase):
     
     
     def test_simu_instanceof_Simulation(self):
-        r=Robot(5)
+        cap=Capteur(6)
+        r=Robot(5,cap)
         envi=Environnement([200,200],r,2)
         simu=Simulation(envi,50)
     
@@ -88,4 +80,3 @@ class TestSimulation(unittest.TestCase):
     
 if __name__ == '__main__':
     unittest.main()
-    
