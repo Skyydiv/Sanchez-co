@@ -24,9 +24,8 @@ class Robot:
     self.MOTOR_LEFT_Offset=0
     self.MOTOR_RIGHT_Offset=0
 
-    self.vitesseRoueDroite=50
-    self.vitesseRoueGauche=43
-
+    self.vitesseRoueDroite=0
+    self.vitesseRoueGauche=0
 
 
   def set_motor_dps(self, port, dps):
