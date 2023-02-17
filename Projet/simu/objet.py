@@ -1,6 +1,5 @@
 import math
 
-
 class Robot:
 
   def __init__(self, rayon, capteur):

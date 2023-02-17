@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from simu import Robot, Environnement, View, Simulation
+from simu import *
 #import simu (peut être remplacé par ça)
 
 rob=Robot(30,NONE) # initialiser le robot
