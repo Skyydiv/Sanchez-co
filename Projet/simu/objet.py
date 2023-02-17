@@ -39,6 +39,9 @@ class Robot:
       self.MOTOR_RIGHT=dps
     if(port==self.MOTOR_LEFT):
       self.MOTOR_LEFT=dps
+    if(port==(self.MOTOR_RIGHT,self.MOTOR_LEFT)):
+      self.MOTOR_RIGHT=dps
+      self.MOTOR_LEFT=dps
 
   def deplacer(self, intervalle_temps):
         """deplace le robot dans un intervalle de temps
@@ -78,11 +81,13 @@ class Robot:
     :port: un des deux moteurs MOTOR_LEFT ou MOTOR_RIGHT (ou les deux avec +)
     :offset: l'offset de decalage en degre.
     """
-    if(port==self.MOTOR_RIGHT):
+    if(port==self.MOTOR_LEFT_Offset):
       self.MOTOR_RIGHT_Offset=offset
-    if(port==self.MOTOR_LEFT):
+    if(port==self.MOTOR_LEFT_Offset):
       self.MOTOR_LEFT_Offset=offset
-  
+    if(port==(self.MOTOR_RIGHT_Offset,self.MOTOR_LEFT_Offset)):
+       self.MOTOR_RIGHT_Offset=offset
+       self.MOTOR_LEFT_Offset=offset
   
 class Obstacle :
   '''Obstacle qui peuvent être présent dans l'environnement'''
