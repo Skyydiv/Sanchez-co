@@ -1,7 +1,7 @@
-from Environnement import Environnement
 from time import sleep
 import random
 from threading import Thread
+from objet import Environnement
 
 class Simulation :
     """Simulation qui fait interagir le Robot avec son Environnement
@@ -34,8 +34,8 @@ class Simulation :
 
     def update1pas(self):
         self.robot.deplacer(1./self.delta_t)
-        # if(Environnement.detectCollision()):
-        #     self.stop_simu()
+        if(self.environnement.detectCollision()):
+            self.stop_simu()
 
 
     def coordAlea(self) :
@@ -52,7 +52,6 @@ class Simulation :
         '''Depose nbObstacles obstacles dans des positions aléatoires dans l'environnement
         :param nbObstacles: nombre d'obstacles a déposer
         '''
-        i=0
         for i in range(nbObstacles) :
             newCoord=self.coordAlea()
             self.environnement.addObstacle(newCoord[0],newCoord[1],1,0,30)

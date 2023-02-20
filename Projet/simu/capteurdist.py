@@ -1,5 +1,4 @@
 import math
-from Environnement import Environnement
 
 
 def intersectionDroites(a1, b1, c1, a2, b2, c2):
@@ -137,7 +136,7 @@ def checkObstacle(env):
     if lObstacle==[]:
         return None
     first=plusProche((r.x,r.y),lObstacle)
-    return Environnement.calculDistance(r,first)
+    return env.calculDistance(r,first)
 
  
      
