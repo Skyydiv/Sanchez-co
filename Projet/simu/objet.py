@@ -50,8 +50,6 @@ class Robot:
         v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
         w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
 
-        # self.vitesseRoueDroite = v + w * self.WHEEL_BASE_WIDTH / 2
-        # self.vitesseRoueGauche = v - w * self.WHEEL_BASE_WIDTH / 2
 
         distance_parcourue_droite = self.vitesseRoueDroite* intervalle_temps
         distance_parcourue_gauche = self.vitesseRoueGauche * intervalle_temps
@@ -59,7 +57,7 @@ class Robot:
         newOrientation = (distance_parcourue_droite - distance_parcourue_gauche) / self.WHEEL_BASE_WIDTH
         self.orientation += newOrientation
 
-        newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #recalcul vitesse lineare
+        newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #recalcul vitesse lineare parcourue par le robot
         self.x += newV * math.cos(self.orientation)
         self.y += newV * math.sin(self.orientation)
 
