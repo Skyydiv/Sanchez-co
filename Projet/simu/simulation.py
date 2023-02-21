@@ -2,6 +2,7 @@ from time import sleep
 import random
 from threading import Thread
 from objet import Environnement
+from IA import Ia_Avancer_tout_droit
 
 class Simulation :
     """Simulation qui fait interagir le Robot avec son Environnement
@@ -15,6 +16,7 @@ class Simulation :
         self.robot=environnement.robot
         self.delta_t=delta_t
         self.en_cours=False
+    
     
 
     def run_simu(self):
@@ -33,6 +35,8 @@ class Simulation :
 
 
     def update1pas(self):
+        
+        
         self.robot.deplacer(1./self.delta_t)
         if(self.environnement.detectCollision()):
             self.stop_simu()
