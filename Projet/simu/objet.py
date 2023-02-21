@@ -24,8 +24,8 @@ class Robot:
     self.MOTOR_LEFT_Offset=0
     self.MOTOR_RIGHT_Offset=0
 
-    self.vitesseRoueDroite=0
-    self.vitesseRoueGauche=0
+    self.vitesseRoueDroite=0 #degre par sec
+    self.vitesseRoueGauche=0 #degre par sec
 
 
   def set_motor_dps(self, port, dps):
@@ -47,19 +47,38 @@ class Robot:
         """deplace le robot dans un intervalle de temps
         :param intervalle_temps: intervalle de temps dans lequel le robot avance"""
 
-        v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
-        w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
+        #Conversion de la vitesse dps en mm par sec
+        vD=self.vitesseRoueDroite/360.0 * math.pi * self.WHEEL_DIAMETER
+        vG=self.vitesseRoueGauche/360.0 * math.pi * self.WHEEL_DIAMETER
 
-
-        distance_parcourue_droite = self.vitesseRoueDroite* intervalle_temps
-        distance_parcourue_gauche = self.vitesseRoueGauche * intervalle_temps
+        distance_parcourue_droite = vD * intervalle_temps
+        distance_parcourue_gauche = vG * intervalle_temps
 
         newOrientation = (distance_parcourue_droite - distance_parcourue_gauche) / self.WHEEL_BASE_WIDTH
         self.orientation += newOrientation
 
-        newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #recalcul vitesse lineare parcourue par le robot
+        newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #calcul vitesse lineare 
         self.x += newV * math.cos(self.orientation)
         self.y += newV * math.sin(self.orientation)
+
+        # v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
+        # w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
+
+
+        # distance_parcourue_droite = self.vitesseRoueDroite* intervalle_temps
+        # distance_parcourue_gauche = self.vitesseRoueGauche * intervalle_temps
+
+        # newOrientation = (distance_parcourue_droite - distance_parcourue_gauche) / self.WHEEL_BASE_WIDTH
+        # self.orientation += newOrientation
+
+        # newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #recalcul vitesse lineare parcourue par le robot
+        # self.x += newV * math.cos(self.orientation)
+        # self.y += newV * math.sin(self.orientation)
+
+       
+
+
+
 
   def setVitesse(self,Vr,Vg):
     """set la vitesse des roues
