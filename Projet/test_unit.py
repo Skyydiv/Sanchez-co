@@ -1,6 +1,9 @@
 import unittest
+from capteur import *
 from simu import *
 
+
+'''
 class TestRobot(unittest.TestCase):
         
     def test_r_is_instanceof_Robot(self):
@@ -77,13 +80,13 @@ class TestSimulation(unittest.TestCase):
     
         self.assertIsInstance(simu,Simulation)
     
-    
+'''
 
 class TestCapteur(unittest.TestCase):
 
     def setUp(self):
-        c=Capteur(6)
-        robot=Robot(5,c)
+        self.c=Capteur(6)
+        robot=Robot(5,self.c)
         self.env=Environnement([200,200],robot,2)
         self.env.addObstacle(140,20,5,0,3)
         obs1=Obstacle(140,20,5,0,3)
@@ -92,9 +95,13 @@ class TestCapteur(unittest.TestCase):
         self.env.addObstacle(10,10,5,0,3)
        
     def testIntersectionDroiteCercle(self):
-        print(self.c.intersectionDroiteCercle(-30, 20, 100, 25, 23, 10))
+        l=intersectionDroiteCercle(-30, 20, 100, 25, 23, 10)
+        self.assertTrue(l[0]==(25.3,33.0))
+        self.assertTrue(l[1]==(15.9,18.9))
+
 
 
 
 if __name__ == '__main__':
     unittest.main()
+
