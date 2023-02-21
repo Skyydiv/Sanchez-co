@@ -81,7 +81,7 @@ def equationDroitePolaire(vect):
     a = m
     b = 1
     c = -p
-    return (a, b, c)
+    return (round(a), round(b), round(c))
 
 def dist(c1,c2):
     """
