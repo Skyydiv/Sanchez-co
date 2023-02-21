@@ -3,7 +3,8 @@ from tkinter import ttk
 from simu import *
 #import simu (peut être remplacé par ça)
 
-rob=Robot(30,NONE) # initialiser le robot
+capteur = Capteur(0)
+rob=Robot(30,capteur) # initialiser le robot
 rob.setVitesse(50,43)
 env=Environnement([1000,500],rob,5) # initialiser l'environment
 simulation=Simulation(env,100)
