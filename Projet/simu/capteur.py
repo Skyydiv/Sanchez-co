@@ -1,53 +1,5 @@
 import math
 
-class Capteur:
-    def __init__(self, angle):
-        self.angle = angle
-
-    def checkObstacle(self,env):
-        '''
-        Vérifie si il y a un obstacle présent devant le robot.
-        :param env: L'environnement 
-        :param tailleRayon (float): l'épaisseur sur laquelle le rayon détect (sa précision)
-        '''
-        r = env.robot #récupère le robot
-
-        rA,rB,rC = equationDroitePolaire((1,r.orientation)) #calcul l'équation de la droite à partir des info du robot
-        lObstacle=[]    #liste de tout les obstacles rencontré, le 1 er fais partie de ceux là
-
-        for o in env.ensemble_obstacles: #parcourt tout les obstacles de l'environnement
-
-            if o.x >= r.x - r.rayon -o.rayon: #on regarde que les obstacles devant le robot
-                lInter=intersectionDroiteCercle(rA,rB,rC,o.x,o.y,o.rayon) #Donne la liste des coordonnées d'intersection entre le rayon du robot et le cercle
-                if lInter!=[]:
-                    proche=plusProche((r.x,r.y), lInter) #récupère le plus proche 
-                    lObstacle.append(proche) 
-            
-        if lObstacle==[]: #si aucun obstacle rencontré 
-            return None
-        first=plusProche((r.x,r.y),lObstacle)
-        return env.calculDistance(r,first)
-
- 
-     
-    def capteur_distance(self,env):
-        """Renvoie la distance à l'obstacle le plus près du robot dans sa direction si il y en a un, sinon renvoie la distance au mur dans sa direction.
-        :param env: L'environnement
-        :return : distance obstacle/mur le plus proche
-        """
-        
-        checkO = self.checkObstacle(env)
-        return checkO
-
-    # if checkO != None:
-    #     return check0
-        
-    # eqMurD= (-1,0,env.coordsmax[0])
-    # eqMurG = (-1,0,0)
-    #  eqMurH = (0,-1,0)
-    #  eqMurB = (0,-1,env.coordsmax[1])
-
-    # lM=[eqMurD,eqMurG,eqMurH,eqMurB]
 def intersectionDroites(a1, b1, c1, a2, b2, c2):
     """
     Calcule les coordonnées cartésiennes de l'intersection de deux droites à partir de leurs équations, sous la forme ax + by + c = 0.
@@ -160,3 +112,62 @@ def plusProche(c,liste):
             distMin=dTmp
 
     return e
+
+
+
+
+
+
+
+
+
+
+
+class Capteur:
+    def __init__(self, angle):
+        self.angle = angle
+
+    def checkObstacle(self,env):
+        '''
+        Vérifie si il y a un obstacle présent devant le robot.
+        :param env: L'environnement 
+        :param tailleRayon (float): l'épaisseur sur laquelle le rayon détect (sa précision)
+        '''
+        r = env.robot #récupère le robot
+
+        rA,rB,rC = equationDroitePolaire((1,r.orientation)) #calcul l'équation de la droite à partir des info du robot
+        lObstacle=[]    #liste de tout les obstacles rencontré, le 1 er fais partie de ceux là
+
+        for o in env.ensemble_obstacles: #parcourt tout les obstacles de l'environnement
+
+            if o.x >= r.x - r.rayon -o.rayon: #on regarde que les obstacles devant le robot
+                lInter=intersectionDroiteCercle(rA,rB,rC,o.x,o.y,o.rayon) #Donne la liste des coordonnées d'intersection entre le rayon du robot et le cercle
+                if lInter!=[]:
+                    proche=plusProche((r.x,r.y), lInter) #récupère le plus proche 
+                    lObstacle.append(proche) 
+            
+        if lObstacle==[]: #si aucun obstacle rencontré 
+            return None
+        first=plusProche((r.x,r.y),lObstacle)
+        return env.calculDistance(r,first)
+
+ 
+     
+    def capteur_distance(self,env):
+        """Renvoie la distance à l'obstacle le plus près du robot dans sa direction si il y en a un, sinon renvoie la distance au mur dans sa direction.
+        :param env: L'environnement
+        :return : distance obstacle/mur le plus proche
+        """
+        
+        checkO = self.checkObstacle(env)
+        return checkO
+
+    # if checkO != None:
+    #     return check0
+        
+    # eqMurD= (-1,0,env.coordsmax[0])
+    # eqMurG = (-1,0,0)
+    #  eqMurH = (0,-1,0)
+    #  eqMurB = (0,-1,env.coordsmax[1])
+
+    # lM=[eqMurD,eqMurG,eqMurH,eqMurB]
