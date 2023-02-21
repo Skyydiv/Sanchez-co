@@ -86,21 +86,15 @@ class Robot:
     self.vitesseRoueDroite=Vr
     self.vitesseRoueGauche=Vg
 
-  def get_distance_roue(self, time, delta_t):
+  def get_distance_roue(self,delta_t):
     """
     Lit la distance parcourue par les roues pendant un temps
     :return: couple du distance parcourue par les roues
     """
-    distancerg=0.0
-    rotationrg=0.0
-    distancerd=0.0
-    rotationrd=0.0
-    while time>0:
-      rotationrg+= (self.vitesseRoueGauche * delta_t) % 360
-      distancerg+= (math.pi * WHEEL_DIAMETER/2 * rotation) / 180
-      rotationrd+= (self.vitesseRoueDroite * delta_t) % 360
-      distancerd+= (math.pi * WHEEL_DIAMETER/2 * rotation) / 180
-      time-=delta_t
+    rotationrg = (self.vitesseRoueGauche * delta_t) % 360
+    distancerg = (math.pi * WHEEL_DIAMETER/2 * rotationrg) / 180
+    rotationrd = (self.vitesseRoueDroite * delta_t) % 360
+    distancerd = (math.pi * WHEEL_DIAMETER/2 * rotationrd) / 180
     return (distancerg, distancerd)
 
 
