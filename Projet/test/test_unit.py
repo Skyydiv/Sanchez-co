@@ -65,7 +65,7 @@ class TestEnvironnement(unittest.TestCase):
         obs2=Obstacle(80,170,5,0,3)
         self.assertEqual(self.env.calculDistance(obs1,obs2),161.53637361288014)
         
-
+    
 class TestSimulation(unittest.TestCase):
     
     
@@ -78,5 +78,23 @@ class TestSimulation(unittest.TestCase):
         self.assertIsInstance(simu,Simulation)
     
     
+
+class TestCapteur(unittest.TestCase):
+
+    def setUp(self):
+        c=Capteur(6)
+        robot=Robot(5,c)
+        self.env=Environnement([200,200],robot,2)
+        self.env.addObstacle(140,20,5,0,3)
+        obs1=Obstacle(140,20,5,0,3)
+        obs2=Obstacle(80,170,5,0,3)
+        self.env.addObstacle(80,170,5,0,3)
+        self.env.addObstacle(10,10,5,0,3)
+       
+    def testIntersectionDroiteCercle(self):
+        print(self.c.intersectionDroiteCercle(-30, 20, 100, 25, 23, 10))
+
+
+
 if __name__ == '__main__':
     unittest.main()
