@@ -8,18 +8,20 @@ class Robot:
   WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * math.pi # perimetre de la roue (mm)
 
 
-  def __init__(self, rayon, capteur):
+  def __init__(self,rayon,capteur):
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) 
     :param rayon: rayon de l'objet (en mm)
     '''
-    self.x =0.1+rayon #pour être dans l'env
-    self.y = 0.1+rayon
-    self.rayon = rayon #(mm)
+    self.x =0.1+self.rayon #pour être dans l'env
+    self.y = 0.1+self.rayon
+
+    self.rayon = rayon
+    
     self.orientation=0 #(radians)
     self.capteur=capteur #Capteur du robot
 
-    self.MOTOR_LEFT=None
-    self.MOTOR_RIGHT=None
+    # self.MOTOR_LEFT=0 #dps
+    # self.MOTOR_RIGHT=0 #dps
 
     self.MOTOR_LEFT_Offset=0
     self.MOTOR_RIGHT_Offset=0
@@ -74,10 +76,6 @@ class Robot:
         # newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #recalcul vitesse lineare parcourue par le robot
         # self.x += newV * math.cos(self.orientation)
         # self.y += newV * math.sin(self.orientation)
-
-       
-
-
 
 
   def setVitesse(self,Vr,Vg):
