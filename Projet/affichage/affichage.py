@@ -7,7 +7,7 @@ from view import View
 capteur = Capteur(0)
 rob=Robot(Robot.WHEEL_BASE_WIDTH/2,capteur) # initialiser le robot
 rob.setVitesse(100,80)
-env=Environnement([1500,800],rob,5) # initialiser l'environment
+env=Environment([1500,800],rob,5) # initialiser l'environment
 simulation=Simulation(env,100)
 simulation.addSimulation(5) #ajouter des obstcales a l'environnement
   
