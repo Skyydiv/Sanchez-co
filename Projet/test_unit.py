@@ -99,6 +99,9 @@ class TestCapteur(unittest.TestCase):
         self.assertTrue(l[0]==(25.3,33.0))
         self.assertTrue(l[1]==(15.9,18.9))
 
+        l=intersectionDroiteCercle(-30, 20, 100, 33, 17, 1)
+        self.assertTrue(l==[])
+
 
 
 
