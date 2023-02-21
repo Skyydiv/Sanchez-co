@@ -86,24 +86,24 @@ class Robot:
     self.vitesseRoueDroite=Vr
     self.vitesseRoueGauche=Vg
 
-  def get_motor_position(self):
-    """Retourne un couple de couple de position des roues du robot grâce à la distance des deux roues et à l'orientation et position du robot"""
-    return ((self.x-self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y+self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)),(self.x+self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y-self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)))
+  def get_distance_roue(self, time, delta_t):
+    """
+    Lit la distance parcourue par les roues pendant un temps
+    :return: couple du distance parcourue par les roues
+    """
+    distancerg=0.0
+    rotationrg=0.0
+    distancerd=0.0
+    rotationrd=0.0
+    while time>0:
+      rotationrg+= (self.vitesseRoueGauche * delta_t) % 360
+      distancerg+= (math.pi * WHEEL_DIAMETER/2 * rotation) / 180
+      rotationrd+= (self.vitesseRoueDroite * delta_t) % 360
+      distancerd+= (math.pi * WHEEL_DIAMETER/2 * rotation) / 180
+      time-=delta_t
+    return (distancerg, distancerd)
 
-   
-  def offset_motor_encoder(self, port, offset):
-    """
-    Fixe l'offset des moteurs (en degres)   
-    :port: un des deux moteurs MOTOR_LEFT ou MOTOR_RIGHT (ou les deux avec +)
-    :offset: l'offset de decalage en degre.
-    """
-    if(port==self.MOTOR_LEFT_Offset):
-      self.MOTOR_RIGHT_Offset=offset
-    if(port==self.MOTOR_LEFT_Offset):
-      self.MOTOR_LEFT_Offset=offset
-    if(port==(self.MOTOR_RIGHT_Offset,self.MOTOR_LEFT_Offset)):
-       self.MOTOR_RIGHT_Offset=offset
-       self.MOTOR_LEFT_Offset=offset
+
   
 class Obstacle :
   '''Obstacle qui peuvent être présent dans l'environnement'''
