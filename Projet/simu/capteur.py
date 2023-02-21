@@ -111,7 +111,7 @@ def plusProche(c,liste):
             min=e
             distMin=dTmp
 
-    return e
+    return min
 
 
 

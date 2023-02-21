@@ -106,6 +106,8 @@ class TestCapteur(unittest.TestCase):
         self.assertTrue( dist((0,0),(0,5)) == 5)
         self.assertTrue( round(dist((0,0),(1,5)),1 )  == 5.1)
 
+    def testPlusProche(self):
+        self.assertTrue(plusProche((10,10), [(1,1), (3,2), (12,12), (15,15)])== (12,12))
 
 if __name__ == '__main__':
     unittest.main()
