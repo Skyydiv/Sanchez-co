@@ -102,7 +102,9 @@ class TestCapteur(unittest.TestCase):
         l=intersectionDroiteCercle(-30, 20, 100, 33, 17, 1)
         self.assertTrue(l==[])
 
-
+    def testdist(self):
+        self.assertTrue( dist((0,0),(0,5)) == 5)
+        self.assertTrue( round(dist((0,0),(1,5)),1 )  == 5.1)
 
 
 if __name__ == '__main__':
