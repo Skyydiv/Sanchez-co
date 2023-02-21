@@ -86,9 +86,11 @@ class Robot:
     self.vitesseRoueDroite=Vr
     self.vitesseRoueGauche=Vg
 
-  def get_motor_position(self):
-    """Retourne un couple de couple de position des roues du robot grâce à la distance des deux roues et à l'orientation et position du robot"""
-    return ((self.x-self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y+self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)),(self.x+self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y-self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)))
+  def get_motor_position(self, distance):
+    """Lit les etats des moteurs en degre.
+    :return: couple du  degre de rotation des moteurs
+    """
+    pass
 
    
   def offset_motor_encoder(self, port, offset):

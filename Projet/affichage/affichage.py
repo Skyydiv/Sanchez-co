@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from simu import *
+from view import View
 #import simu (peut être remplacé par ça)
 
 capteur = Capteur(0)
