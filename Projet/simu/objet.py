@@ -8,11 +8,11 @@ class Robot:
   WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * math.pi # perimetre de la roue (mm)
 
 
-  def __init__(self,capteur):
+  def __init__(self,rayon,capteur):
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) 
     :param rayon: rayon de l'objet (en mm)
     '''
-    self.rayon = self.WHEEL_BASE_WIDTH/2
+    self.rayon = rayon
 
     self.x =0.1+self.rayon #pour être dans l'env
     self.y = 0.1+self.rayon
@@ -86,11 +86,9 @@ class Robot:
     self.vitesseRoueDroite=Vr
     self.vitesseRoueGauche=Vg
 
-  def get_motor_position(self, distance):
-    """Lit les etats des moteurs en degre.
-    :return: couple du  degre de rotation des moteurs
-    """
-    pass
+  def get_motor_position(self):
+    """Retourne un couple de couple de position des roues du robot grâce à la distance des deux roues et à l'orientation et position du robot"""
+    return ((self.x-self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y+self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)),(self.x+self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y-self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)))
 
    
   def offset_motor_encoder(self, port, offset):
@@ -203,4 +201,5 @@ class Environnement :
         verifie si les coordonnes du robot sont identiques a un obstacle de l’environnement ou s’il a pris un mur selon une precision
         '''
         return self.estObstacle(self.robot.x,self.robot.y,self.robot.rayon) or self.estMur(self.robot.x,self.robot.y,self.robot.rayon)
+        
        
