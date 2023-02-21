@@ -8,24 +8,27 @@ class Robot:
   WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * math.pi # perimetre de la roue (mm)
 
 
-  def __init__(self, rayon, capteur):
+  def __init__(self,rayon,capteur):
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) 
     :param rayon: rayon de l'objet (en mm)
     '''
-    self.x =0.1+rayon #pour être dans l'env
-    self.y = 0.1+rayon
-    self.rayon = rayon #(mm)
+    self.rayon = rayon
+
+    self.x =0.1+self.rayon #pour être dans l'env
+    self.y = 0.1+self.rayon
+
+    
     self.orientation=0 #(radians)
     self.capteur=capteur #Capteur du robot
 
-    self.MOTOR_LEFT=None
-    self.MOTOR_RIGHT=None
+    # self.MOTOR_LEFT=0 #dps
+    # self.MOTOR_RIGHT=0 #dps
 
     self.MOTOR_LEFT_Offset=0
     self.MOTOR_RIGHT_Offset=0
 
-    self.vitesseRoueDroite=0
-    self.vitesseRoueGauche=0
+    self.vitesseRoueDroite=0 #degre par sec
+    self.vitesseRoueGauche=0 #degre par sec
 
 
   def set_motor_dps(self, port, dps):
@@ -47,19 +50,34 @@ class Robot:
         """deplace le robot dans un intervalle de temps
         :param intervalle_temps: intervalle de temps dans lequel le robot avance"""
 
-        v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
-        w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
+        #Conversion de la vitesse dps en mm par sec
+        vD=self.vitesseRoueDroite/360.0 * math.pi * self.WHEEL_DIAMETER
+        vG=self.vitesseRoueGauche/360.0 * math.pi * self.WHEEL_DIAMETER
 
-
-        distance_parcourue_droite = self.vitesseRoueDroite* intervalle_temps
-        distance_parcourue_gauche = self.vitesseRoueGauche * intervalle_temps
+        distance_parcourue_droite = vD * intervalle_temps
+        distance_parcourue_gauche = vG * intervalle_temps
 
         newOrientation = (distance_parcourue_droite - distance_parcourue_gauche) / self.WHEEL_BASE_WIDTH
         self.orientation += newOrientation
 
-        newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #recalcul vitesse lineare parcourue par le robot
+        newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #calcul vitesse lineare 
         self.x += newV * math.cos(self.orientation)
         self.y += newV * math.sin(self.orientation)
+
+        # v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
+        # w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
+
+
+        # distance_parcourue_droite = self.vitesseRoueDroite* intervalle_temps
+        # distance_parcourue_gauche = self.vitesseRoueGauche * intervalle_temps
+
+        # newOrientation = (distance_parcourue_droite - distance_parcourue_gauche) / self.WHEEL_BASE_WIDTH
+        # self.orientation += newOrientation
+
+        # newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #recalcul vitesse lineare parcourue par le robot
+        # self.x += newV * math.cos(self.orientation)
+        # self.y += newV * math.sin(self.orientation)
+
 
   def setVitesse(self,Vr,Vg):
     """set la vitesse des roues
@@ -68,24 +86,24 @@ class Robot:
     self.vitesseRoueDroite=Vr
     self.vitesseRoueGauche=Vg
 
-  def get_motor_position(self):
-    """Retourne un couple de couple de position des roues du robot grâce à la distance des deux roues et à l'orientation et position du robot"""
-    return ((self.x-self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y+self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)),(self.x+self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y-self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)))
+  def get_distance_roue(self, time, delta_t):
+    """
+    Lit la distance parcourue par les roues pendant un temps
+    :return: couple du distance parcourue par les roues
+    """
+    distancerg=0.0
+    rotationrg=0.0
+    distancerd=0.0
+    rotationrd=0.0
+    while time>0:
+      rotationrg+= (self.vitesseRoueGauche * delta_t) % 360
+      distancerg+= (math.pi * WHEEL_DIAMETER/2 * rotation) / 180
+      rotationrd+= (self.vitesseRoueDroite * delta_t) % 360
+      distancerd+= (math.pi * WHEEL_DIAMETER/2 * rotation) / 180
+      time-=delta_t
+    return (distancerg, distancerd)
 
-   
-  def offset_motor_encoder(self, port, offset):
-    """
-    Fixe l'offset des moteurs (en degres)   
-    :port: un des deux moteurs MOTOR_LEFT ou MOTOR_RIGHT (ou les deux avec +)
-    :offset: l'offset de decalage en degre.
-    """
-    if(port==self.MOTOR_LEFT_Offset):
-      self.MOTOR_RIGHT_Offset=offset
-    if(port==self.MOTOR_LEFT_Offset):
-      self.MOTOR_LEFT_Offset=offset
-    if(port==(self.MOTOR_RIGHT_Offset,self.MOTOR_LEFT_Offset)):
-       self.MOTOR_RIGHT_Offset=offset
-       self.MOTOR_LEFT_Offset=offset
+
   
 class Obstacle :
   '''Obstacle qui peuvent être présent dans l'environnement'''
@@ -183,4 +201,5 @@ class Environnement :
         verifie si les coordonnes du robot sont identiques a un obstacle de l’environnement ou s’il a pris un mur selon une precision
         '''
         return self.estObstacle(self.robot.x,self.robot.y,self.robot.rayon) or self.estMur(self.robot.x,self.robot.y,self.robot.rayon)
+        
        
