@@ -92,9 +92,9 @@ class Robot:
     :return: couple du distance parcourue par les roues
     """
     rotationrg = (self.vitesseRoueGauche * delta_t) % 360
-    distancerg = (math.pi * WHEEL_DIAMETER/2 * rotationrg) / 180
+    distancerg = (math.pi * self.WHEEL_DIAMETER/2 * rotationrg) / 180
     rotationrd = (self.vitesseRoueDroite * delta_t) % 360
-    distancerd = (math.pi * WHEEL_DIAMETER/2 * rotationrd) / 180
+    distancerd = (math.pi * self.WHEEL_DIAMETER/2 * rotationrd) / 180
     return (distancerg, distancerd)
 
 
