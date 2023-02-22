@@ -1,8 +1,7 @@
 import unittest
 
 import math
-from simu import *
-from simu.capteur import dist, equationDroitePolaire, intersectionDroiteCercle, plusProche
+from simu import Capteur, Robot, Obstacle, Environnement, Simulation
 
 
 

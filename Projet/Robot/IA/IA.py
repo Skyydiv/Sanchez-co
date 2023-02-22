@@ -1,4 +1,3 @@
-from simu import *
 from abc import ABC, abstractmethod
 import math
 

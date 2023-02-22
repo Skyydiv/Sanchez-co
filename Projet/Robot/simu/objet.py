@@ -1,5 +1,4 @@
 import math
-from capteur import Capteur
 
 class Robot:
 
