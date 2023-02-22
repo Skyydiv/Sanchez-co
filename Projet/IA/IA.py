@@ -49,7 +49,37 @@ class Ia_Avancer_tout_droit(Ia):
                 self.robot.setVitesse(self.v, self.v)
             else:
                 self.stop()
+
     
+class IAangle:
+    """
+    sous-classe de l'IA permettant permettant une rotation du robot d'un angle donné 
+    """
+    def __init__(self, robot, angle):
+        
+        self.robot = robot
+        self.running = False
+        self.angle = angle
+        
+        
+
+    def start(self):
+        if not self.running:
+            self.running = True
+            
+        
+
+
+    def stop(self):
+        return self.robot.orientation == self.angle
+    
+
+    def update(self, delta_t):
+        if self.running:
+            if self.stop(): 
+                return
+            else:
+                self.robot.orientation = self.angle
     
     
     
