@@ -2,6 +2,7 @@ from time import sleep
 import random
 from threading import Thread
 from objet import Environnement
+import IA
 
 
 class Simulation :
@@ -33,7 +34,8 @@ class Simulation :
 
 
     def update1pas(self):
-        self.robot.deplacer(1./self.delta_t)
+        IA.Ia_Avancer_tout_droit(self.robot,10,500).update(1/self.delta_t)
+        #self.robot.deplacer(1./self.delta_t)
         if(self.environnement.detectCollision()):
             self.stop_simu()
 
