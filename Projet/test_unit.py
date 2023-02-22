@@ -1,6 +1,10 @@
 import unittest
+from capteur import *
 from simu import *
+import math
 
+
+'''
 class TestRobot(unittest.TestCase):
         
     def test_r_is_instanceof_Robot(self):
@@ -65,7 +69,7 @@ class TestEnvironnement(unittest.TestCase):
         obs2=Obstacle(80,170,5,0,3)
         self.assertEqual(self.env.calculDistance(obs1,obs2),161.53637361288014)
         
-
+    
 class TestSimulation(unittest.TestCase):
     
     
@@ -77,6 +81,36 @@ class TestSimulation(unittest.TestCase):
     
         self.assertIsInstance(simu,Simulation)
     
-    
+'''
+
+class TestCapteur(unittest.TestCase):
+
+    def setUp(self):
+        self.c=Capteur(0)
+        robot=Robot(5,self.c)
+        self.env=Environnement([200,200],robot,0)
+        self.env.addObstacle(20,5,0,0,4)
+        
+       
+    def testIntersectionDroiteCercle(self):
+        l=intersectionDroiteCercle(-30, 20, 100, 25, 23, 10)
+        self.assertTrue(l[0]==(25.3,33.0))
+        self.assertTrue(l[1]==(15.9,18.9))
+
+        l=intersectionDroiteCercle(-30, 20, 100, 33, 17, 1)
+        self.assertTrue(l==[])
+
+    def testdist(self):
+        self.assertTrue( dist((0,0),(0,5)) == 5)
+        self.assertTrue( round(dist((0,0),(1,5)),1 )  == 5.1)
+
+    def testPlusProche(self):
+        self.assertTrue(plusProche((10,10), [(1,1), (3,2), (12,12), (15,15)])== (12,12))
+
+    def testEquationDroitePolaire(self):
+        #self.assertTrue(equationDroitePolaire( (14,0) ) == (0,1,0))
+        print(equationDroitePolaire( (200,math.pi/4) ))
+        
 if __name__ == '__main__':
     unittest.main()
+
