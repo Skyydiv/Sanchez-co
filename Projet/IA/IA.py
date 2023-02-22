@@ -51,7 +51,7 @@ class Ia_Avancer_tout_droit(Ia):
                 self.stop()
 
     
-class IAangle:
+class IAangle(Ia):
     """
     sous-classe de l'IA permettant permettant une rotation du robot d'un angle donné 
     """
@@ -83,7 +83,7 @@ class IAangle:
     
     
     
-class IAseq:
+class IAseq(Ia):
     """
     sequence de sous IA 
     """
@@ -114,7 +114,7 @@ class IAseq:
     
 
 
-class IAevitecrash:
+class IAevitecrash(Ia):
     """
     sous-classe de l'IA permettant permettant d'eviter au robot de se crash 
     """
