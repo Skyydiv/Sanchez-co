@@ -4,7 +4,6 @@ from threading import Thread
 from simu import Environnement
 from IA import Ia_Avancer_tout_droit, IAseq, IAangle, Ia, IAevitecrash
 
-
 class Simulation :
     """Simulation qui fait interagir le Robot avec son Environnement
     """

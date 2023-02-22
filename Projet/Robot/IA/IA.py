@@ -36,17 +36,19 @@ class Ia_Avancer_tout_droit(Ia):
         return False
     
     def update(self, delta_t):
-            if self.stop():
-                self.robot.setVitesse(0, 0)
-                self.parcouru_gauche = 0
-                self.parcouru_droite = 0
+        if self.stop():
+            self.robot.setVitesse(0, 0)
+            self.parcouru_gauche = 0
+            self.parcouru_droite = 0
+        else:
+            parcouru_g, parcouru_d = self.robot.get_distance_roue(delta_t)
+            if self.parcouru_gauche < self.goal and self.parcouru_droite < self.goal:
+                self.robot.setVitesse(self.v, self.v)
+                self.robot.deplacer(delta_t)
+                self.parcouru_gauche += parcouru_g
+                self.parcouru_droite += parcouru_d
             else:
-                parcouru_g, parcouru_d = self.robot.get_distance_roue(delta_t)
-                if self.parcouru_gauche < self.goal or self.parcouru_droite < self.goal:
-                    self.robot.setVitesse(self.v, self.v)
-                    self.robot.deplacer(delta_t)
-                    self.parcouru_gauche += parcouru_g
-                    self.parcouru_droite += parcouru_d
+                self.stop()==True
 
     
 class IAangle(Ia):
