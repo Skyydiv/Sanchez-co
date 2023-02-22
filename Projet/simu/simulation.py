@@ -3,6 +3,7 @@ import random
 from threading import Thread
 from objet import Environnement
 
+
 class Simulation :
     """Simulation qui fait interagir le Robot avec son Environnement
     """
