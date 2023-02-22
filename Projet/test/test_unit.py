@@ -1,10 +1,9 @@
 import unittest
-from capteur import *
-from simu import *
 import math
+from simu import *
+from simu.capteur import dist, equationDroitePolaire, intersectionDroiteCercle, plusProche
 
 
-'''
 class TestRobot(unittest.TestCase):
         
     def test_r_is_instanceof_Robot(self):
@@ -19,13 +18,6 @@ class TestRobot(unittest.TestCase):
         self.assertEqual(r.vitesseRoueGauche,5)
         self.assertEqual(r.vitesseRoueDroite,6)
         
-    def test_set_motor_dps(self):
-        c=Capteur(6)
-        r=Robot(4,c)
-        r.set_motor_dps(None, 10)
-        self.assertEqual(r.MOTOR_RIGHT,10)
-        self.assertEqual(r.MOTOR_LEFT,10)
-        
 class TestObstacle(unittest.TestCase):
     
     def test_obstacle_is_instanceof_Obastacle(self):
@@ -33,8 +25,6 @@ class TestObstacle(unittest.TestCase):
         obstacle=Obstacle(2,3,5,0,4)
         self.assertIsInstance(obstacle,Obstacle)
                                             
-
-
 class TestEnvironnement(unittest.TestCase):
     
     def setUp(self):
@@ -80,8 +70,7 @@ class TestSimulation(unittest.TestCase):
         simu=Simulation(envi,50)
     
         self.assertIsInstance(simu,Simulation)
-    
-'''
+
 
 class TestCapteur(unittest.TestCase):
 
