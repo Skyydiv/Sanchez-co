@@ -1,4 +1,6 @@
 import math
+from Environnement import Environnement
+
 
 def intersectionDroites(a1, b1, c1, a2, b2, c2):
     """
@@ -63,7 +65,7 @@ def intersectionDroiteCercle(a, b, c, h, k, r):
     y2 = m * x2 + p
 
     # Renvoi des coordonnées des points d'intersection sous forme de liste
-    return [(round(x1,1), round(y1,1)), (round(x2,1), round(y2,1))]
+    return [(x1, y1), (x2, y2)]
 
 
 def equationDroitePolaire(vect):
@@ -81,7 +83,7 @@ def equationDroitePolaire(vect):
     a = m
     b = 1
     c = -p
-    return (round(a), round(b), round(c))
+    return (a, b, c)
 
 def dist(c1,c2):
     """
@@ -111,91 +113,54 @@ def plusProche(c,liste):
             min=e
             distMin=dTmp
 
-    return min
+    return e
 
+def checkObstacle(env):
+    '''
+    Vérifie si il y a un obstacle présent devant le robot.
+    :param env: L'environnement 
+    :param tailleRayon (float): l'épaisseur sur laquelle le rayon détect (sa précision)
+    '''
+    r = env.robot
 
+    rA,rB,rC = equationDroitePolaire(r.v,r.orientation)
+    lObstacle=[]
 
+    for o in env.ensemble_obstacles:
 
-
-
-
-
-
-
-
-class Capteur:
-    def __init__(self, angle):
-        self.angle = angle
-
-    def checkObstacle(self,env):
-        '''
-        Vérifie si il y a un obstacle présent devant le robot.
-        :param env: L'environnement 
-        :param tailleRayon (float): l'épaisseur sur laquelle le rayon détect (sa précision)
-        '''
-        r = env.robot #récupère le robot
-        print("orientation:",r.orientation)
-        rA,rB,rC = equationDroitePolaire((17,r.orientation*math.pi)) #calcul l'équation de la droite à partir des info du robot
-        lObstacle=[]    #liste de tout les obstacles rencontré, le 1 er fais partie de ceux là
-
-        for o in env.ensemble_obstacles: #parcourt tout les obstacles de l'environnement
-            print("boucle1")
-            lInter=intersectionDroiteCercle(rA,rB,rC,o.x,o.y,o.rayon) #Donne la liste des coordonnées d'intersection entre le rayon du robot et le cercle
-            print(lInter)
+        if o.x >= r.x - r.rayon -o.rayon:
+            lInter=intersectionDroiteCercle(rA,rB,rC,o.x,o.y,o.rayon)
             if lInter!=[]:
-                print("if2")
-                proche=plusProche((r.x,r.y), lInter) #récupère le plus proche 
+                proche=plusProche((r.x,r.y), lInter)
                 lObstacle.append(proche) 
-            
-        if lObstacle==[]: #si aucun obstacle rencontré 
-            return None
-        first=plusProche((r.x,r.y),lObstacle)
-        return env.calculDistance(r,first)
-
- #  def checkObstacle(self,env):
         
-     #   Vérifie si il y a un obstacle présent devant le robot.
-     #   :param env: L'environnement 
-     #   :param tailleRayon (float): l'épaisseur sur laquelle le rayon détect (sa précision)
-     #   
-     #   r = env.robot #récupère le robot
+    if lObstacle==[]:
+        return None
+    first=plusProche((r.x,r.y),lObstacle)
+    return Environnement.calculDistance(r,first)
 
-     #   rA,rB,rC = equationDroitePolaire((1,r.orientation)) #calcul l'équation de la droite à partir des info du robot
-     #   lObstacle=[]    #liste de tout les obstacles rencontré, le 1 er fais partie de ceux là
-
-     #   for o in env.ensemble_obstacles: #parcourt tout les obstacles de l'environnement
-     #       print("boucle1")
-     #       if o.x >= r.x - r.rayon -o.rayon: #on regarde que les obstacles devant le robot
-     #           print("if1")
-     #           lInter=intersectionDroiteCercle(rA,rB,rC,o.x,o.y,o.rayon) #Donne la liste des coordonnées d'intersection entre le rayon du robot et le cercle
-     #           print(lInter)
-     #           if lInter!=[]:
-     #               print("if2")
-     #               proche=plusProche((r.x,r.y), lInter) #récupère le plus proche 
-     #               lObstacle.append(proche) 
-     #       
-     #   if lObstacle==[]: #si aucun obstacle rencontré 
-     #       return None
-     #   first=plusProche((r.x,r.y),lObstacle)
-     #   return env.calculDistance(r,first)
  
      
-    def capteur_distance(self,env):
-        """Renvoie la distance à l'obstacle le plus près du robot dans sa direction si il y en a un, sinon renvoie la distance au mur dans sa direction.
-        :param env: L'environnement
-        :return : distance obstacle/mur le plus proche
-        """
-        
-        checkO = self.checkObstacle(env)
-        return checkO
+def capteur_distance(env):
+    """Renvoie la distance à l'obstacle le plus près du robot dans sa direction si il y en a un, sinon renvoie la distance au mur dans sa direction.
+    :param env: L'environnement
+    :return : distance obstacle/mur le plus proche
+    """
+    
+    checkO = checkObstacle(env)
+    return checkO
 
-    # if checkO != None:
-    #     return check0
-        
-    # eqMurD= (-1,0,env.coordsmax[0])
-    # eqMurG = (-1,0,0)
-    #  eqMurH = (0,-1,0)
-    #  eqMurB = (0,-1,env.coordsmax[1])
+   # if checkO != None:
+   #     return check0
+    
+   # eqMurD= (-1,0,env.coordsmax[0])
+   # eqMurG = (-1,0,0)
+  #  eqMurH = (0,-1,0)
+  #  eqMurB = (0,-1,env.coordsmax[1])
 
-    # lM=[eqMurD,eqMurG,eqMurH,eqMurB]
+   # lM=[eqMurD,eqMurG,eqMurH,eqMurB]
+
+    
+
+
 

@@ -24,6 +24,7 @@ class Robot:
     # self.MOTOR_LEFT=0 #dps
     # self.MOTOR_RIGHT=0 #dps
 
+
     self.MOTOR_LEFT_Offset=0
     self.MOTOR_RIGHT_Offset=0
 
@@ -45,6 +46,7 @@ class Robot:
     if(port==(self.MOTOR_RIGHT,self.MOTOR_LEFT)):
       self.MOTOR_RIGHT=dps
       self.MOTOR_LEFT=dps
+
 
   def deplacer(self, intervalle_temps):
         """deplace le robot dans un intervalle de temps
@@ -78,13 +80,13 @@ class Robot:
         # self.x += newV * math.cos(self.orientation)
         # self.y += newV * math.sin(self.orientation)
 
-
   def setVitesse(self,Vr,Vg):
     """set la vitesse des roues
     :param Vr : vitesse de la roue droite
     :param Vg : vitesse de la roue gauche"""
     self.vitesseRoueDroite=Vr
     self.vitesseRoueGauche=Vg
+
 
   def get_distance_roue(self,delta_t):
     """
@@ -98,7 +100,6 @@ class Robot:
     return (distancerg, distancerd)
 
 
-  
 class Obstacle :
   '''Obstacle qui peuvent être présent dans l'environnement'''
     
@@ -115,6 +116,7 @@ class Obstacle :
       self.hauteur=h
       self.distSol=d
       self.rayon= rayon
+
   
 class Environnement :
     ''' L'environnement dans lequel se trouve le Robot'''
@@ -187,7 +189,9 @@ class Environnement :
         :return : sinon valeur positive correspondant à la distance en valeur absolue la plus petite entre les 2 rayons (distance générale, ne pdonne pas la direction)
         '''
 
+
         return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2) - (objet1.rayon + objet2.rayon) )
+
 
     
     def detectCollision(self):
@@ -195,5 +199,4 @@ class Environnement :
         verifie si les coordonnes du robot sont identiques a un obstacle de l’environnement ou s’il a pris un mur selon une precision
         '''
         return self.estObstacle(self.robot.x,self.robot.y,self.robot.rayon) or self.estMur(self.robot.x,self.robot.y,self.robot.rayon)
-        
-       
+
