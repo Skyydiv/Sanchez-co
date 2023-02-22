@@ -83,7 +83,34 @@ class IAangle:
     
     
     
-    
+class IAseq:
+    """
+    sequence de sous IA 
+    """
+    def __init__(self, listeIA):
+        
+        self.listeIA = listeIA
+        self.curr = 0
+
+
+
+    def start(self):
+        pass
+
+
+    def stop(self):
+        if self.curr == len(self.listeIA):
+            return True
+        
+        
+    def update(self):
+        if self.stop():
+            return
+        else:
+            self.listeIA[self.curr].stop()
+            self.curr+=1
+            self.listeIA[self.curr].start()
+        self.listeIA[self.curr].update()
     
     
    
