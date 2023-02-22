@@ -1,6 +1,7 @@
 import unittest
 from capteur import *
 from simu import *
+import math
 
 
 '''
@@ -85,14 +86,11 @@ class TestSimulation(unittest.TestCase):
 class TestCapteur(unittest.TestCase):
 
     def setUp(self):
-        self.c=Capteur(6)
+        self.c=Capteur(0)
         robot=Robot(5,self.c)
-        self.env=Environnement([200,200],robot,2)
-        self.env.addObstacle(140,20,5,0,3)
-        obs1=Obstacle(140,20,5,0,3)
-        obs2=Obstacle(80,170,5,0,3)
-        self.env.addObstacle(80,170,5,0,3)
-        self.env.addObstacle(10,10,5,0,3)
+        self.env=Environnement([200,200],robot,0)
+        self.env.addObstacle(20,5,0,0,4)
+        
        
     def testIntersectionDroiteCercle(self):
         l=intersectionDroiteCercle(-30, 20, 100, 25, 23, 10)
@@ -109,6 +107,10 @@ class TestCapteur(unittest.TestCase):
     def testPlusProche(self):
         self.assertTrue(plusProche((10,10), [(1,1), (3,2), (12,12), (15,15)])== (12,12))
 
+    def testEquationDroitePolaire(self):
+        #self.assertTrue(equationDroitePolaire( (14,0) ) == (0,1,0))
+        print(equationDroitePolaire( (200,math.pi/4) ))
+        
 if __name__ == '__main__':
     unittest.main()
 
