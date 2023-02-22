@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 
 
+
 class View :
     '''L'interface graphique de la simulation'''
 
@@ -50,6 +51,7 @@ class View :
         x=self.robot.x
         y=self.robot.y
         r=self.robot.rayon
+        #r=30
         self.canv.create_arc(x-r,y-r,x+r,y+r, start=45, extent=270,fill="yellow")
 
     def drawObstacles(self):

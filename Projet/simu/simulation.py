@@ -15,7 +15,6 @@ class Simulation :
         self.robot=environnement.robot
         self.delta_t=delta_t
         self.en_cours=False
-    
 
     def run_simu(self):
         """lance la simulation"""
@@ -52,7 +51,6 @@ class Simulation :
         '''Depose nbObstacles obstacles dans des positions aléatoires dans l'environnement
         :param nbObstacles: nombre d'obstacles a déposer
         '''
-        i=0
         for i in range(nbObstacles) :
             newCoord=self.coordAlea()
             self.environnement.addObstacle(newCoord[0],newCoord[1],1,0,30)

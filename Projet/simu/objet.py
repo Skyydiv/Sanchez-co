@@ -1,34 +1,35 @@
 import math
 
-
 class Robot:
 
-  def __init__(self, rayon, capteur):
+  WHEEL_BASE_WIDTH=117 # distance (mm) de la roue gauche a la roue droite.
+  WHEEL_DIAMETER=66.5 # diametre de la roue (mm)
+  WHEEL_BASE_CIRCUMFERENCE =WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
+  WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * math.pi # perimetre de la roue (mm)
+
+
+  def __init__(self,rayon,capteur):
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) 
     :param rayon: rayon de l'objet (en mm)
     '''
-    self.x =0.1+rayon #pour être dans l'env
-    self.y = 0.1+rayon
-    self.rayon = rayon #(mm)
+    self.rayon = rayon
+
+    self.x =0.1+self.rayon #pour être dans l'env
+    self.y = 0.1+self.rayon
+
+    
     self.orientation=0 #(radians)
     self.capteur=capteur #Capteur du robot
 
-    self.WHEEL_BASE_WIDTH=117 # distance (mm) de la roue gauche a la roue droite.
-    self.WHEEL_DIAMETER=66.5 # diametre de la roue (mm)
-    self.WHEEL_BASE_CIRCUMFERENCE =self.WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
-    self.WHEEL_CIRCUMFERENCE = self.WHEEL_DIAMETER * math.pi # perimetre de la roue (mm)
+    # self.MOTOR_LEFT=0 #dps
+    # self.MOTOR_RIGHT=0 #dps
 
-    self.MOTOR_LEFT=None
-    self.MOTOR_RIGHT=None
 
     self.MOTOR_LEFT_Offset=0
     self.MOTOR_RIGHT_Offset=0
 
-    self.vitesseRoueDroite=50
-    self.vitesseRoueGauche=43
-
-    self.v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
-    self.w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
+    self.vitesseRoueDroite=0 #degre par sec
+    self.vitesseRoueGauche=0 #degre par sec
 
 
   def set_motor_dps(self, port, dps):
@@ -42,22 +43,42 @@ class Robot:
       self.MOTOR_RIGHT=dps
     if(port==self.MOTOR_LEFT):
       self.MOTOR_LEFT=dps
+    if(port==(self.MOTOR_RIGHT,self.MOTOR_LEFT)):
+      self.MOTOR_RIGHT=dps
+      self.MOTOR_LEFT=dps
+
 
   def deplacer(self, intervalle_temps):
         """deplace le robot dans un intervalle de temps
         :param intervalle_temps: intervalle de temps dans lequel le robot avance"""
-        self.vitesseRoueDroite = self.v + self.w * self.WHEEL_BASE_WIDTH / 2
-        self.vitesseRoueGauche = self.v - self.w * self.WHEEL_BASE_WIDTH / 2
 
-        distance_parcourue_droite = self.vitesseRoueDroite* intervalle_temps
-        distance_parcourue_gauche = self.vitesseRoueGauche * intervalle_temps
+        #Conversion de la vitesse dps en mm par sec
+        vD=self.vitesseRoueDroite/360.0 * math.pi * self.WHEEL_DIAMETER
+        vG=self.vitesseRoueGauche/360.0 * math.pi * self.WHEEL_DIAMETER
+
+        distance_parcourue_droite = vD * intervalle_temps
+        distance_parcourue_gauche = vG * intervalle_temps
 
         newOrientation = (distance_parcourue_droite - distance_parcourue_gauche) / self.WHEEL_BASE_WIDTH
         self.orientation += newOrientation
 
-        newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #recalcul vitesse lineare
+        newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #calcul vitesse lineare 
         self.x += newV * math.cos(self.orientation)
         self.y += newV * math.sin(self.orientation)
+
+        # v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
+        # w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
+
+
+        # distance_parcourue_droite = self.vitesseRoueDroite* intervalle_temps
+        # distance_parcourue_gauche = self.vitesseRoueGauche * intervalle_temps
+
+        # newOrientation = (distance_parcourue_droite - distance_parcourue_gauche) / self.WHEEL_BASE_WIDTH
+        # self.orientation += newOrientation
+
+        # newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #recalcul vitesse lineare parcourue par le robot
+        # self.x += newV * math.cos(self.orientation)
+        # self.y += newV * math.sin(self.orientation)
 
   def setVitesse(self,Vr,Vg):
     """set la vitesse des roues
@@ -66,23 +87,19 @@ class Robot:
     self.vitesseRoueDroite=Vr
     self.vitesseRoueGauche=Vg
 
-  def get_motor_position(self):
-    """Retourne un couple de couple de position des roues du robot grâce à la distance des deux roues et à l'orientation et position du robot"""
-    return ((self.x-self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y+self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)),(self.x+self.WHEEL_BASE_WIDTH/2*math.sin(self.orientation),self.y-self.WHEEL_BASE_WIDTH/2*math.cos(self.orientation)))
 
-   
-  def offset_motor_encoder(self, port, offset):
+  def get_distance_roue(self,delta_t):
     """
-    Fixe l'offset des moteurs (en degres)   
-    :port: un des deux moteurs MOTOR_LEFT ou MOTOR_RIGHT (ou les deux avec +)
-    :offset: l'offset de decalage en degre.
+    Lit la distance parcourue par les roues pendant un temps
+    :return: couple du distance parcourue par les roues
     """
-    if(port==self.MOTOR_RIGHT):
-      self.MOTOR_RIGHT_Offset=offset
-    if(port==self.MOTOR_LEFT):
-      self.MOTOR_LEFT_Offset=offset
-  
-  
+    rotationrg = (self.vitesseRoueGauche * delta_t) % 360
+    distancerg = (math.pi * self.WHEEL_DIAMETER/2 * rotationrg) / 180
+    rotationrd = (self.vitesseRoueDroite * delta_t) % 360
+    distancerd = (math.pi * self.WHEEL_DIAMETER/2 * rotationrd) / 180
+    return (distancerg, distancerd)
+
+
 class Obstacle :
   '''Obstacle qui peuvent être présent dans l'environnement'''
     
@@ -100,7 +117,8 @@ class Obstacle :
       self.distSol=d
       self.rayon= rayon
 
-class Environnement() :
+  
+class Environnement :
     ''' L'environnement dans lequel se trouve le Robot'''
 
     def __init__(self,coordsmax,robot,precision):
@@ -171,7 +189,9 @@ class Environnement() :
         :return : sinon valeur positive correspondant à la distance en valeur absolue la plus petite entre les 2 rayons (distance générale, ne pdonne pas la direction)
         '''
 
-        return ( math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y),2) - (objet1.rayon + objet2.rayon) )
+
+        return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2) - (objet1.rayon + objet2.rayon) )
+
 
     
     def detectCollision(self):
@@ -179,7 +199,4 @@ class Environnement() :
         verifie si les coordonnes du robot sont identiques a un obstacle de l’environnement ou s’il a pris un mur selon une precision
         '''
         return self.estObstacle(self.robot.x,self.robot.y,self.robot.rayon) or self.estMur(self.robot.x,self.robot.y,self.robot.rayon)
-            
 
-
-  
