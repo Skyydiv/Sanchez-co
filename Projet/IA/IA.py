@@ -47,6 +47,7 @@ class Ia_Avancer_tout_droit(Ia):
             self.parcouru_droite += parcouru_d
             if self.parcouru_gauche < self.goal and self.parcouru_droite < self.goal:
                 self.robot.setVitesse(self.v, self.v)
+                self.robot.deplacer(delta_t)
             else:
                 self.stop()
 
