@@ -32,24 +32,22 @@ class Ia_Avancer_tout_droit(Ia):
             
     def stop(self):
         # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
-        self.robot.setVitesse(0, 0)
-        self.parcouru_gauche = 0
-        self.parcouru_droite = 0
-        
-        if self.parcouru_gauche > self.goal or self.parcouru_droite > self.goal:
+        if self.parcouru_gauche > self.goal and self.parcouru_droite > self.goal:
             return True
-        
         return False
     
     def update(self, delta_t):
-            parcouru_g, parcouru_d = self.robot.get_distance_roue(delta_t)
-            self.parcouru_gauche += parcouru_g
-            self.parcouru_droite += parcouru_d
-            if self.parcouru_gauche < self.goal and self.parcouru_droite < self.goal:
-                self.robot.setVitesse(self.v, self.v)
-                self.robot.deplacer(delta_t)
+            if self.stop():
+                self.robot.setVitesse(0, 0)
+                self.parcouru_gauche = 0
+                self.parcouru_droite = 0
             else:
-                self.stop()
+                parcouru_g, parcouru_d = self.robot.get_distance_roue(delta_t)
+                if self.parcouru_gauche < self.goal or self.parcouru_droite < self.goal:
+                    self.robot.setVitesse(self.v, self.v)
+                    self.robot.deplacer(delta_t)
+                    self.parcouru_gauche += parcouru_g
+                    self.parcouru_droite += parcouru_d
 
     
 class IAangle(Ia):

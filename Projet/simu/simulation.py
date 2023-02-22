@@ -34,7 +34,7 @@ class Simulation :
 
 
     def update1pas(self):
-        IA.Ia_Avancer_tout_droit(self.robot,10,500).update(1/self.delta_t)
+        IA.Ia_Avancer_tout_droit(self.robot,0.1,50).update(1/self.delta_t)
         #self.robot.deplacer(1./self.delta_t)
         if(self.environnement.detectCollision()):
             self.stop_simu()
@@ -62,8 +62,6 @@ class Simulation :
         '''Methode qui permet l'arrêt de la simulation'''
         self.en_cours=False
 
-
-  
 
     
 

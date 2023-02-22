@@ -1,4 +1,5 @@
 import math
+from capteur import Capteur
 
 class Robot:
 
@@ -93,9 +94,9 @@ class Robot:
     Lit la distance parcourue par les roues pendant un temps
     :return: couple du distance parcourue par les roues
     """
-    rotationrg = (self.vitesseRoueGauche * delta_t) % 360
+    rotationrg = (self.vitesseRoueGauche * delta_t)
     distancerg = (math.pi * self.WHEEL_DIAMETER/2 * rotationrg) / 180
-    rotationrd = (self.vitesseRoueDroite * delta_t) % 360
+    rotationrd = (self.vitesseRoueDroite * delta_t)
     distancerd = (math.pi * self.WHEEL_DIAMETER/2 * rotationrd) / 180
     return (distancerg, distancerd)
 
