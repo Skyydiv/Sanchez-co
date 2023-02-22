@@ -2,7 +2,7 @@ import unittest
 
 import math
 from simu import Capteur, Robot, Obstacle, Environnement, Simulation
-
+from simu import dist, equationDroitePolaire, intersectionDroiteCercle, plusProche
 
 
 class TestRobot(unittest.TestCase):
