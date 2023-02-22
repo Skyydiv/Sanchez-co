@@ -112,7 +112,52 @@ class IAseq:
             self.listeIA[self.curr].start()
         self.listeIA[self.curr].update()
     
+
+
+class IAevitecrash:
+    """
+    sous-classe de l'IA permettant permettant d'eviter au robot de se crash 
+    """
+    def __init__(self, robot, v):
+        
+        self.robot = robot
+        self.running = False
+        self.v = v
+        self.parcouru_g = 0
+        self.parcouru_d = 0
+        #Calcul de la distance à l'obstacle le plus proche
+        self.distance = self.robot.capteur.getDistcapteur_distanceance()
+
+
+
+    def start(self):
+        if not self.running:
+            self.running = True
+            self.parcouru_g = 0
+            self.parcouru_d = 0
+            
+        
+
+    def stop(self):
+        #Avance vers l'obstacle/mur jusqu'à être à une distance de sécurité
+        return self.parcouru_g  - self.distance <= 1 or self.parcouru_d - self.distance <= 1
+
     
+    def end(self):
+        self.robot.setVitesse(0,0)
+        self.parcouru_g = 0
+        self.parcouru_d = 0
+
+    def update(self, delta_t):
+        if self.running:
+            parcouru_g, parcouru_d = self.robot.get_distance_roue(delta_t)
+            self.parcouru_g += parcouru_g
+            self.parcouru_d += parcouru_d
+            if self.stop(): 
+                self.end()
+                return
+            else:
+                self.robot.setVitesse(self.v,self.v)
    
         
         
