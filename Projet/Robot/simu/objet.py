@@ -127,7 +127,7 @@ class Environnement :
         
         :param coordsmax: coordsmax[0] représente la longueur et coordsmax[1] représente la largeur de l'espace (en cm)
         :param robot: le robot unique présent dans l'environnement
-        :param precision: le plus petit écart entre 2 points pour les considérer distincts (en cm)
+        :param precision: le plus petit écart entre 2 points pour les considérer distincts (en mm)
         '''
         self.coordsmax=coordsmax
         self.robot=robot
@@ -182,21 +182,28 @@ class Environnement :
 
     def calculDistance(self, objet1, objet2):
         '''
-        Calcule la distance entre deux objets passer en paramètre, en prenant compte le rayon le rayon des objets. Les objets peuvent être des robots ou des obstacles.
+        Calcule la distance entre le centre de deux objets passer en paramètre. Les objets peuvent être des robots ou des obstacles.
         :param objet1 : robot/obstacle
         :param objet2 : robot/obstacle
         :return : valeur négative ou égale à 0 si les objects sont en collision (ne gère pas la hauteur)
         :return : sinon valeur positive correspondant à la distance en valeur absolue la plus petite entre les 2 rayons (distance générale, ne pdonne pas la direction)
         '''
 
-
-        return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2) - (objet1.rayon + objet2.rayon) )
+        return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2))
+      # return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2) - (objet1.rayon + objet2.rayon) )
 
 
     
     def detectCollision(self):
         '''
-        verifie si les coordonnes du robot sont identiques a un obstacle de l’environnement ou s’il a pris un mur selon une precision
+        Detecte si il y a une collision (un crash) entre le robot et un obstacle avec une precision
         '''
-        return self.estObstacle(self.robot.x,self.robot.y,self.robot.rayon) or self.estMur(self.robot.x,self.robot.y,self.robot.rayon)
+        for obs in self.ensemble_obstacles:
+           dist=self.calculDistance(self.robot,obs)
+           if(dist - self.robot.rayon - obs.rayon <= self.precision):  #verifie si la distance entre les 2 objets est inferieure a la somme des rayons
+              return True
+        return False
+
+
+       
 
