@@ -3,6 +3,7 @@ from tkinter import ttk
 from simu import Robot, Environnement, Simulation, Capteur
 from affichage import View
 
+
 capteur = Capteur(0)
 rob=Robot(Robot.WHEEL_BASE_WIDTH/2,capteur) # initialiser le robot
 rob.setVitesse(100,80)

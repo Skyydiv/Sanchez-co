@@ -7,5 +7,5 @@ setup(
    url='https://github.com/Skyydiv/Sanchez-co.git',
    author='Sanchez & co',
    author_email='',
-   packages=['Robot', 'test']
+   packages=['simu'],
 )

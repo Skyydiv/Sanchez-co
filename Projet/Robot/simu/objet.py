@@ -12,7 +12,7 @@ class Robot:
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) 
     :param rayon: rayon de l'objet (en mm)
     '''
-    self._rayon = rayon
+    self.rayon = rayon
 
     self._x =0.1+self.rayon #pour être dans l'env
     self._y = 0.1+self.rayon
