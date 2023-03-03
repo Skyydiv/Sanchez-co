@@ -19,15 +19,49 @@ class Simulation :
     
     @property
     def environnement(self):
+        """Renvoie l'environnement de la simulation"""
         return self._environnement
     
     @property
-    def robot(self):
-        return self._robot
+    def delta_t(self):
+        """Renvoie le delta_t de la simulation"""
+        return self._delta_t
+      
+    @property
+    def coordsXmax(self):
+      """Renvoie les coordonnées x de l'environnement """
+      return self._environnement.coordsXmax
     
     @property
-    def delta_t(self):
-        return self._delta_t
+    def coordsYmax(self):
+      """Renvoie les coordonnées y de l'environnement"""
+      return self._environnement.coordsYmax
+    
+    @property
+    def ensemble_obstacles(self):
+       """Renvoie l'ensemble des obstacles de l'environnement"""
+       return self._environnement.ensemble_obstacles
+    
+    @property
+    def robot(self):
+      """Renvoie le robot de la simulation"""
+      return self._robot
+        
+    @property
+    def robotX(self):
+       """Renvoie les coordonnées x du robot"""
+       return self._environnement.robotX
+    
+    @property
+    def robotY(self):
+       """Renvoie les coordonnées y du robot """
+       return self._environnement.robotY
+    
+    @property
+    def robotRayon(self):
+        """Renvoie le rayon du robot """
+        return self._environnement.robotRayon
+    
 
     def run_simu(self):
         """lance la simulation"""
@@ -53,9 +87,9 @@ class Simulation :
 
     def coordAlea(self) :
         '''Renvoie des coord aléatoires x et y non occupés dans l'environnement'''
-        x=round(random.uniform(0,self.environnement.coordsmax[0]-1),1)
-        y=round(random.uniform(0,self.environnement.coordsmax[1]-1),1)
-        if(self.environnement.estObstacle(x,y,31)  or self.environnement.estMur(x,y,31) or (self.robot.x==x and self.robot.y==y)):
+        x=round(random.uniform(0,self.coordsXmax-1),1)
+        y=round(random.uniform(0,self.coordsYmax-1),1)
+        if(self.environnement.estObstacle(x,y,31)  or self.environnement.estMur(x,y,31) or (self.robotX==x and self.robotY==y)):
             return self.coordAlea()  
         else:
             return (x,y)
