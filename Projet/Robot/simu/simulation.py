@@ -12,10 +12,22 @@ class Simulation :
         '''Constructeur de la simulation qui initailise l'environnement et le robot 
         :param environnement: environnement dans lequel se déroule la simulation
         '''
-        self.environnement=environnement
-        self.robot=environnement.robot
-        self.delta_t=delta_t
+        self._environnement=environnement
+        self._robot=environnement.robot
+        self._delta_t=delta_t
         self.en_cours=False
+    
+    @property
+    def environnement(self):
+        return self._environnement
+    
+    @property
+    def robot(self):
+        return self._robot
+    
+    @property
+    def delta_t(self):
+        return self._delta_t
 
     def run_simu(self):
         """lance la simulation"""
