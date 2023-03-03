@@ -40,11 +40,6 @@ class Robot:
   def y(self):
     """Renvoie coordonnées y du robot"""
     return self._y
-  
-  @property
-  def rayon(self):
-    """Renvoie le rayon du robot"""
-    return self._rayon
 
   def set_motor_dps(self, port, dps):
     """
@@ -140,11 +135,6 @@ class Obstacle :
   def y(self):
     """Renvoie coordonnées y de l'obstacle"""
     return self._y
-      
-  @property
-  def rayon(self):
-    """Renvoie coordonnées rayon de l'obstacle"""
-    return self._rayon
       
 class Environnement :
     ''' L'environnement dans lequel se trouve le Robot'''
@@ -257,16 +247,16 @@ class Environnement :
               return True
         return False
     
-def calculDistance(objet1, objet2):
-      '''
-      Calcule la distance entre le centre de deux objets passer en paramètre. Les objets peuvent être des robots ou des obstacles.
-      :param objet1 : robot/obstacle
-      :param objet2 : robot/obstacle
-      :return : valeur négative ou égale à 0 si les objects sont en collision (ne gère pas la hauteur)
-      :return : sinon valeur positive correspondant à la distance en valeur absolue la plus petite entre les 2 rayons (distance générale, ne pdonne pas la direction)
-      '''
+    def calculDistance(objet1, objet2):
+        '''
+        Calcule la distance entre le centre de deux objets passer en paramètre. Les objets peuvent être des robots ou des obstacles.
+        :param objet1 : robot/obstacle
+        :param objet2 : robot/obstacle
+        :return : valeur négative ou égale à 0 si les objects sont en collision (ne gère pas la hauteur)
+        :return : sinon valeur positive correspondant à la distance en valeur absolue la plus petite entre les 2 rayons (distance générale, ne pdonne pas la direction)
+        '''
 
-      return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2))
+        return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2))
       # return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2) - (objet1.rayon + objet2.rayon) )
 
 
