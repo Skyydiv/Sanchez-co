@@ -62,10 +62,10 @@ class View :
             r=obs.rayon
             self.canv.create_oval(x-r,y-r,x+r,y+r, fill='white')
 
-    def start_sim(self):
-        self.sim.run_simu()
+    # def start_sim(self):
+    #     self.sim.run_simu()
 
-    def stop_sim(self):
-        self.sim.stop_simu()
+    # def stop_sim(self):
+    #     self.sim.stop_simu()
 
 

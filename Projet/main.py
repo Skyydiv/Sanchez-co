@@ -14,9 +14,11 @@ simulation.addSimulation(5) #ajouter des obstcales a l'environnement
   
 root = Tk() # initialiser la fenetre tkinter
 view=View(root, simulation)
-view.start_sim()
+simulation.run_simu()
+# view.start_sim()
 root.mainloop()
-view.stop_sim()
+simulation.stop_simu()
+# view.stop_sim()
 
 
 
