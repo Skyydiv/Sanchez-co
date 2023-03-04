@@ -1,7 +1,8 @@
 import unittest
 import math
-from simu import Capteur, Robot, Obstacle, Environnement, Simulation
-from simu import dist, equationDroitePolaire, intersectionDroiteCercle, plusProche
+from module.simu.objet import Robot, Obstacle, Environnement
+from module.simu.simulation import Simulation
+from module.simu.capteur import Capteur, dist, equationDroitePolaire, intersectionDroiteCercle, plusProche
 
 
 class TestRobot(unittest.TestCase):

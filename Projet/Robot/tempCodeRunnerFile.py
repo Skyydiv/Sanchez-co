@@ -1,1 +1,0 @@
-from simu import Robot, Environnement, Simulation, Capteur

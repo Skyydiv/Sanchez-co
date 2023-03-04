@@ -1,7 +1,9 @@
 from tkinter import *
 from tkinter import ttk
-from simu import Robot, Environnement, Simulation, Capteur
-from affichage import View
+from module.simu.objet import Robot, Environnement
+from module.simu.capteur import Capteur
+from module.affichage import View
+from module.simu.simulation import Simulation
 
 
 capteur = Capteur(0)
