@@ -63,7 +63,7 @@ class Simulation :
 
     def run_simu(self):
         """lance la simulation"""
-        self.en_cours=True
+        self._en_cours=True
         threadSimu=Thread(target=self.boucle)
         threadSimu.start()
 
@@ -71,15 +71,15 @@ class Simulation :
         '''
         La boucle qui avance la simulation chaque pas de temps
         '''
-        while self.en_cours:
+        while self._en_cours:
             self.update1pas()
-            sleep(1./self.delta_t) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
+            sleep(1./self._delta_t) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
 
 
     def update1pas(self):
         #IA.Ia_Avancer_tout_droit(self.robot,0.1,150).update(1/self.delta_t)
-        self.robot.deplacer(1./self.delta_t)
-        if(self.environnement.detectCollision()):
+        self._robot.deplacer(1./self._delta_t)
+        if(self._environnement.detectCollision()):
             self.stop_simu()
 
 
@@ -87,7 +87,7 @@ class Simulation :
         '''Renvoie des coord aléatoires x et y non occupés dans l'environnement'''
         x=round(random.uniform(0,self.coordsXmax-1),1)
         y=round(random.uniform(0,self.coordsYmax-1),1)
-        if(self.environnement.estObstacle(x,y,31)  or self.environnement.estMur(x,y,31) or (self.robotX==x and self.robotY==y)):
+        if(self._environnement.estObstacle(x,y,31)  or self._environnement.estMur(x,y,31) or (self.robotX==x and self.robotY==y)):
             return self.coordAlea()  
         else:
             return (x,y)
@@ -99,11 +99,11 @@ class Simulation :
         '''
         for i in range(nbObstacles) :
             newCoord=self.coordAlea()
-            self.environnement.addObstacle(newCoord[0],newCoord[1],1,0,30)
+            self._environnement.addObstacle(newCoord[0],newCoord[1],1,0,30)
 
     def stop_simu(self):
         '''Methode qui permet l'arrêt de la simulation'''
-        self.en_cours=False
+        self._en_cours=False
 
 
     

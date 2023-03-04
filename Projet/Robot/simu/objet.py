@@ -72,8 +72,8 @@ class Robot:
         self.orientation += newOrientation
 
         newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #calcul vitesse lineare 
-        self.x += newV * math.cos(self.orientation)
-        self.y += newV * math.sin(self.orientation)
+        self._x += newV * math.cos(self.orientation)
+        self._y += newV * math.sin(self.orientation)
 
         # v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
         # w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
@@ -200,7 +200,7 @@ class Environnement :
         :return False si on est dans l’environnement 
         :return True si on se prend un mur
         '''
-        if ((x+rayon>=self.coordsXmax) or (y+rayon>=self.coordsYmax) or (x-rayon<=0) or (y-rayon<=0)):
+        if ((x+rayon>=self._coordsmax[0]) or (y+rayon>=self._coordsmax[1]) or (x-rayon<=0) or (y-rayon<=0)):
             return True
         return False
     
@@ -234,30 +234,30 @@ class Environnement :
         :param d: distance du sol de l'obstacle
         """
         if not (self.estObstacle(x,y,rayon) and self.estMur(x,y,rayon) and self.estRobot):
-            self.ensemble_obstacles.add(Obstacle(x,y,h,d,rayon))
+            self._ensemble_obstacles.add(Obstacle(x,y,h,d,rayon))
         return
     
     def detectCollision(self):
         '''
         Detecte si il y a une collision (un crash) entre le robot et un obstacle avec une precision
         '''
-        for obs in self.ensemble_obstacles:
-           dist=calculDistance(self.robot,obs)
-           if(dist - self.robotRayon - obs.rayon <= self.precision):  #verifie si la distance entre les 2 objets est inferieure a la somme des rayons
+        for obs in self._ensemble_obstacles:
+           dist=calculDistance(self._robot,obs)
+           if(dist - self.robotRayon - obs.rayon <= self._precision):  #verifie si la distance entre les 2 objets est inferieure a la somme des rayons
               return True
         return False
     
-    def calculDistance(objet1, objet2):
-        '''
-        Calcule la distance entre le centre de deux objets passer en paramètre. Les objets peuvent être des robots ou des obstacles.
-        :param objet1 : robot/obstacle
-        :param objet2 : robot/obstacle
-        :return : valeur négative ou égale à 0 si les objects sont en collision (ne gère pas la hauteur)
-        :return : sinon valeur positive correspondant à la distance en valeur absolue la plus petite entre les 2 rayons (distance générale, ne pdonne pas la direction)
-        '''
+def calculDistance(objet1, objet2):
+    '''
+    Calcule la distance entre le centre de deux objets passer en paramètre. Les objets peuvent être des robots ou des obstacles.
+    :param objet1 : robot/obstacle
+    :param objet2 : robot/obstacle
+    :return : valeur négative ou égale à 0 si les objects sont en collision (ne gère pas la hauteur)
+    :return : sinon valeur positive correspondant à la distance en valeur absolue la plus petite entre les 2 rayons (distance générale, ne pdonne pas la direction)
+    '''
 
-        return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2))
-      # return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2) - (objet1.rayon + objet2.rayon) )
+    return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2))
+    # return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2) - (objet1.rayon + objet2.rayon) )
 
 
        
