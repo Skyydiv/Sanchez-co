@@ -16,10 +16,10 @@ class View :
 
         self.sim=simulation
         self.delta=simulation.delta_t
-        self.robot=simulation.environnement.robot
-        self.obstacles=simulation.environnement.ensemble_obstacles
-        self.longueur=simulation.environnement.coordsmax[0]
-        self.largeur=simulation.environnement.coordsmax[1]
+        self.robot=simulation.robot
+        self.obstacles=simulation.ensemble_obstacles
+        self.longueur=simulation.coordsXmax
+        self.largeur=simulation.coordsYmax
 
 
         self.canv=Canvas(self.root, bg="black",highlightbackground='white',highlightthickness=4, height=self.largeur, width=self.longueur)
@@ -62,10 +62,10 @@ class View :
             r=obs.rayon
             self.canv.create_oval(x-r,y-r,x+r,y+r, fill='white')
 
-    def start_sim(self):
-        self.sim.run_simu()
+    # def start_sim(self):
+    #     self.sim.run_simu()
 
-    def stop_sim(self):
-        self.sim.stop_simu()
+    # def stop_sim(self):
+    #     self.sim.stop_simu()
 
 

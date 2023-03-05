@@ -1,8 +1,8 @@
 import unittest
-
 import math
-from simu import Capteur, Robot, Obstacle, Environnement, Simulation
-
+from module.simu.objet import Robot, Obstacle, Environnement
+from module.simu.simulation import Simulation
+from module.simu.capteur import Capteur, dist, equationDroitePolaire, intersectionDroiteCercle, plusProche
 
 
 class TestRobot(unittest.TestCase):
@@ -57,11 +57,7 @@ class TestEnvironnement(unittest.TestCase):
         self.assertTrue(self.env.estObstacle(10,10,5))
         self.assertTrue(self.env.estObstacle(12,12,5))
         self.assertFalse(self.env.estObstacle(40,40,1))
-        
-    def test_calculDistance(self):
-        obs1=Obstacle(140,20,5,0,3)
-        obs2=Obstacle(80,170,5,0,3)
-        self.assertEqual(self.env.calculDistance(obs1,obs2),161.53637361288014)
+
         
     
 class TestSimulation(unittest.TestCase):
