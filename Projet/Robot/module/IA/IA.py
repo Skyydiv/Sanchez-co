@@ -32,11 +32,8 @@ class Ia_Avancer_tout_droit(Ia):
         self.parcouru_gauche=0
         self.parcouru_droite=0
         self.en_cours=True
-        
-        while self.en_cours:
-            self.robot.setVitesse(self.v, self.v)
-            self.update(self.delta_t)
-            time.sleep(self.delta_t)
+        self.robot.setVitesse(self.v, self.v)
+       
  
     def stop(self):
          # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
