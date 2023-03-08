@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import math
+from time import sleep
 
 class Ia(ABC):
     @abstractmethod
@@ -20,35 +21,35 @@ class Ia_Avancer_tout_droit(Ia):
     
     def __init__(self, robot, distance, v):
         self.robot = robot
-        self.parcouru_gauche = 0
-        self.parcouru_droite = 0
+        self.parcouru_gauche=0
+        self.parcouru_droite=0
         self.goal = distance
         self.v = v
-    
+        self.en_cours=False
+        self.delta_t=0.1
+        
     def start(self):
+        self.parcouru_gauche=0
+        self.parcouru_droite=0
+        self.en_cours=True
+        self.robot.setVitesse(self.v, self.v)
+       
+ 
+    def stop(self):
+         # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
+        self.v=0
+        self.v=0
+        self.robot.setVitesse(self.v,self.v)
         self.parcouru_gauche = 0
         self.parcouru_droite = 0
-            
-    def stop(self):
-        # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
-        if self.parcouru_gauche > self.goal and self.parcouru_droite > self.goal:
-            return True
-        return False
     
-    def update(self, delta_t):
-        if self.stop():
-            self.robot.setVitesse(0, 0)
-            self.parcouru_gauche = 0
-            self.parcouru_droite = 0
+    def update(self,delta_t):
+        if (self.parcouru_gauche + self.parcouru_droite)/2 >= self.goal:
+           self.stop()
         else:
             parcouru_g, parcouru_d = self.robot.get_distance_roue(delta_t)
-            if self.parcouru_gauche < self.goal and self.parcouru_droite < self.goal:
-                self.robot.setVitesse(self.v, self.v)
-                self.robot.deplacer(delta_t)
-                self.parcouru_gauche += parcouru_g
-                self.parcouru_droite += parcouru_d
-            else:
-                self.stop()==True
+            self.parcouru_gauche += parcouru_g
+            self.parcouru_droite += parcouru_d
 
     
 class IAangle(Ia):
