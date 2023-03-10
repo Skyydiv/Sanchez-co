@@ -1,14 +1,13 @@
 from tkinter import *
 from tkinter import ttk
 from module.simu.objet import Robot, Environnement
-from module.simu.capteur import Capteur
 from module.affichage import View
 from module.simu.simulation import Simulation
 from module.IA import Ia_Avancer_tout_droit
 
 
-capteur = Capteur(0)
-rob=Robot(Robot.WHEEL_BASE_WIDTH/2,capteur) # initialiser le robot
+
+rob=Robot(Robot.WHEEL_BASE_WIDTH/2) # initialiser le robot
 
 env=Environnement([1500,800],rob,5) # initialiser l'environment
 simulation=Simulation(env,100)
