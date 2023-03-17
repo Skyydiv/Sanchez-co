@@ -1,3 +1,5 @@
+import math 
+
 class ControleurRobotVirtuel:
     def __init__(self, robot):
         self.robot=robot
@@ -19,7 +21,8 @@ class ControleurRobotVirtuel:
         :param delta_t: un intervalle de temps 
         :return: couple de distance parcourue par les 2 roues du robot
         """
-        self.robot.get_distance_roue
+        self.robot.get_distance_roue(delta_t)
+    
 
 
     def __getattr__(self, name):
@@ -42,6 +45,17 @@ class ControleurRobotVraieVie:
 
     def stop(self):
         self.robot.stop()
+
+    def get_distance_parcourue(self,delta_t):
+        """
+        :param delta_t: un intervalle de temps 
+        :return: couple de distance parcourue par les 2 roues du robot
+        """
+        rotationrg = (self.robot.MOTOR_LEFT * delta_t)
+        distancerg = (math.pi * self.robot.WHEEL_DIAMETER/2 * rotationrg) / 180
+        rotationrd = (self.robot.MOTOR_RIGHT * delta_t)
+        distancerd = (math.pi * self.robot.WHEEL_DIAMETER/2 * rotationrd) / 180
+        return (distancerg, distancerd)
     
     def __getattr__(self, name):
         return getattr(self.robot, name)
