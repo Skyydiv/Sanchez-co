@@ -32,6 +32,9 @@ class Robot:
     self.vitesseRoueDroite=0 #degre par sec
     self.vitesseRoueGauche=0 #degre par sec
 
+    self._distance_parcourue_roue_gauche=0 #en mm
+    self._distance_parcourue_roue_droite=0 #en mm
+
   @property
   def x(self):
     """Renvoie coordonnées x du robot"""
@@ -41,6 +44,27 @@ class Robot:
   def y(self):
     """Renvoie coordonnées y du robot"""
     return self._y
+  
+  @property
+  def distance_parcourue_roue_gauche(self):
+    """Renvoie la distance parcourue par la roue gauche"""
+    return self._distance_parcourue_roue_gauche
+  
+  @property
+  def distance_parcourue_roue_droite(self):
+    """Renvoie la distance parcourue par la roue droite"""
+    return self._distance_parcourue_roue_droite
+  
+  def set_distance_parcourue_roue_gauche(self,d):
+     """fixe la distance_parcourue_roue_gauche a une distance d 
+     :param d: distance parcourue"""
+     self._distance_parcourue_roue_gauche=d
+
+  def set_distance_parcourue_roue_droite(self,d):
+     """fixe la distance_parcourue_roue_droite a une distance d 
+     :param d: distance parcourue"""
+     self._distance_parcourue_roue_droite=d
+
 
   # def set_motor_dps(self, port, dps):
   #   """
