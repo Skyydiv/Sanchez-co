@@ -39,6 +39,8 @@ class ControleurRobotVirtuel:
 class ControleurRobotVraieVie:
     def __init__(self, robot):
         self.robot=robot
+        self.distance_parcourue_roue_gauche=0
+        self.distance_parcourue_roue_droite=0
 
     def avancerToutDroit(self, dps):
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT + self.robot.MOTOR_RIGHT, dps)
@@ -65,5 +67,13 @@ class ControleurRobotVraieVie:
         distancerd = (math.pi * self.robot.WHEEL_DIAMETER/2 * rotationrd) / 180
         return (distancerg, distancerd)
     
+    def set_distance_parcourue(self, dist_g,dist_d):
+        """fixe la distance parcourue par les roues du robot
+        :param dist_g: distance parcourue par la roue gauche
+        :param dist_d: distance parcourue par la roue droite
+        """
+        self.distance_parcourue_roue_gauche(dist_g)
+        self.distance_parcourue_roue_droite(dist_d)
+
     def __getattr__(self, name):
         return getattr(self.robot, name)
