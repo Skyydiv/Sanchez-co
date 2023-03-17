@@ -1,8 +1,8 @@
 from time import sleep
 import random
 from threading import Thread
-from .objet import Environnement
-from .objet import Robot 
+from .virtuel import Environnement
+from .virtuel import Robot 
 
 class Simulation :
     """Simulation qui fait interagir le Robot avec son Environnement
