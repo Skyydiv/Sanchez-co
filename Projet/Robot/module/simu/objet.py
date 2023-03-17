@@ -42,20 +42,20 @@ class Robot:
     """Renvoie coordonnées y du robot"""
     return self._y
 
-  def set_motor_dps(self, port, dps):
-    """
-    Fixe la vitesse d'un moteur en nombre de degres par seconde
-    :port: une constante moteur,  MOTOR_LEFT ou MOTOR_RIGHT (ou les deux MOTOR_LEFT+MOTOR_RIGHT).
-    :dps: la vitesse cible en nombre de degres par seconde
-    """
+  # def set_motor_dps(self, port, dps):
+  #   """
+  #   Fixe la vitesse d'un moteur en nombre de degres par seconde
+  #   :port: une constante moteur,  MOTOR_LEFT ou MOTOR_RIGHT (ou les deux MOTOR_LEFT+MOTOR_RIGHT).
+  #   :dps: la vitesse cible en nombre de degres par seconde
+  #   """
 
-    if(port==self.MOTOR_RIGHT):
-      self.MOTOR_RIGHT=dps
-    if(port==self.MOTOR_LEFT):
-      self.MOTOR_LEFT=dps
-    if(port==(self.MOTOR_RIGHT,self.MOTOR_LEFT)):
-      self.MOTOR_RIGHT=dps
-      self.MOTOR_LEFT=dps
+  #   if(port==self.MOTOR_RIGHT):
+  #     self.MOTOR_RIGHT=dps
+  #   if(port==self.MOTOR_LEFT):
+  #     self.MOTOR_LEFT=dps
+  #   if(port==(self.MOTOR_RIGHT,self.MOTOR_LEFT)):
+  #     self.MOTOR_RIGHT=dps
+  #     self.MOTOR_LEFT=dps
 
 
   def deplacer(self, intervalle_temps):
