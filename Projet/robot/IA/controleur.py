@@ -47,6 +47,7 @@ class ControleurRobotVraieVie:
         self.robot=robot
         self.distance_parcourue_roue_gauche=0
         self.distance_parcourue_roue_droite=0
+        self.angle_parcouru=0 #en degre
 
     def avancerToutDroit(self, dps):
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT + self.robot.MOTOR_RIGHT, dps)
@@ -78,8 +79,14 @@ class ControleurRobotVraieVie:
         :param dist_g: distance parcourue par la roue gauche
         :param dist_d: distance parcourue par la roue droite
         """
-        self.distance_parcourue_roue_gauche(dist_g)
-        self.distance_parcourue_roue_droite(dist_d)
+        self.distance_parcourue_roue_gauche=dist_g
+        self.distance_parcourue_roue_droite=dist_d
+
+    def setAngleParcour(self, a):
+        """fixe l'angle parcouru par le robot
+        :param a: distance parcourue par le robot en degre
+        """
+        self.angle_parcouru=a
 
     def __getattr__(self, name):
         return getattr(self.robot, name)
