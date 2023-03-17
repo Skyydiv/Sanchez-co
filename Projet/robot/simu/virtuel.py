@@ -35,6 +35,8 @@ class Robot:
     self._distance_parcourue_roue_gauche=0 #en mm
     self._distance_parcourue_roue_droite=0 #en mm
 
+    self._angle_parcouru=0 #(en degre)
+
   @property
   def x(self):
     """Renvoie coordonnées x du robot"""
@@ -64,6 +66,11 @@ class Robot:
      """fixe la distance_parcourue_roue_droite a une distance d 
      :param d: distance parcourue"""
      self._distance_parcourue_roue_droite=d
+
+  def set_angle_parcouru(self,a ):
+     """fixe l'angle_parcouru a un angle a
+     :param a: angle parcouru en degre"""
+     self._angle_parcouru=a
 
 
   # def set_motor_dps(self, port, dps):

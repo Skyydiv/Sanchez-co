@@ -16,20 +16,26 @@ class ControleurRobotVirtuel:
     def stop(self):
         self.robot.setVitesse(0,0)
 
-    def calcul_distance_parcourue(self,delta_t):
+    def calculDistanceParcourue(self,delta_t):
         """
         :param delta_t: un intervalle de temps 
         :return: couple de distance parcourue par les 2 roues du robot
         """
         self.robot.get_distance_roue(delta_t)
 
-    def set_distance_parcourue(self, dist_g,dist_d):
+    def setDistanceParcourue(self, dist_g,dist_d):
         """fixe la distance parcourue par les roues du robot
         :param dist_g: distance parcourue par la roue gauche
         :param dist_d: distance parcourue par la roue droite
         """
         self.robot.set_distance_parcourue_roue_gauche(dist_g)
         self.robot.set_distance_parcourue_roue_droite(dist_d)
+
+    def setAngleParcour(self, a):
+        """fixe l'angle parcouru par le robot
+        :param a: distance parcourue par le robot en degre
+        """
+        self.robot.set_angle_parcouru(a)
     
 
 
@@ -56,7 +62,7 @@ class ControleurRobotVraieVie:
     def stop(self):
         self.robot.stop()
 
-    def calcul_distance_parcourue(self,delta_t):
+    def calculDistanceParcourue(self,delta_t):
         """
         :param delta_t: un intervalle de temps 
         :return: couple de distance parcourue par les 2 roues du robot
@@ -67,7 +73,7 @@ class ControleurRobotVraieVie:
         distancerd = (math.pi * self.robot.WHEEL_DIAMETER/2 * rotationrd) / 180
         return (distancerg, distancerd)
     
-    def set_distance_parcourue(self, dist_g,dist_d):
+    def setDistanceParcourue(self, dist_g,dist_d):
         """fixe la distance parcourue par les roues du robot
         :param dist_g: distance parcourue par la roue gauche
         :param dist_d: distance parcourue par la roue droite
