@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from robot.simu.objet import Robot, Environnement
+from robot.simu.virtuel import Robot, Environnement
 from robot.affichage import View
 from robot.simu.simulation import Simulation
 from robot.IA import Ia_Avancer_tout_droit
