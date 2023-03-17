@@ -14,6 +14,14 @@ class ControleurRobotVirtuel:
     def stop(self):
         self.robot.setVitesse(0,0)
 
+    def get_distance_parcourue(self,delta_t):
+        """
+        :param delta_t: un intervalle de temps 
+        :return: couple de distance parcourue par les 2 roues du robot
+        """
+        self.robot.get_distance_roue
+
+
     def __getattr__(self, name):
         return getattr(self.robot, name)
     
