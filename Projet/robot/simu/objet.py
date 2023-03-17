@@ -1,4 +1,5 @@
 import math
+from .capteur import Capteur
 
 class Robot:
 
@@ -8,7 +9,7 @@ class Robot:
   WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * math.pi # perimetre de la roue (mm)
 
 
-  def __init__(self,rayon,capteur):
+  def __init__(self,rayon):
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) 
     :param rayon: rayon de l'objet (en mm)
     '''
@@ -19,7 +20,7 @@ class Robot:
 
     
     self.orientation=0 #(radians)
-    self.capteur=capteur #Capteur du robot
+    self.capteur=Capteur(0) #Capteur du robot
 
     # self.MOTOR_LEFT=0 #dps
     # self.MOTOR_RIGHT=0 #dps

@@ -1,21 +1,20 @@
 import unittest
 import math
-from module.simu.objet import Robot, Obstacle, Environnement
-from module.simu.simulation import Simulation
-from module.simu.capteur import Capteur, dist, equationDroitePolaire, intersectionDroiteCercle, plusProche
+from robot.simu.objet import Robot, Environnement, Obstacle
+from robot.simu.capteur import Capteur
+from robot.simu.simulation import Simulation
+from robot.simu.capteur import Capteur, dist, equationDroitePolaire, intersectionDroiteCercle, plusProche
 
 
 class TestRobot(unittest.TestCase):
         
     def test_r_is_instanceof_Robot(self):
-
-        c=Capteur(6)
-        r=Robot(4,c)
+        r=Robot(4)
         self.assertIsInstance(r,Robot)
         
     def test_setVitesse(self):
         c=Capteur(6)
-        r=Robot(4,c)
+        r=Robot(4)
 
         r.setVitesse(6,5)
         self.assertEqual(r.vitesseRoueGauche,5)
@@ -32,8 +31,7 @@ class TestObstacle(unittest.TestCase):
 class TestEnvironnement(unittest.TestCase):
     
     def setUp(self):
-        c=Capteur(6)
-        robot=Robot(5,c)
+        robot=Robot(5)
         self.env=Environnement([200,200],robot,2)
         self.env.addObstacle(140,20,5,0,3)
         obs1=Obstacle(140,20,5,0,3)
@@ -57,17 +55,15 @@ class TestEnvironnement(unittest.TestCase):
         self.assertTrue(self.env.estObstacle(10,10,5))
         self.assertTrue(self.env.estObstacle(12,12,5))
         self.assertFalse(self.env.estObstacle(40,40,1))
-
         
     
 class TestSimulation(unittest.TestCase):
     
     
     def test_simu_instanceof_Simulation(self):
-        cap=Capteur(6)
-        r=Robot(5,cap)
+        r=Robot(5)
         envi=Environnement([200,200],r,2)
-        simu=Simulation(envi,50)
+        simu=Simulation(50)
     
         self.assertIsInstance(simu,Simulation)
 
@@ -76,8 +72,7 @@ class TestSimulation(unittest.TestCase):
 class TestCapteur(unittest.TestCase):
 
     def setUp(self):
-        self.c=Capteur(0)
-        robot=Robot(5,self.c)
+        robot=Robot(5)
         self.env=Environnement([200,200],robot,0)
         self.env.addObstacle(20,5,0,0,4)
         

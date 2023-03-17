@@ -1,17 +1,23 @@
 from time import sleep
 import random
 from threading import Thread
+from .objet import Environnement
+from .objet import Robot 
 
 class Simulation :
     """Simulation qui fait interagir le Robot avec son Environnement
     """
     
-    def __init__(self, environnement, delta_t):
+    SIMU_WIDTH=1500
+    SIMU_HEIGHT=800
+    SIMU_PRECESION=5
+
+    def __init__(self,delta_t):
         '''Constructeur de la simulation qui initailise l'environnement et le robot 
         :param environnement: environnement dans lequel se déroule la simulation
         '''
-        self._environnement=environnement
-        self._robot=environnement.robot
+        self._robot=Robot(Robot.WHEEL_BASE_WIDTH/2) # initialiser le robot        
+        self._environnement=Environnement([Simulation.SIMU_WIDTH,Simulation.SIMU_HEIGHT],self._robot,Simulation.SIMU_PRECESION) # initialiser l'environment
         self._delta_t=delta_t
         self.en_cours=False
     
