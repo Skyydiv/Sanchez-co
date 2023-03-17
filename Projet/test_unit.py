@@ -1,6 +1,6 @@
 import unittest
 import math
-from robot.simu.objet import Robot, Environnement, Obstacle
+from robot.simu.virtuel import Robot, Environnement, Obstacle
 from robot.simu.capteur import Capteur
 from robot.simu.simulation import Simulation
 from robot.simu.capteur import Capteur, dist, equationDroitePolaire, intersectionDroiteCercle, plusProche
