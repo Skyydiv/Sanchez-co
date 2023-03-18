@@ -39,7 +39,7 @@ class ControleurRobotVirtuel:
     
     def calculAngleParcouru(self, delta_t):
         angleRobot=self.robot.angle
-        angleParcouru=(self.robot.get_distance_roue(delta_t)[0] - self.robot.get_distance_roue(delta_t)[1]) / self.robot.WHEEL_BASE_WIDTH
+        angleParcouru=(self.robot.get_distance_roue(delta_t)[1] - self.robot.get_distance_roue(delta_t)[0]) / self.robot.WHEEL_BASE_WIDTH
         self.robot.angle=angleParcouru+angleRobot
         return angleParcouru
     
