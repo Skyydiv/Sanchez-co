@@ -33,12 +33,13 @@ class ControleurRobotVirtuel:
 
     def setAngleParcouru(self, a):
         """fixe l'angle parcouru par le robot
-        :param a: distance parcourue par le robot en degre
+        :param a: angle parcourue par le robot en degre
         """
         self.robot.set_angle_parcouru(a)
     
     def calculAngleParcouru(self, delta_t):
         angleRobot=self.robot.angle
+
         angleParcouru=(self.robot.get_distance_roue(delta_t)[1] - self.robot.get_distance_roue(delta_t)[0]) / self.robot.WHEEL_BASE_WIDTH
         self.robot.angle=angleParcouru+angleRobot
         return angleParcouru
