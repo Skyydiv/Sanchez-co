@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 import math
 from time import sleep
-from controleur import ControleurRobotVirtuel
+from threading import Thread
+from .controleur import ControleurRobotVirtuel
 
 class Ia(ABC):
     @abstractmethod
