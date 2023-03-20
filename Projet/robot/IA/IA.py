@@ -4,6 +4,8 @@ from time import sleep
 from threading import Thread
 from .controleur import ControleurRobotVirtuel
 
+
+#plus de abstract
 class Ia(ABC):
     @abstractmethod
     def start(self):
@@ -21,7 +23,7 @@ class Ia(ABC):
 
 class Ia_Avancer_tout_droit(Thread):
     
-    def __init__(self, robot, distance, v):
+    def __init__(self, robot, distance, v, controleur):
         Thread.__init__(self)
 
         self.robot = robot
@@ -31,7 +33,7 @@ class Ia_Avancer_tout_droit(Thread):
         self.v = v
         self.en_cours=False
         self.delta_t=1./100
-        self.CRV=ControleurRobotVirtuel(self.robot)
+        self.CR=controleur
         self.threadIA=Thread(target=self.boucleIA)
         
     def start(self):
@@ -40,7 +42,7 @@ class Ia_Avancer_tout_droit(Thread):
         self.en_cours=True
         threadIA=Thread(target=self.boucleIA)
         threadIA.start()
-        self.CRV.avancerToutDroit(self.v)
+        self.CR.avancerToutDroit(self.v)
        
  
     def stop(self):
@@ -55,16 +57,17 @@ class Ia_Avancer_tout_droit(Thread):
         if self.stop():
             self.parcouru_gauche = 0
             self.parcouru_droite = 0
-            self.CRV.stop()
+            self.CR.stop()
             self.en_cours=False
             print("fin de l'ordre")
             
         else:
-            parcouru_g, parcouru_d = self.CRV.calculDistanceParcourue(delta_t)
+            #ca saute--------------------------------------------------------/
+            parcouru_g, parcouru_d = self.CR.calculDistanceParcourue(delta_t)
             self.parcouru_gauche += parcouru_g
             self.parcouru_droite += parcouru_d
     
-    
+    #boucleia class thread
     def boucleIA(self):
         while self.en_cours:
             print(self.parcouru_gauche)

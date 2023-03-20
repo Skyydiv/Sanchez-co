@@ -4,6 +4,7 @@ from robot.simu.virtuel import Robot, Environnement
 from robot.affichage import View
 from robot.simu.simulation import Simulation
 from robot.IA import Ia_Avancer_tout_droit
+from robot.IA.controleur import ControleurRobotVirtuel
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -12,8 +13,15 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 simulation=Simulation(100)
 simulation.addSimulation(5) #ajouter des obstcales a l'environnement
 
-ia=Ia_Avancer_tout_droit(simulation.robot,200,60)
+#ajout du controleur
+
+cr=ControleurRobotVirtuel(simulation.robot)
+
+        
+
+ia=Ia_Avancer_tout_droit(simulation.robot,200,60,cr)
 ia.start()
+
 
 root = Tk() # initialiser la fenetre tkinter
 view=View(root, simulation)
