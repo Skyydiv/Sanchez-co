@@ -76,40 +76,54 @@ class Ia_Avancer_tout_droit(Thread):
            
           
     
-
-
-    
-class IAangle(Ia):
+class IATournerAngle(Thread):
     """
-    sous-classe de l'IA permettant permettant une rotation du robot d'un angle donné 
+    Classe IA pour tourner d'un certain angle a vers la droite
     """
-    def __init__(self, robot, angle):
+    def __init__(self, controleur, angle, vitesse):
         
-        self.robot = robot
-        self.running = False
-        self.angle = angle
+        Thread.__init__(self)
         
+        self.angle = radians(angle)
+        self._controleur=controleur
+        self.threadIA=Thread(target=self.boucleIA)
         
+        if angle >= 0:
+            self.vitesse = vitesse
+        else:
+            self.vitesse = -vitesse
+        self.parcouru = 0
 
     def start(self):
-        if not self.running:
-            self.running = True
-            
+        self.parcouru = 0
+        self._controleur.calculAngleParcouru()
+        threadIA=Thread(target=self.boucleIA)
+        threadIA.start()
         
-
-
     def stop(self):
-        return self.robot.orientation == self.angle
+        #On ne s'arrête que si on l'a depassé l'angle 
+        return self.parcouru > abs(self.angle) 
+        
+    def update(self, dT : float):
+        #Calcul de l'angle parcouru
+        a = abs(self._controleur.calculAngleParcouru())
+        self.parcouru += a
+        
+        if self.stop():
+            self.end()
+            print("fin de l'ordre")
+            self._controleur.stop()
+            return
+
+        self.avancer()
+
+    def end(self):
+        self._controleur.SetVitesseRoues(0,0)
+
+    def avancer(self):
+        self._controleur.SetVitesseRoues(self.vitesse,-self.vitesse)
     
 
-    def update(self, delta_t):
-        if self.running:
-            if self.stop(): 
-                return
-            else:
-                self.robot.orientation = self.angle
-    
-    
     
 class IAseq(Ia):
     """
