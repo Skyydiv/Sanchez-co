@@ -3,6 +3,7 @@ import math
 class ControleurRobotVirtuel:
     def __init__(self, robot):
         self.robot=robot
+        self.distanceParcourue=0
 
     def setVitesseRoues(self, vitesseg, vitessed):
         self.robot.setVitesse(vitesseg,vitessed)
@@ -22,9 +23,12 @@ class ControleurRobotVirtuel:
     def calculDistanceParcourue(self,delta_t):
         """
         :param delta_t: un intervalle de temps 
-        :return: couple de distance parcourue par les 2 roues du robot
+        :return: la distance parcourue par le robot pour delta_t et met a jour la distance parcourue totale
         """
-        return self.robot.get_distance_roue(delta_t)
+        d_gauche,d_droite=self.robot.get_distance_roue(delta_t)
+        d=(d_gauche+d_droite)/2
+        self.setDistanceParcourue+=d
+        return d
 
     def setDistanceParcourue(self, dist_g,dist_d):
         """fixe la distance parcourue par les roues du robot
@@ -59,6 +63,7 @@ class ControleurRobotVirtuel:
 class ControleurRobotVraieVie:
     def __init__(self, robot):
         self.robot=robot
+        self.distanceParcourue=0
         self.distance_parcourue_roue_gauche=0
         self.distance_parcourue_roue_droite=0
         self.angle_parcouru_offset=(0,0)
@@ -85,13 +90,15 @@ class ControleurRobotVraieVie:
         """
         calcul la distance parcourue par les roues du robot
         :param delta_t: un intervalle de temps 
-        :return: couple de distance parcourue par les 2 roues du robot
+        :return: la distance parcourue par le robot pour delta_t et met a jour la distance parcourue totale
         """
         rotationrg = (self.robot.MOTOR_LEFT * delta_t)
         distancerg = (math.pi * self.robot.WHEEL_DIAMETER/2 * rotationrg) / 180
         rotationrd = (self.robot.MOTOR_RIGHT * delta_t)
         distancerd = (math.pi * self.robot.WHEEL_DIAMETER/2 * rotationrd) / 180
-        return (distancerg, distancerd)
+        d=(distancerg + distancerd)/2
+        self.distanceParcourue+=d
+        return d
     
     def setDistanceParcourue(self, dist_g,dist_d):
         """fixe la distance parcourue par les roues du robot
