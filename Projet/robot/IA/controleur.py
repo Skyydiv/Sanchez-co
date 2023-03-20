@@ -28,7 +28,7 @@ class ControleurRobotVirtuel:
         """
         d_gauche,d_droite=self.robot.get_distance_roue(delta_t)
         d=(d_gauche+d_droite)/2
-        self.istanceParcourue+=d
+        self.distanceParcourue+=d
         return d
 
     def setDistanceParcourue(self, dist_g,dist_d):
