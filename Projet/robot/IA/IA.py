@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 import math
 from time import sleep
+from threading import Thread
+from .controleur import ControleurRobotVirtuel
 
 class Ia(ABC):
     @abstractmethod
@@ -17,39 +19,61 @@ class Ia(ABC):
         pass
 
 
-class Ia_Avancer_tout_droit(Ia):
+class Ia_Avancer_tout_droit(Thread):
     
     def __init__(self, robot, distance, v):
+        Thread.__init__(self)
+
         self.robot = robot
         self.parcouru_gauche=0
         self.parcouru_droite=0
         self.goal = distance
         self.v = v
         self.en_cours=False
-        self.delta_t=0.1
+        self.delta_t=1./100
+        self.CRV=ControleurRobotVirtuel(self.robot)
+        self.threadIA=Thread(target=self.boucleIA)
         
     def start(self):
         self.parcouru_gauche=0
         self.parcouru_droite=0
         self.en_cours=True
-        self.robot.setVitesse(self.v, self.v)
+        threadIA=Thread(target=self.boucleIA)
+        threadIA.start()
+        self.CRV.avancerToutDroit(self.v)
        
  
     def stop(self):
          # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
-        self.v=0
-        self.v=0
-        self.robot.setVitesse(self.v,self.v)
-        self.parcouru_gauche = 0
-        self.parcouru_droite = 0
-    
-    def update(self,delta_t):
         if (self.parcouru_gauche + self.parcouru_droite)/2 >= self.goal:
-           self.stop()
+            return True 
+        return False
+    
+    
+    
+    def update(self, delta_t):
+        if self.stop():
+            self.parcouru_gauche = 0
+            self.parcouru_droite = 0
+            self.CRV.stop()
+            self.en_cours=False
+            print("fin de l'ordre")
+            
         else:
-            parcouru_g, parcouru_d = self.robot.get_distance_roue(delta_t)
+            parcouru_g, parcouru_d = self.CRV.calculDistanceParcourue(delta_t)
             self.parcouru_gauche += parcouru_g
             self.parcouru_droite += parcouru_d
+    
+    
+    def boucleIA(self):
+        while self.en_cours:
+            print(self.parcouru_gauche)
+            self.update(self.delta_t)
+            sleep(self.delta_t)
+           
+          
+    
+
 
     
 class IAangle(Ia):

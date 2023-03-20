@@ -12,9 +12,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 simulation=Simulation(100)
 simulation.addSimulation(5) #ajouter des obstcales a l'environnement
 
-ia=Ia_Avancer_tout_droit(simulation.robot,100,60)
+ia=Ia_Avancer_tout_droit(simulation.robot,200,60)
 ia.start()
-  
 
 root = Tk() # initialiser la fenetre tkinter
 view=View(root, simulation)

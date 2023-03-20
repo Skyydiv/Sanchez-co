@@ -32,6 +32,11 @@ class Robot:
     self.vitesseRoueDroite=0 #degre par sec
     self.vitesseRoueGauche=0 #degre par sec
 
+    self._distance_parcourue_roue_gauche=0 #en mm
+    self._distance_parcourue_roue_droite=0 #en mm
+
+    self._angle_parcouru=0 #(en degre)
+
   @property
   def x(self):
     """Renvoie coordonnées x du robot"""
@@ -41,21 +46,47 @@ class Robot:
   def y(self):
     """Renvoie coordonnées y du robot"""
     return self._y
+  
+  @property
+  def distance_parcourue_roue_gauche(self):
+    """Renvoie la distance parcourue par la roue gauche"""
+    return self._distance_parcourue_roue_gauche
+  
+  @property
+  def distance_parcourue_roue_droite(self):
+    """Renvoie la distance parcourue par la roue droite"""
+    return self._distance_parcourue_roue_droite
+  
+  def set_distance_parcourue_roue_gauche(self,d):
+     """fixe la distance_parcourue_roue_gauche a une distance d 
+     :param d: distance parcourue"""
+     self._distance_parcourue_roue_gauche=d
 
-  def set_motor_dps(self, port, dps):
-    """
-    Fixe la vitesse d'un moteur en nombre de degres par seconde
-    :port: une constante moteur,  MOTOR_LEFT ou MOTOR_RIGHT (ou les deux MOTOR_LEFT+MOTOR_RIGHT).
-    :dps: la vitesse cible en nombre de degres par seconde
-    """
+  def set_distance_parcourue_roue_droite(self,d):
+     """fixe la distance_parcourue_roue_droite a une distance d 
+     :param d: distance parcourue"""
+     self._distance_parcourue_roue_droite=d
 
-    if(port==self.MOTOR_RIGHT):
-      self.MOTOR_RIGHT=dps
-    if(port==self.MOTOR_LEFT):
-      self.MOTOR_LEFT=dps
-    if(port==(self.MOTOR_RIGHT,self.MOTOR_LEFT)):
-      self.MOTOR_RIGHT=dps
-      self.MOTOR_LEFT=dps
+  def set_angle_parcouru(self,a ):
+     """fixe l'angle_parcouru a un angle a
+     :param a: angle parcouru en degre"""
+     self._angle_parcouru=a
+
+
+  # def set_motor_dps(self, port, dps):
+  #   """
+  #   Fixe la vitesse d'un moteur en nombre de degres par seconde
+  #   :port: une constante moteur,  MOTOR_LEFT ou MOTOR_RIGHT (ou les deux MOTOR_LEFT+MOTOR_RIGHT).
+  #   :dps: la vitesse cible en nombre de degres par seconde
+  #   """
+
+  #   if(port==self.MOTOR_RIGHT):
+  #     self.MOTOR_RIGHT=dps
+  #   if(port==self.MOTOR_LEFT):
+  #     self.MOTOR_LEFT=dps
+  #   if(port==(self.MOTOR_RIGHT,self.MOTOR_LEFT)):
+  #     self.MOTOR_RIGHT=dps
+  #     self.MOTOR_LEFT=dps
 
 
   def deplacer(self, intervalle_temps):
