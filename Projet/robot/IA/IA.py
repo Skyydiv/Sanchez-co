@@ -19,9 +19,11 @@ class Ia(ABC):
         pass
 
 
-class Ia_Avancer_tout_droit(Ia):
+class Ia_Avancer_tout_droit(Thread):
     
     def __init__(self, robot, distance, v):
+        Thread.__init__(self)
+
         self.robot = robot
         self.parcouru_gauche=0
         self.parcouru_droite=0
@@ -30,6 +32,7 @@ class Ia_Avancer_tout_droit(Ia):
         self.en_cours=False
         self.delta_t=1./100
         self.CRV=ControleurRobotVirtuel(self.robot)
+        self.threadIA=Thread(target=self.boucleIA)
         
     def start(self):
         self.parcouru_gauche=0
@@ -37,35 +40,40 @@ class Ia_Avancer_tout_droit(Ia):
         self.en_cours=True
         threadIA=Thread(target=self.boucleIA)
         threadIA.start()
+        self.CRV.avancerToutDroit(self.v)
        
  
     def stop(self):
          # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
-         
-        #mettre la condition de ditance
-        if (self.parcouru_gauche + self.parcouru_droite)/2 == self.goal:
+        if (self.parcouru_gauche + self.parcouru_droite)/2 >= self.goal:
             return True 
         return False
     
     
     
-    def update(self,delta_t):
-        if stop()==True:
+    def update(self, delta_t):
+        if self.stop():
             self.parcouru_gauche = 0
-            self.parcouru_droite = 0 
+            self.parcouru_droite = 0
             self.CRV.stop()
+            self.en_cours==False
+            print("fin de l'ordre")
+            
         else:
-            parcouru_g, parcouru_d = self.CRV.calculDistanceParcourue(self.delta_t)
+            parcouru_g, parcouru_d = self.CRV.calculDistanceParcourue(delta_t)
             self.parcouru_gauche += parcouru_g
             self.parcouru_droite += parcouru_d
     
     
     def boucleIA(self):
-        while self.en_cours==True:
-            print("passage boucle")
-            self.CRV.avancerToutDroit(self.v)
+        while self.en_cours:
+            print(self.parcouru_gauche)
             self.update(self.delta_t)
             sleep(self.delta_t)
+           
+          
+    
+
 
     
 class IAangle(Ia):
