@@ -84,7 +84,7 @@ class IATournerAngle(Thread):
         
         Thread.__init__(self)
         
-        self.angle = radians(angle)
+        self.angle = math.radians(angle)
         self._controleur=controleur
         self.threadIA=Thread(target=self.boucleIA)
         
