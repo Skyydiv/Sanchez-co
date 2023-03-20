@@ -56,7 +56,7 @@ class Ia_Avancer_tout_droit(Thread):
             self.parcouru_gauche = 0
             self.parcouru_droite = 0
             self.CRV.stop()
-            self.en_cours==False
+            self.en_cours=False
             print("fin de l'ordre")
             
         else:
