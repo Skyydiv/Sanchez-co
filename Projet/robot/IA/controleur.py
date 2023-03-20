@@ -9,6 +9,7 @@ class ControleurRobotVirtuel:
         self.robot.setVitesse(vitesseg,vitessed)
 
     def avancerToutDroit(self, v):
+        self.calculDistanceParcourue
         self.robot.setVitesse(v,v)
 
     def tournerDroite(self,v):
@@ -27,7 +28,7 @@ class ControleurRobotVirtuel:
         """
         d_gauche,d_droite=self.robot.get_distance_roue(delta_t)
         d=(d_gauche+d_droite)/2
-        self.setDistanceParcourue+=d
+        self.istanceParcourue+=d
         return d
 
     def setDistanceParcourue(self, dist_g,dist_d):
@@ -55,6 +56,11 @@ class ControleurRobotVirtuel:
         self.robot.angle=angleParcouru+angleRobot
         return angleParcouru
     
+    def getDistanceParcourue(self):
+        """
+        :return : la distance parcourue par le robot depuis la derniere remise a 0
+        """
+        return self.distanceParcourue
 
 
     def __getattr__(self, name):
@@ -73,6 +79,7 @@ class ControleurRobotVraieVie:
         self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dpsd)
 
     def avancerToutDroit(self, dps):
+        self.distanceParcourue
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT + self.robot.MOTOR_RIGHT, dps)
 
     def tournerDroite(self,dps):
@@ -128,6 +135,11 @@ class ControleurRobotVraieVie:
         self.angle_parcouru_offset=(pos[0],pos[1])
         return angle
     
+    def getDistanceParcourue(self):
+        """
+        :return : la distance parcourue par le robot depuis la derniere remise a 0
+        """
+        return self.distanceParcourue
 
     def __getattr__(self, name):
         return getattr(self.robot, name)
