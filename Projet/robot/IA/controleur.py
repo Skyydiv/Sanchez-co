@@ -38,6 +38,10 @@ class ControleurRobotVirtuel:
         self.robot.set_angle_parcouru(a)
     
     def calculAngleParcouru(self, delta_t):
+        """
+        calcul l'angle parcouru par le robot en radians
+        :return: angle parcouru par le robot en radians
+        """
         angleRobot=self.robot.angle
 
         angleParcouru=(self.robot.get_distance_roue(delta_t)[1] - self.robot.get_distance_roue(delta_t)[0]) / self.robot.WHEEL_BASE_WIDTH
@@ -72,6 +76,7 @@ class ControleurRobotVraieVie:
 
     def calculDistanceParcourue(self,delta_t):
         """
+        calcul la distance parcourue par les roues du robot
         :param delta_t: un intervalle de temps 
         :return: couple de distance parcourue par les 2 roues du robot
         """
@@ -96,11 +101,15 @@ class ControleurRobotVraieVie:
         self.angle_parcouru=a
 
     def calculAngleParcouru(self):
+        """
+        calcul l'angle parcouru par le robot en radians
+        :return: angle parcouru par le robot en radians
+        """
         angleRobot=self.robot.angle
         angleParcouru=(self.distance_parcourue_roue_droite - self.distance_parcourue_roue_gauche) / self.robot.WHEEL_BASE_WIDTH
         self.robot.angle=angleParcouru+angleRobot
         return angleParcouru
-        
+    
 
     def __getattr__(self, name):
         return getattr(self.robot, name)
