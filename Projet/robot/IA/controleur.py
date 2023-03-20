@@ -4,6 +4,9 @@ class ControleurRobotVirtuel:
     def __init__(self, robot):
         self.robot=robot
 
+    def setVitesseRoues(self, vitesseg, vitessed):
+        self.robot.setVitesse(vitesseg,vitessed)
+
     def avancerToutDroit(self, v):
         self.robot.setVitesse(v,v)
 
@@ -58,7 +61,11 @@ class ControleurRobotVraieVie:
         self.robot=robot
         self.distance_parcourue_roue_gauche=0
         self.distance_parcourue_roue_droite=0
-        self.angle_parcouru=0 #en degre
+        self.angle_parcouru_offset=(0,0)
+
+    def setVitesseRoues(self, dpsg, dpsd):
+        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dpsg)
+        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dpsd)
 
     def avancerToutDroit(self, dps):
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT + self.robot.MOTOR_RIGHT, dps)
@@ -105,10 +112,14 @@ class ControleurRobotVraieVie:
         calcul l'angle parcouru par le robot en radians
         :return: angle parcouru par le robot en radians
         """
-        angleRobot=self.robot.angle
-        angleParcouru=(self.distance_parcourue_roue_droite - self.distance_parcourue_roue_gauche) / self.robot.WHEEL_BASE_WIDTH
-        self.robot.angle=angleParcouru+angleRobot
-        return angleParcouru
+        pos=self.robot.get_motor_position()
+        posL=(pos[0]-self.angle_parcouru_offset[0])/360 * self.robot.WHEEL_DIAMETER * math.pi
+        posR=(pos[1]-self.angle_parcouru_offset[1])/360 * self.robot.WHEEL_DIAMETER * math.pi
+
+        angle= (posR-posL)/self.robot.WHEEL_BASE_WIDTH
+
+        self.angle_parcouru_offset=(pos[0],pos[1])
+        return angle
     
 
     def __getattr__(self, name):
