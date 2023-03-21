@@ -28,8 +28,6 @@ class Ia_Avancer_tout_droit:
     def __init__(self, robot, distance, v, controleur):
 
         self.robot = robot
-        self.parcouru_gauche=0
-        self.parcouru_droite=0
         self.goal = distance
         self.v = v
         self.en_cours=False
@@ -38,8 +36,6 @@ class Ia_Avancer_tout_droit:
        
         
     def start(self):
-        self.parcouru_gauche=0
-        self.parcouru_droite=0
         self.en_cours=True
         self.CR.avancerToutDroit(self.v)
        
@@ -53,11 +49,9 @@ class Ia_Avancer_tout_droit:
     
     def update(self, delta_t):
         if self.stop():
-            self.parcouru_gauche = 0
-            self.parcouru_droite = 0
+            self.CR.distanceParcourue=0
             self.CR.stop()
             self.en_cours=False
-            print("fin de l'ordre")
             
         else:
             self.CR.calculDistanceParcourue(delta_t)
@@ -112,37 +106,6 @@ class IATournerAngle:
         self._controleur.SetVitesseRoues(self.vitesse,-self.vitesse)
     
 
-    
-class IAseq:
-    """
-    sequence de sous IA 
-    """
-    def __init__(self, listeIA):
-        
-        self.listeIA = listeIA
-        self.curr = 0
-
-
-
-    def start(self):
-        pass
-
-
-    def stop(self):
-        if self.curr == len(self.listeIA):
-            return True
-        
-        
-    def update(self):
-        if self.stop():
-            return
-        else:
-            self.listeIA[self.curr].stop()
-            self.curr+=1
-            self.listeIA[self.curr].start()
-        self.listeIA[self.curr].update()
-    
-
 
 class IAevitecrash:
     """
@@ -192,4 +155,39 @@ class IAevitecrash:
         
         
         
-    
+class IAseq:
+        
+        def __init__(self,controleur,liste):
+            self.CR=controleur
+            self.ia_list=liste
+            self.en_cours=False
+            self.delta_t=1./100
+            self.ia_en_cours=0
+            
+        def start(self):
+            # print("début de l'ordre seq")
+            self.en_cours=True
+            self.ia_list[self.ia_en_cours].start()
+            
+        def stop(self):
+            if not (self.ia_list[self.ia_en_cours].en_cours):
+                self.ia_en_cours+=1
+                if self.ia_en_cours>=len(self.ia_list):
+                    self.en_cours=False
+                    return True
+                else:
+                    self.ia_list[self.ia_en_cours].start()
+                    return False
+            return False
+        
+        def update(self, delta_t):
+            if self.stop():
+                self.CR.stop()
+                self.en_cours=False
+                # print("fin de l'ordre seq")
+                
+            else:
+                # print("update seq")
+                self.ia_list[self.ia_en_cours].update(delta_t)
+        
+        

@@ -5,9 +5,11 @@ from robot.affichage import View
 from robot.simu.simulation import Simulation
 from robot.IA import Ia_Avancer_tout_droit
 from robot.IA import BoucleIA
+from robot.IA import IAseq
 from robot.IA.controleur import ControleurRobotVirtuel
 import os
 import sys
+from time import sleep
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
@@ -20,12 +22,16 @@ cr=ControleurRobotVirtuel(simulation.robot)
 
         
 
-ia=Ia_Avancer_tout_droit(simulation.robot,200,100,cr)
-
-iaboucle=BoucleIA(cr,ia)
+ia1=Ia_Avancer_tout_droit(simulation.robot,200,100,cr)
+ia2=Ia_Avancer_tout_droit(simulation.robot,500,300,cr)
+iaseq=IAseq(cr,[ia1,ia2,ia1])
+iaboucle=BoucleIA(cr,iaseq)
 
 iaboucle.start()
 
+
+
+# iaboucle.start()
 
 root = Tk() # initialiser la fenetre tkinter
 view=View(root, simulation)
@@ -34,6 +40,3 @@ simulation.run_simu()
 root.mainloop()
 simulation.stop_simu()
 # view.stop_sim()
-
-
-
