@@ -6,25 +6,26 @@ from .controleur import ControleurRobotVirtuel
 
 
 #plus de abstract
-class Ia(ABC):
-    @abstractmethod
-    def start(self):
-        pass
-
+class BoucleIA(Thread):
     
-    @abstractmethod
-    def stop(self):
-        pass
-    
-    @abstractmethod
-    def update(self):
-        pass
+    def __init__(self, controleur, ia):
+        Thread.__init__(self)
+        self.controleur = controleur
+        self.ia=ia
+        self.delta_t =1./100
 
+    def run(self):
+        self.ia.start()
+        self.controleur.running = True
+        while self.ia.en_cours:
+            #---------------------------
+            self.ia.update(self.delta_t)
+            sleep(self.delta_t)
+        self.controleur.running = False
 
-class Ia_Avancer_tout_droit(Thread):
+class Ia_Avancer_tout_droit:
     
     def __init__(self, robot, distance, v, controleur):
-        Thread.__init__(self)
 
         self.robot = robot
         self.parcouru_gauche=0
@@ -34,23 +35,20 @@ class Ia_Avancer_tout_droit(Thread):
         self.en_cours=False
         self.delta_t=1./100
         self.CR=controleur
-        self.threadIA=Thread(target=self.boucleIA)
+       
         
     def start(self):
         self.parcouru_gauche=0
         self.parcouru_droite=0
         self.en_cours=True
-        threadIA=Thread(target=self.boucleIA)
-        threadIA.start()
         self.CR.avancerToutDroit(self.v)
        
  
     def stop(self):
          # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
-        if (self.parcouru_gauche + self.parcouru_droite)/2 >= self.goal:
+        if (self.CR.distanceParcourue)>= self.goal:
             return True 
         return False
-    
     
     
     def update(self, delta_t):
@@ -62,21 +60,11 @@ class Ia_Avancer_tout_droit(Thread):
             print("fin de l'ordre")
             
         else:
-            #ca saute--------------------------------------------------------/
-            parcouru_g, parcouru_d = self.CR.calculDistanceParcourue(delta_t)
-            self.parcouru_gauche += parcouru_g
-            self.parcouru_droite += parcouru_d
+            self.CR.calculDistanceParcourue(delta_t)
     
-    #boucleia class thread
-    def boucleIA(self):
-        while self.en_cours:
-            print(self.parcouru_gauche)
-            self.update(self.delta_t)
-            sleep(self.delta_t)
-           
           
     
-class IATournerAngle(Thread):
+class IATournerAngle:
     """
     Classe IA pour tourner d'un certain angle a vers la droite
     """
@@ -125,7 +113,7 @@ class IATournerAngle(Thread):
     
 
     
-class IAseq(Ia):
+class IAseq:
     """
     sequence de sous IA 
     """
@@ -156,7 +144,7 @@ class IAseq(Ia):
     
 
 
-class IAevitecrash(Ia):
+class IAevitecrash:
     """
     sous-classe de l'IA permettant permettant d'eviter au robot de se crash 
     """

@@ -4,6 +4,7 @@ from robot.simu.virtuel import Robot, Environnement
 from robot.affichage import View
 from robot.simu.simulation import Simulation
 from robot.IA import Ia_Avancer_tout_droit
+from robot.IA import BoucleIA
 from robot.IA.controleur import ControleurRobotVirtuel
 import os
 import sys
@@ -19,8 +20,11 @@ cr=ControleurRobotVirtuel(simulation.robot)
 
         
 
-ia=Ia_Avancer_tout_droit(simulation.robot,200,60,cr)
-ia.start()
+ia=Ia_Avancer_tout_droit(simulation.robot,200,100,cr)
+
+iaboucle=BoucleIA(cr,ia)
+
+iaboucle.start()
 
 
 root = Tk() # initialiser la fenetre tkinter
