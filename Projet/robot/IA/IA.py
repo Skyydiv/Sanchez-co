@@ -25,9 +25,8 @@ class BoucleIA(Thread):
 
 class Ia_Avancer_tout_droit:
     
-    def __init__(self, robot, distance, v, controleur):
+    def __init__(self, distance, v, controleur):
 
-        self.robot = robot
         self.goal = distance
         self.v = v
         self.en_cours=False
@@ -49,7 +48,7 @@ class Ia_Avancer_tout_droit:
     
     def update(self, delta_t):
         if self.stop():
-            self.CR.distanceParcourue=0
+            self.CR.resetDistanceParcourue()
             self.CR.stop()
             self.en_cours=False
             

@@ -22,8 +22,8 @@ cr=ControleurRobotVirtuel(simulation.robot)
 
         
 
-ia1=Ia_Avancer_tout_droit(simulation.robot,200,100,cr)
-ia2=Ia_Avancer_tout_droit(simulation.robot,500,300,cr)
+ia1=Ia_Avancer_tout_droit(200,100,cr)
+ia2=Ia_Avancer_tout_droit(500,300,cr)
 iaseq=IAseq(cr,[ia1,ia2,ia1])
 iaboucle=BoucleIA(cr,iaseq)
 

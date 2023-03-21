@@ -66,6 +66,9 @@ class ControleurRobotVirtuel:
     def __getattr__(self, name):
         return getattr(self.robot, name)
     
+    def resetDistanceParcourue(self):
+        self.distanceParcourue=0
+    
 class ControleurRobotVraieVie:
     def __init__(self, robot):
         self.robot=robot
@@ -143,3 +146,7 @@ class ControleurRobotVraieVie:
 
     def __getattr__(self, name):
         return getattr(self.robot, name)
+    
+    
+    def resetDistanceParcourue(self):
+        self.distanceParcourue=0
