@@ -26,7 +26,7 @@ cr=ControleurRobotVirtuel(simulation.robot)
 ia1=Ia_Avancer_tout_droit(200,100,cr)
 ia2=Ia_Avancer_tout_droit(500,300,cr)
 iaa=IATournerAngle(cr,90,100)
-iaseq=IAseq(cr,[ia1,iaa,ia1,iaa])
+iaseq=IAseq(cr,[ia1,iaa,ia1,iaa,ia1,iaa,ia1])
 iaboucle=BoucleIA(cr,iaseq)
 
 iaboucle.start()

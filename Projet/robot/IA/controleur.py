@@ -4,6 +4,8 @@ class ControleurRobotVirtuel:
     def __init__(self, robot):
         self.robot=robot
         self.distanceParcourue=0
+        self.AngleParcouru=0 #en radians
+
 
     def setVitesseRoues(self, vitesseg, vitessed):
         self.robot.setVitesse(vitesseg,vitessed)
@@ -50,11 +52,10 @@ class ControleurRobotVirtuel:
         calcul l'angle parcouru par le robot en radians
         :return: angle parcouru par le robot en radians
         """
-        angleRobot=self.robot.angle
+        #angleRobot=self.robot.angle
 
-        angleParcouru=(self.robot.get_distance_roue(delta_t)[1] - self.robot.get_distance_roue(delta_t)[0]) / self.robot.WHEEL_BASE_WIDTH
-        self.robot.angle=angleParcouru+angleRobot
-        return angleParcouru
+        angledif=(self.robot.get_distance_roue(delta_t)[1] - self.robot.get_distance_roue(delta_t)[0]) / self.robot.WHEEL_BASE_WIDTH
+        self.AngleParcouru+=angledif
     
     def getDistanceParcourue(self):
         """
@@ -63,11 +64,14 @@ class ControleurRobotVirtuel:
         return self.distanceParcourue
 
 
-    def __getattr__(self, name):
-        return getattr(self.robot, name)
+    # def __getattr__(self, name):
+    #     return getattr(self.robot, name)
     
     def resetDistanceParcourue(self):
         self.distanceParcourue=0
+
+    def resetAngleParcourue(self):
+        self.AngleParcouru=0
     
 class ControleurRobotVraieVie:
     def __init__(self, robot):
