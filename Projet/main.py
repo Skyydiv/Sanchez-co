@@ -4,6 +4,7 @@ from robot.simu.virtuel import Robot, Environnement
 from robot.affichage import View
 from robot.simu.simulation import Simulation
 from robot.IA import Ia_Avancer_tout_droit
+from robot.IA import IATournerAngle
 from robot.IA import BoucleIA
 from robot.IA import IAseq
 from robot.IA.controleur import ControleurRobotVirtuel
@@ -14,7 +15,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 simulation=Simulation(100)
-simulation.addSimulation(5) #ajouter des obstcales a l'environnement
+simulation.addSimulation(0) #ajouter des obstcales a l'environnement
 
 #ajout du controleur
 
@@ -24,7 +25,8 @@ cr=ControleurRobotVirtuel(simulation.robot)
 
 ia1=Ia_Avancer_tout_droit(200,100,cr)
 ia2=Ia_Avancer_tout_droit(500,300,cr)
-iaseq=IAseq(cr,[ia1,ia2,ia1])
+iaa=IATournerAngle(cr,90,100)
+iaseq=IAseq(cr,[ia1,iaa,ia1,iaa])
 iaboucle=BoucleIA(cr,iaseq)
 
 iaboucle.start()

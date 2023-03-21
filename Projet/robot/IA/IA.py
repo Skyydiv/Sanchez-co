@@ -67,7 +67,6 @@ class IATournerAngle:
         
         self.angle = math.radians(angle)
         self._controleur=controleur
-        self.threadIA=Thread(target=self.boucleIA)
         
         if angle >= 0:
             self.vitesse = vitesse
@@ -78,8 +77,6 @@ class IATournerAngle:
     def start(self):
         self.parcouru = 0
         self._controleur.calculAngleParcouru()
-        threadIA=Thread(target=self.boucleIA)
-        threadIA.start()
         
     def stop(self):
         #On ne s'arrête que si on l'a depassé l'angle 
