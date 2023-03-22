@@ -41,7 +41,7 @@ class Ia_Avancer_tout_droit:
  
     def stop(self):
          # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
-        if (self.CR.distanceParcourue)>= self.goal:
+        if (self.CR.getDistanceParcourue())>= self.goal:
             return True 
         return False
     
@@ -53,7 +53,7 @@ class Ia_Avancer_tout_droit:
             self.en_cours=False
             
         else:
-            self.CR.calculDistanceParcourue(delta_t)
+            self.CR.avancerToutDroit(self.v,delta_t)
     
           
     
@@ -88,7 +88,7 @@ class IATournerAngle:
             self.CR.resetAngleParcourue()
 
         else:
-            self.CR.calculAngleParcouru(delta_t)
+            self.CR.tournerDroite(self.v,self.delta_t)
 
 
 class IAevitecrash:
