@@ -55,9 +55,8 @@ class View(Thread) :
         x=self.robot.x
         y=self.robot.y
         r=self.robot.rayon
-        #r=30
         o=degrees(self.robot.orientation)
-        self.canv.create_arc(x-r,y-r,x+r,y+r, start=45, extent=270,fill="yellow")
+        self.canv.create_arc(x-r,y-r,x+r,y+r, start=45-o, extent=270,fill="yellow")
 
     def drawObstacles(self):
         '''dessine l'ensemble des obstacles'''
