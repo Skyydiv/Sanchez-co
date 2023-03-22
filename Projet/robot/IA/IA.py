@@ -68,11 +68,12 @@ class IATournerAngle:
         self.CR=controleur
         self.en_cours=False
         self.v=vitesse
+        self.delta_t=1./100
 
     def start(self):
         self.CR.resetDistanceParcourue()
         self.en_cours=True
-        self.CR.tournerDroite(self.v)
+        self.CR.tournerDroite(self.v,self.delta_t)
         
     def stop(self):
         #On ne s'arrête que si on l'a depassé l'angle 
