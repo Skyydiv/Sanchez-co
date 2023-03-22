@@ -69,6 +69,12 @@ class ControleurRobotVirtuel:
         :return : la distance parcourue par le robot depuis la derniere remise a 0
         """
         return self.distanceParcourue
+    
+    def getAngleParcouru(self):
+        """
+        :return : l'angle parcouru par le robot depuis la derniere remise a 0
+        """
+        return self.AngleParcouru
 
 
     # def __getattr__(self, name):
@@ -84,6 +90,7 @@ class ControleurRobotVraieVie:
     def __init__(self, robot):
         self.robot=robot
         self.distanceParcourue=0
+        self.AngleParcouru=0 #en radians
         self.distance_parcourue_roue_gauche=0
         self.distance_parcourue_roue_droite=0
         self.angle_parcouru_offset=(0,0)
@@ -140,7 +147,7 @@ class ControleurRobotVraieVie:
         """fixe l'angle parcouru par le robot
         :param a: distance parcourue par le robot en degre
         """
-        self.angle_parcouru=a
+        self.AngleParcouru=a
 
     def calculAngleParcouru(self,delta_t):
         """
@@ -161,6 +168,12 @@ class ControleurRobotVraieVie:
         :return : la distance parcourue par le robot depuis la derniere remise a 0
         """
         return self.distanceParcourue
+    
+    def getAngleParcouru(self):
+        """
+        :return : l'angle parcouru par le robot depuis la derniere remise a 0
+        """
+        return self.AngleParcouru
 
     def __getattr__(self, name):
         return getattr(self.robot, name)
