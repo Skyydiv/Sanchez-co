@@ -1,9 +1,11 @@
 from tkinter import *
 from tkinter import ttk
 
+from threading import Thread
 
 
-class View :
+
+class View(Thread) :
     '''L'interface graphique de la simulation'''
 
     def __init__(self, master, simulation):
@@ -11,6 +13,7 @@ class View :
         :param master: la fenetre de l'affichage
         :param simulation: simulation qu'on veut représenter graphiquement
         '''
+        Thread.__init__(self)
     
         self.root=master
 
