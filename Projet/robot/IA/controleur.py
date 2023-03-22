@@ -7,17 +7,24 @@ class ControleurRobotVirtuel:
         self.AngleParcouru=0 #en radians
 
 
-    def setVitesseRoues(self, vitesseg, vitessed):
+    def setVitesseRoues(self, vitesseg, vitessed,delta_t):
+        self.calculDistanceParcourue(delta_t)
+        self.calculAngleParcouru(delta_t)
         self.robot.setVitesse(vitesseg,vitessed)
 
-    def avancerToutDroit(self, v):
-        self.calculDistanceParcourue
+    def avancerToutDroit(self, v,delta_t):
+        self.calculDistanceParcourue(delta_t)
+        self.calculAngleParcouru(delta_t)
         self.robot.setVitesse(v,v)
 
-    def tournerDroite(self,v):
+    def tournerDroite(self,v,delta_t):
+        self.calculDistanceParcourue(delta_t)
+        self.calculAngleParcouru(delta_t)
         self.robot.setVitesse(v,-v)
     
-    def tournerGauche(self,v):
+    def tournerGauche(self,v,delta_t):
+        self.calculDistanceParcourue(delta_t)
+        self.calculAngleParcouru(delta_t)
         self.robot.setVitesse(-v,v)
 
     def stop(self):
@@ -47,7 +54,7 @@ class ControleurRobotVirtuel:
         """
         self.robot.set_angle_parcouru(a)
     
-    def calculAngleParcouru(self, delta_t):
+    def calculAngleParcouru(self,delta_t):
         """
         calcul l'angle parcouru par le robot en radians
         :return: angle parcouru par le robot en radians
@@ -81,19 +88,26 @@ class ControleurRobotVraieVie:
         self.distance_parcourue_roue_droite=0
         self.angle_parcouru_offset=(0,0)
 
-    def setVitesseRoues(self, dpsg, dpsd):
+    def setVitesseRoues(self, dpsg, dpsd,delta_t):
+        self.calculDistanceParcourue(delta_t)
+        self.calculAngleParcouru(delta_t)
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dpsg)
         self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dpsd)
 
-    def avancerToutDroit(self, dps):
-        self.distanceParcourue
+    def avancerToutDroit(self, dps,delta_t):
+        self.calculDistanceParcourue(delta_t)
+        self.calculAngleParcouru(delta_t)
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT + self.robot.MOTOR_RIGHT, dps)
 
-    def tournerDroite(self,dps):
+    def tournerDroite(self,dps,delta_t):
+        self.calculDistanceParcourue(delta_t)
+        self.calculAngleParcouru(delta_t)
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dps)
         self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, -dps)
     
-    def tournerGauche(self,dps):
+    def tournerGauche(self,dps,delta_t):
+        self.calculDistanceParcourue(delta_t)
+        self.calculAngleParcouru(delta_t)
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT, -dps)
         self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dps)
 
@@ -128,7 +142,7 @@ class ControleurRobotVraieVie:
         """
         self.angle_parcouru=a
 
-    def calculAngleParcouru(self):
+    def calculAngleParcouru(self,delta_t):
         """
         calcul l'angle parcouru par le robot en radians
         :return: angle parcouru par le robot en radians

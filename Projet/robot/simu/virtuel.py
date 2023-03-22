@@ -15,8 +15,8 @@ class Robot:
     '''
     self.rayon = rayon
 
-    self._x =0.1+self.rayon #pour être dans l'env
-    self._y = 0.1+self.rayon
+    self._x =100.1+self.rayon #pour être dans l'env
+    self._y = 100.1+self.rayon
 
     
     self.orientation=0 #(radians)
