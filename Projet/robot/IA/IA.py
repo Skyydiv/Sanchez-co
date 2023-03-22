@@ -4,142 +4,93 @@ from time import sleep
 from threading import Thread
 from .controleur import ControleurRobotVirtuel
 
-class Ia(ABC):
-    @abstractmethod
-    def start(self):
-        pass
 
+#plus de abstract
+class BoucleIA(Thread):
     
-    @abstractmethod
-    def stop(self):
-        pass
-    
-    @abstractmethod
-    def update(self):
-        pass
-
-
-class Ia_Avancer_tout_droit(Thread):
-    
-    def __init__(self, robot, distance, v):
+    def __init__(self, controleur, ia):
         Thread.__init__(self)
+        self.controleur = controleur
+        self.ia=ia
+        self.delta_t =1./100
 
-        self.robot = robot
-        self.parcouru_gauche=0
-        self.parcouru_droite=0
+    def run(self):
+        self.ia.start()
+        self.controleur.running = True
+        while self.ia.en_cours:
+            #---------------------------
+            self.ia.update(self.delta_t)
+            sleep(self.delta_t)
+        self.controleur.running = False
+
+class Ia_Avancer_tout_droit:
+    
+    def __init__(self, distance, v, controleur):
+
         self.goal = distance
         self.v = v
         self.en_cours=False
         self.delta_t=1./100
-        self.CRV=ControleurRobotVirtuel(self.robot)
-        self.threadIA=Thread(target=self.boucleIA)
+        self.CR=controleur
+       
         
     def start(self):
-        self.parcouru_gauche=0
-        self.parcouru_droite=0
         self.en_cours=True
-        threadIA=Thread(target=self.boucleIA)
-        threadIA.start()
-        self.CRV.avancerToutDroit(self.v)
+        self.CR.avancerToutDroit(self.v)
        
  
     def stop(self):
          # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
-        if (self.parcouru_gauche + self.parcouru_droite)/2 >= self.goal:
+        if (self.CR.distanceParcourue)>= self.goal:
             return True 
         return False
     
     
-    
     def update(self, delta_t):
         if self.stop():
-            self.parcouru_gauche = 0
-            self.parcouru_droite = 0
-            self.CRV.stop()
+            self.CR.resetDistanceParcourue()
+            self.CR.stop()
             self.en_cours=False
-            print("fin de l'ordre")
             
         else:
-            parcouru_g, parcouru_d = self.CRV.calculDistanceParcourue(delta_t)
-            self.parcouru_gauche += parcouru_g
-            self.parcouru_droite += parcouru_d
+            self.CR.calculDistanceParcourue(delta_t)
     
-    
-    def boucleIA(self):
-        while self.en_cours:
-            print(self.parcouru_gauche)
-            self.update(self.delta_t)
-            sleep(self.delta_t)
-           
           
     
-
-
-    
-class IAangle(Ia):
+class IATournerAngle:
     """
-    sous-classe de l'IA permettant permettant une rotation du robot d'un angle donné 
+    Classe IA pour tourner d'un certain angle a vers la droite
     """
-    def __init__(self, robot, angle):
+    def __init__(self, controleur, angle, vitesse):
         
-        self.robot = robot
-        self.running = False
-        self.angle = angle
-        
-        
+        self.angle = math.radians(angle) 
+        #on convertit les degrés passés en paramètre en radians pour les calculs
+        self.CR=controleur
+        self.en_cours=False
+        self.v=vitesse
 
     def start(self):
-        if not self.running:
-            self.running = True
-            
+        self.CR.resetDistanceParcourue()
+        self.en_cours=True
+        self.CR.tournerDroite(self.v)
         
-
-
     def stop(self):
-        return self.robot.orientation == self.angle
-    
-
+        #On ne s'arrête que si on l'a depassé l'angle 
+        return self.CR.AngleParcouru > abs(self.angle) 
+        
     def update(self, delta_t):
-        if self.running:
-            if self.stop(): 
-                return
-            else:
-                self.robot.orientation = self.angle
-    
-    
-    
-class IAseq(Ia):
-    """
-    sequence de sous IA 
-    """
-    def __init__(self, listeIA):
-        
-        self.listeIA = listeIA
-        self.curr = 0
-
-
-
-    def start(self):
-        pass
-
-
-    def stop(self):
-        if self.curr == len(self.listeIA):
-            return True
-        
-        
-    def update(self):
+        #Calcul de l'angle parcouru
+         
         if self.stop():
-            return
+            self.en_cours=False
+            self.CR.stop()
+            self.CR.resetAngleParcourue()
+
         else:
-            self.listeIA[self.curr].stop()
-            self.curr+=1
-            self.listeIA[self.curr].start()
-        self.listeIA[self.curr].update()
-    
+            self.CR.calculAngleParcouru(delta_t)
 
 
-class IAevitecrash(Ia):
+class IAevitecrash:
     """
     sous-classe de l'IA permettant permettant d'eviter au robot de se crash 
     """
@@ -187,4 +138,36 @@ class IAevitecrash(Ia):
         
         
         
-    
+class IAseq:
+        
+        def __init__(self,controleur,liste):
+            self.CR=controleur
+            self.ia_list=liste
+            self.en_cours=False
+            self.delta_t=1./100
+            self.ia_en_cours=0
+            
+        def start(self):
+            self.en_cours=True
+            self.ia_list[self.ia_en_cours].start()
+            
+        def stop(self):
+            if not (self.ia_list[self.ia_en_cours].en_cours):
+                self.ia_en_cours+=1
+                if self.ia_en_cours>=len(self.ia_list):
+                    self.en_cours=False
+                    return True
+                else:
+                    self.ia_list[self.ia_en_cours].start()
+                    return False
+            return False
+        
+        def update(self, delta_t):
+            if self.stop():
+                self.CR.stop()
+                self.en_cours=False
+                
+            else:
+                self.ia_list[self.ia_en_cours].update(delta_t)
+        
+        
