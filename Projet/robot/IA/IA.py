@@ -36,7 +36,7 @@ class Ia_Avancer_tout_droit:
         
     def start(self):
         self.en_cours=True
-        self.CR.avancerToutDroit(self.v)
+        self.CR.avancerToutDroit(self.v,self.delta_t)
        
  
     def stop(self):

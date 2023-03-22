@@ -47,13 +47,14 @@ class ControleurRobotVirtuel:
         """
         self.robot.set_angle_parcouru(a)
     
-    def calculAngleParcouru(self, delta_t):
+    def calculAngleParcouru(self):
         """
         calcul l'angle parcouru par le robot en radians
         :return: angle parcouru par le robot en radians
         """
         #angleRobot=self.robot.angle
 
+        delta_t=100
         angledif=(self.robot.get_distance_roue(delta_t)[1] - self.robot.get_distance_roue(delta_t)[0]) / self.robot.WHEEL_BASE_WIDTH
         self.AngleParcouru+=angledif
     
@@ -85,15 +86,17 @@ class ControleurRobotVraieVie:
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dpsg)
         self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dpsd)
 
-    def avancerToutDroit(self, dps):
-        self.distanceParcourue
+    def avancerToutDroit(self, dps,delta_t):
+        self.calculDistanceParcourue(delta_t)
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT + self.robot.MOTOR_RIGHT, dps)
 
     def tournerDroite(self,dps):
+        self.calculAngleParcouru()
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dps)
         self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, -dps)
     
     def tournerGauche(self,dps):
+        self.calculAngleParcouru()
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT, -dps)
         self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dps)
 
