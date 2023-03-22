@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 
 from threading import Thread
+from math import degrees
 
 
 
@@ -55,6 +56,7 @@ class View(Thread) :
         y=self.robot.y
         r=self.robot.rayon
         #r=30
+        o=degrees(self.robot.orientation)
         self.canv.create_arc(x-r,y-r,x+r,y+r, start=45, extent=270,fill="yellow")
 
     def drawObstacles(self):
