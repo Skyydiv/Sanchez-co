@@ -15,10 +15,10 @@ class ControleurRobotVirtuel:
         self.robot.setVitesse(v,v)
 
     def tournerDroite(self,v):
-        self.robot.setVitesse(v,0)
+        self.robot.setVitesse(v,-v)
     
     def tournerGauche(self,v):
-        self.robot.setVitesse(0,v)
+        self.robot.setVitesse(-v,v)
 
     def stop(self):
         self.robot.setVitesse(0,0)
@@ -91,10 +91,10 @@ class ControleurRobotVraieVie:
 
     def tournerDroite(self,dps):
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dps)
-        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, 0)
+        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, -dps)
     
     def tournerGauche(self,dps):
-        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, 0)
+        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, -dps)
         self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dps)
 
     def stop(self):
