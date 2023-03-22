@@ -19,7 +19,7 @@ class Robot:
     self._y = 100.1+self.rayon
 
     
-    self.orientation=0 #(radians)
+    self._orientation=0 #(radians)
     self.capteur=Capteur(0) #Capteur du robot
 
     # self.MOTOR_LEFT=0 #dps
@@ -46,6 +46,11 @@ class Robot:
   def y(self):
     """Renvoie coordonnées y du robot"""
     return self._y
+  
+  @property
+  def orientation(self):
+    """Renvoie coordonnées y du robot"""
+    return self._orientation
   
   @property
   def distance_parcourue_roue_gauche(self):
