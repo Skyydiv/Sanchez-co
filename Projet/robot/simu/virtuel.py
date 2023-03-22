@@ -19,7 +19,7 @@ class Robot:
     self._y = 100.1+self.rayon
 
     
-    self.orientation=0 #(radians)
+    self._orientation=0 #(radians)
     self.capteur=Capteur(0) #Capteur du robot
 
     # self.MOTOR_LEFT=0 #dps
@@ -46,6 +46,11 @@ class Robot:
   def y(self):
     """Renvoie coordonnées y du robot"""
     return self._y
+  
+  @property
+  def orientation(self):
+    """Renvoie coordonnées y du robot"""
+    return self._orientation
   
   @property
   def distance_parcourue_roue_gauche(self):
@@ -101,11 +106,11 @@ class Robot:
         distance_parcourue_gauche = vG * intervalle_temps
 
         newOrientation = (distance_parcourue_droite - distance_parcourue_gauche) / self.WHEEL_BASE_WIDTH
-        self.orientation += newOrientation
+        self._orientation += newOrientation
 
         newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #calcul vitesse lineare 
-        self._x += newV * math.cos(self.orientation)
-        self._y += newV * math.sin(self.orientation)
+        self._x += newV * math.cos(self._orientation)
+        self._y += newV * math.sin(self._orientation)
 
         # v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
         # w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
