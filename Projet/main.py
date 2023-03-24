@@ -20,7 +20,6 @@ ia2=Ia_Avancer_tout_droit(500,300,cr)
 iaa=IATournerAngle(cr,90,100)
 iaseq=IAseq(cr,[ia1,iaa,ia1,iaa,ia1,iaa,ia1])
 iaboucle=BoucleIA(cr,iaseq)
-
 iaboucle.start()
 
 
@@ -30,7 +29,5 @@ iaboucle.start()
 root = Tk() # initialiser la fenetre tkinter
 view=View(root, simulation)
 simulation.run_simu()
-# view.start_sim()
 root.mainloop()
 simulation.stop_simu()
-# view.stop_sim()
