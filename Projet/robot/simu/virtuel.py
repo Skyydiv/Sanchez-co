@@ -133,6 +133,23 @@ class Robot:
     self.vitesseRoueDroite=Vr
     self.vitesseRoueGauche=Vg
 
+  def setVitesseRoueDroite(self,v):
+    """set la vitesse de la roue droite
+    :param v : vitesse de la roue droite
+    """
+    self.vitesseRoueDroite=v
+
+  def setVitesseRoueGauche(self,v):
+    """set la vitesse de la roue gauche
+    :param v : vitesse de la roue gauche
+    """
+    self.vitesseRoueGauche=v
+
+  def stop(self):
+    """stop le robot"""
+    self.vitesseRoueDroite=0
+    self.vitesseRoueGauche=0
+
 
   def get_distance_roue(self,delta_t):
     """

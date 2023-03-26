@@ -36,24 +36,25 @@ class Ia_Avancer_tout_droit:
         
     def start(self):
         self.en_cours=True
-        self.CR.avancerToutDroit(self.v,self.delta_t)
+        self.CR.avancerToutDroit(self.v)
        
  
     def stop(self):
-         # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
+        # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
         if (self.CR.getDistanceParcourue())>= self.goal:
             return True 
         return False
     
     
     def update(self, delta_t):
+        self.CR.update(delta_t)
         if self.stop():
             self.CR.resetDistanceParcourue()
             self.CR.stop()
             self.en_cours=False
             
         else:
-            self.CR.avancerToutDroit(self.v,delta_t)
+            self.CR.avancerToutDroit(self.v)
     
           
     
@@ -73,7 +74,7 @@ class IATournerAngle:
     def start(self):
         self.CR.resetDistanceParcourue()
         self.en_cours=True
-        self.CR.tournerDroite(self.v,self.delta_t)
+        self.CR.tournerDroite(self.v)
         
     def stop(self):
         #On ne s'arrête que si on l'a depassé l'angle 
@@ -81,14 +82,14 @@ class IATournerAngle:
         
     def update(self, delta_t):
         #Calcul de l'angle parcouru
-         
+        self.CR.update(delta_t)
         if self.stop():
             self.en_cours=False
             self.CR.stop()
             self.CR.resetAngleParcourue()
 
         else:
-            self.CR.tournerDroite(self.v,self.delta_t)
+            self.CR.tournerDroite(self.v)
 
 
 class IAevitecrash:
@@ -126,6 +127,7 @@ class IAevitecrash:
         self.parcouru_d = 0
 
     def update(self, delta_t):
+        self.CR.update(delta_t)
         if self.running:
             parcouru_g, parcouru_d = self.robot.get_distance_roue(delta_t)
             self.parcouru_g += parcouru_g

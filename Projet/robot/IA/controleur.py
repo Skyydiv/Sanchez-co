@@ -1,35 +1,61 @@
 import math 
+import time
 
-class ControleurRobotVirtuel:
+class Controleur:
     def __init__(self, robot):
         self.robot=robot
-        self.distanceParcourue=0
-        self.AngleParcouru=0 #en radians
+        self.deb=0
+        self.fin=0
+        self.temps_total=0
 
-
-    def setVitesseRoues(self, vitesseg, vitessed,delta_t):
-        self.calculDistanceParcourue(delta_t)
-        self.calculAngleParcouru(delta_t)
-        self.robot.setVitesse(vitesseg,vitessed)
-
-    def avancerToutDroit(self, v,delta_t):
-        self.calculDistanceParcourue(delta_t)
-        self.calculAngleParcouru(delta_t)
-        self.robot.setVitesse(v,v)
-
-    def tournerDroite(self,v,delta_t):
-        self.calculDistanceParcourue(delta_t)
-        self.calculAngleParcouru(delta_t)
-        self.robot.setVitesse(v,-v)
+    def setVitesseRoues(self, vitesseg, vitessed):
+        if self.__class__.__name__=="ControleurRobotVirtuel":
+            self.robot.setVitesse(vitesseg, vitessed)
+        else:
+            self.robot.set_motor_dps(self.robot.MOTOR_LEFT, vitesseg)
+            self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, vitessed)
     
-    def tournerGauche(self,v,delta_t):
-        self.calculDistanceParcourue(delta_t)
-        self.calculAngleParcouru(delta_t)
-        self.robot.setVitesse(-v,v)
+    def avancerToutDroit(self, v):
+        if self.__class__.__name__=="ControleurRobotVirtuel":
+            self.robot.setVitesse(v,v)
+        else:
+            self.robot.set_motor_dps(self.robot.MOTOR_LEFT+self.robot.MOTOR_RIGHT, v)
+
+    def tournerDroite(self,v):
+        if self.__class__.__name__=="ControleurRobotVirtuel":
+            self.robot.setVitesse(v,-v)
+        else:
+            self.robot.set_motor_dps(self.robot.MOTOR_LEFT, v)
+            self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, -v)
+    
+    def tournerGauche(self,v):
+        if  self.__class__.__name__=="ControleurRobotVirtuel":
+            self.robot.setVitesse(-v,v)
+        else:
+            self.robot.set_motor_dps(self.robot.MOTOR_LEFT, -v)
+            self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, v)
 
     def stop(self):
-        self.robot.setVitesse(0,0)
+        self.robot.stop()
 
+    def update(self, delta_t):
+        self.fin=time.time()
+        self.calculDistanceParcourue(delta_t)
+        self.calculAngleParcouru(delta_t)
+        self.temps_total=self.fin-self.deb
+        self.deb=self.fin
+
+    def reset_time(self):
+        self.deb=0
+        self.fin=0
+        self.temps_total=0
+
+
+class ControleurRobotVirtuel(Controleur):
+    def __init__(self, robot):
+        Controleur.__init__(self,robot)
+        self.distanceParcourue=0
+        self.AngleParcouru=0 #en radians
     def calculDistanceParcourue(self,delta_t):
         """
         :param delta_t: un intervalle de temps 
@@ -86,54 +112,36 @@ class ControleurRobotVirtuel:
     def resetAngleParcourue(self):
         self.AngleParcouru=0
     
-class ControleurRobotVraieVie:
+class ControleurRobotVraieVie(Controleur):
     def __init__(self, robot):
-        self.robot=robot
+        Controleur.__init__(self,robot)
         self.distanceParcourue=0
         self.AngleParcouru=0 #en radians
         self.distance_parcourue_roue_gauche=0
         self.distance_parcourue_roue_droite=0
         self.angle_parcouru_offset=(0,0)
 
-    def setVitesseRoues(self, dpsg, dpsd,delta_t):
-        self.calculDistanceParcourue(delta_t)
-        self.calculAngleParcouru(delta_t)
-        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dpsg)
-        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dpsd)
-
-    def avancerToutDroit(self, dps,delta_t):
-        self.calculDistanceParcourue(delta_t)
-        self.calculAngleParcouru(delta_t)
-        self.robot.set_motor_dps(self.robot.MOTOR_LEFT + self.robot.MOTOR_RIGHT, dps)
-
-    def tournerDroite(self,dps,delta_t):
-        self.calculDistanceParcourue(delta_t)
-        self.calculAngleParcouru(delta_t)
-        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dps)
-        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, -dps)
-    
-    def tournerGauche(self,dps,delta_t):
-        self.calculDistanceParcourue(delta_t)
-        self.calculAngleParcouru(delta_t)
-        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, -dps)
-        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dps)
-
-    def stop(self):
-        self.robot.stop()
-
-    def calculDistanceParcourue(self,delta_t):
+    def calculDistanceParcourue(self):
         """
-        calcul la distance parcourue par les roues du robot
-        :param delta_t: un intervalle de temps 
-        :return: la distance parcourue par le robot pour delta_t et met a jour la distance parcourue totale
+        calcul la distance parcourue par les roues du robot depuis le dernier appel de la fonction
+        :return: la distance parcourue par le robot en mm et met a jour la distance parcourue totale
         """
-        rotationrg = (self.robot.MOTOR_LEFT * delta_t)
-        distancerg = (math.pi * self.robot.WHEEL_DIAMETER/2 * rotationrg) / 180
-        rotationrd = (self.robot.MOTOR_RIGHT * delta_t)
-        distancerd = (math.pi * self.robot.WHEEL_DIAMETER/2 * rotationrd) / 180
+        motor_pos=self.get_motor_position()
+
+        #calcul la distance parcorue en mm
+        distancerg = motor_pos[0]/360 * self.WHEEL_CIRCUMFERENCE
+        distancerd = motor_pos[1]/360 * self.WHEEL_CIRCUMFERENCE
         d=(distancerg + distancerd)/2
+
+        #Remet l'offset a 0 pour le prochain appel
+        self.offset_motor_encoder(self.MOTOR_LEFT, self.read_encoders()[0])
+        self.offset_motor_encoder(self.MOTOR_RIGHT, self.read_encoders()[1])
+
+        #mis a jour de la distance parcourue totale
         self.distanceParcourue+=d
-        return d
+
+        return d 
+    
     
     def setDistanceParcourue(self, dist_g,dist_d):
         """fixe la distance parcourue par les roues du robot
