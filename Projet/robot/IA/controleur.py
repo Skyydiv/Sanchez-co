@@ -121,19 +121,27 @@ class ControleurRobotVraieVie(Controleur):
         self.distance_parcourue_roue_droite=0
         self.angle_parcouru_offset=(0,0)
 
-    def calculDistanceParcourue(self,delta_t):
+    def calculDistanceParcourue(self):
         """
-        calcul la distance parcourue par les roues du robot
-        :param delta_t: un intervalle de temps 
-        :return: la distance parcourue par le robot pour delta_t et met a jour la distance parcourue totale
+        calcul la distance parcourue par les roues du robot depuis le dernier appel de la fonction
+        :return: la distance parcourue par le robot en mm et met a jour la distance parcourue totale
         """
-        rotationrg = (self.robot.MOTOR_LEFT * delta_t)
-        distancerg = (math.pi * self.robot.WHEEL_DIAMETER/2 * rotationrg) / 180
-        rotationrd = (self.robot.MOTOR_RIGHT * delta_t)
-        distancerd = (math.pi * self.robot.WHEEL_DIAMETER/2 * rotationrd) / 180
+        motor_pos=self.get_motor_position()
+
+        #calcul la distance parcorue en mm
+        distancerg = motor_pos[0]/360 * self.WHEEL_CIRCUMFERENCE
+        distancerd = motor_pos[1]/360 * self.WHEEL_CIRCUMFERENCE
         d=(distancerg + distancerd)/2
+
+        #Remet l'offset a 0 pour le prochain appel
+        self.offset_motor_encoder(self.MOTOR_LEFT, self.read_encoders()[0])
+        self.offset_motor_encoder(self.MOTOR_RIGHT, self.read_encoders()[1])
+
+        #mis a jour de la distance parcourue totale
         self.distanceParcourue+=d
-        return d
+
+        return d 
+    
     
     def setDistanceParcourue(self, dist_g,dist_d):
         """fixe la distance parcourue par les roues du robot

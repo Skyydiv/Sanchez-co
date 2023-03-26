@@ -82,7 +82,8 @@ class Simulation :
             sleep(1./self._delta_t) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
 
 
-    def update1pas(self):
+    def update1pas(self): 
+        #avoir une variable locale qui enregistre le temps depuis le dernier appel et on fait time-la variable et on la passe a deplacer
         #IA.Ia_Avancer_tout_droit(self.robot,0.1,150).update(1/self.delta_t)
         self._robot.deplacer(1./self._delta_t)
         if(self._environnement.detectCollision()):
