@@ -9,7 +9,7 @@ from math import degrees
 class View(Thread) :
     '''L'interface graphique de la simulation'''
 
-    def __init__(self, master, simulation):
+    def __init__(self, master, simulation,delta_t):
         '''Constructeur de l'interface graphique de la simulation
         :param master: la fenetre de l'affichage
         :param simulation: simulation qu'on veut représenter graphiquement
@@ -19,7 +19,7 @@ class View(Thread) :
         self.root=master
 
         self.sim=simulation
-        self.delta=simulation.delta_t
+        self.delta=delta_t
         self.robot=simulation.robot
         self.obstacles=simulation.ensemble_obstacles
         self.longueur=simulation.coordsXmax
@@ -28,19 +28,8 @@ class View(Thread) :
 
         self.canv=Canvas(self.root, bg="black",highlightbackground='white',highlightthickness=4, height=self.largeur, width=self.longueur)
         self.canv.pack()
-
-        # self.Start_Stop_button=Button(self.root, text="Start/Stop", command=self.toggle)
-        # self.Start_Stop_button.pack()
         
         self.updateCanvas()
-
-        
-    # def toggle(self):
-    #     '''Lance ou arrête l'éxécution selon l'état de la simulation avec le click sur le boutton'''
-    #     if self.sim.en_cours:
-    #         self.start_sim()
-    #     else:
-    #          self.stop_sim()
 
     def updateCanvas(self):
         '''Initialise la canvas a chaque pas'''
@@ -66,10 +55,5 @@ class View(Thread) :
             r=obs.rayon
             self.canv.create_oval(x-r,y-r,x+r,y+r, fill='white')
 
-    # def start_sim(self):
-    #     self.sim.run_simu()
-
-    # def stop_sim(self):
-    #     self.sim.stop_simu()
 
 
