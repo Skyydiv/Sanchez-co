@@ -23,7 +23,7 @@ class BoucleIA(Thread):
         while self.ia.en_cours:
             #---------------------------
             
-            self.ia.update(self.delta_t)
+            self.ia.update(self.controleur.temps_total)
             sleep(self.delta_t)
         self.controleur.running = False
 
