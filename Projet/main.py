@@ -6,7 +6,11 @@ from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
 from time import sleep
 
 
-simulation=Simulation(100)
+delta_simu=100#taux rafraichissement des données de la simu
+delta_affich=100 #taux de rafraichissement de l'affichage
+delta_ia=0.0001
+
+simulation=Simulation(delta_simu)
 simulation.addSimulation(0) #ajouter des obstcales a l'environnement
 
 #ajout du controleur
@@ -19,7 +23,7 @@ ia1=Ia_Avancer_tout_droit(200,100,cr)
 ia2=Ia_Avancer_tout_droit(500,300,cr)
 iaa=IATournerAngle(cr,90,100)
 iaseq=IAseq(cr,[ia1,iaa,ia1,iaa,ia1,iaa,ia1])
-iaboucle=BoucleIA(cr,iaseq)
+iaboucle=BoucleIA(cr,iaseq,delta_ia)
 iaboucle.start()
 
 
@@ -27,7 +31,7 @@ iaboucle.start()
 # iaboucle.start()
 
 root = Tk() # initialiser la fenetre tkinter
-view=View(root, simulation)
+view=View(root, simulation,delta_affich)
 simulation.run_simu()
 root.mainloop()
 simulation.stop_simu()

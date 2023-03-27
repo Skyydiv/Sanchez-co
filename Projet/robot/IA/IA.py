@@ -9,11 +9,11 @@ from .controleur import ControleurRobotVirtuel
 #plus de abstract
 class BoucleIA(Thread):
     
-    def __init__(self, controleur, ia):
+    def __init__(self, controleur, ia,delta_t):
         Thread.__init__(self)
         self.controleur = controleur
         self.ia=ia
-        self.delta_t =1./100
+        self.delta_t=delta_t
 
     def run(self):
         self.ia.start()

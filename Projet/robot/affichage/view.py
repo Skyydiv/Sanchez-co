@@ -9,7 +9,7 @@ from math import degrees
 class View(Thread) :
     '''L'interface graphique de la simulation'''
 
-    def __init__(self, master, simulation):
+    def __init__(self, master, simulation,delta_t):
         '''Constructeur de l'interface graphique de la simulation
         :param master: la fenetre de l'affichage
         :param simulation: simulation qu'on veut représenter graphiquement
@@ -19,7 +19,7 @@ class View(Thread) :
         self.root=master
 
         self.sim=simulation
-        self.delta=simulation.delta_t
+        self.delta=delta_t
         self.robot=simulation.robot
         self.obstacles=simulation.ensemble_obstacles
         self.longueur=simulation.coordsXmax
