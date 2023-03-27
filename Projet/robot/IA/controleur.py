@@ -47,8 +47,7 @@ class Controleur:
         self.calculAngleParcouru()
 
     def reset_time(self):
-        self.deb=0
-        self.fin=0
+        self.deb=time.time()
         self.temps_total=0
 
 
