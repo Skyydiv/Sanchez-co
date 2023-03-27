@@ -3,6 +3,7 @@ import random
 from threading import Thread
 from .virtuel import Environnement
 from .virtuel import Robot 
+from time import time
 
 class Simulation :
     """Simulation qui fait interagir le Robot avec son Environnement
@@ -20,6 +21,9 @@ class Simulation :
         self._environnement=Environnement([Simulation.SIMU_WIDTH,Simulation.SIMU_HEIGHT],self._robot,Simulation.SIMU_PRECESION) # initialiser l'environment
         self._delta_t=delta_t
         self.en_cours=False
+        self.deb=0
+        self.fin=0
+        self.temps_total=0
     
     @property
     def environnement(self):
@@ -66,7 +70,10 @@ class Simulation :
         """Renvoie le rayon du robot """
         return self._environnement.robotRayon
     
-
+    def reset_time(self):
+        self.deb=time.time()
+        self.temps_total=0
+    
     def run_simu(self):
         """lance la simulation"""
         self._en_cours=True
@@ -77,15 +84,17 @@ class Simulation :
         '''
         La boucle qui avance la simulation chaque pas de temps
         '''
+        self.reset_time()
         while self._en_cours:
             self.update1pas()
             sleep(1./self._delta_t) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
 
 
     def update1pas(self): 
-        #avoir une variable locale qui enregistre le temps depuis le dernier appel et on fait time-la variable et on la passe a deplacer
-        #IA.Ia_Avancer_tout_droit(self.robot,0.1,150).update(1/self.delta_t)
-        self._robot.deplacer(1./self._delta_t)
+        self.fin=time()
+        self.temps_total=self.fin-self.deb
+        self.deb=self.fin
+        self._robot.deplacer(self.temps_total)
         if(self._environnement.detectCollision()):
             self.stop_simu()
 
