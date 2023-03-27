@@ -38,12 +38,13 @@ class Controleur:
     def stop(self):
         self.robot.stop()
 
-    def update(self, delta_t):
+    def update(self):
         self.fin=time.time()
-        self.calculDistanceParcourue(delta_t)
-        self.calculAngleParcouru(delta_t)
         self.temps_total=self.fin-self.deb
         self.deb=self.fin
+
+        self.calculDistanceParcourue()
+        self.calculAngleParcouru()
 
     def reset_time(self):
         self.deb=0
@@ -56,12 +57,13 @@ class ControleurRobotVirtuel(Controleur):
         Controleur.__init__(self,robot)
         self.distanceParcourue=0
         self.AngleParcouru=0 #en radians
-    def calculDistanceParcourue(self,delta_t):
+
+    def calculDistanceParcourue(self):
         """
         :param delta_t: un intervalle de temps 
         :return: la distance parcourue par le robot pour delta_t et met a jour la distance parcourue totale
         """
-        d_gauche,d_droite=self.robot.get_distance_roue(delta_t)
+        d_gauche,d_droite=self.robot.get_distance_roue(self.temps_total)
         d=(d_gauche+d_droite)/2
         self.distanceParcourue+=d
         return d
@@ -80,14 +82,14 @@ class ControleurRobotVirtuel(Controleur):
         """
         self.robot.set_angle_parcouru(a)
     
-    def calculAngleParcouru(self,delta_t):
+    def calculAngleParcouru(self):
         """
         calcul l'angle parcouru par le robot en radians
         :return: angle parcouru par le robot en radians
         """
         #angleRobot=self.robot.angle
 
-        angledif=(self.robot.get_distance_roue(delta_t)[1] - self.robot.get_distance_roue(delta_t)[0]) / self.robot.WHEEL_BASE_WIDTH
+        angledif=(self.robot.get_distance_roue(self.temps_total)[1] - self.robot.get_distance_roue(self.temps_total)[0]) / self.robot.WHEEL_BASE_WIDTH
         self.AngleParcouru+=angledif
     
     def getDistanceParcourue(self):

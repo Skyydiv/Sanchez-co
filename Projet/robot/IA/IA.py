@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import math
 from time import sleep
+from time import time
 from threading import Thread
 from .controleur import ControleurRobotVirtuel
 
@@ -17,8 +18,11 @@ class BoucleIA(Thread):
     def run(self):
         self.ia.start()
         self.controleur.running = True
+        self.controleur.reset_time()
+        self.controleur.deb=time()
         while self.ia.en_cours:
             #---------------------------
+            
             self.ia.update(self.delta_t)
             sleep(self.delta_t)
         self.controleur.running = False
@@ -30,7 +34,6 @@ class Ia_Avancer_tout_droit:
         self.goal = distance
         self.v = v
         self.en_cours=False
-        self.delta_t=1./100
         self.CR=controleur
        
         
@@ -47,13 +50,13 @@ class Ia_Avancer_tout_droit:
     
     
     def update(self, delta_t):
-        self.CR.update(delta_t)
         if self.stop():
             self.CR.resetDistanceParcourue()
             self.CR.stop()
             self.en_cours=False
             
         else:
+            self.CR.update()
             self.CR.avancerToutDroit(self.v)
     
           
@@ -69,7 +72,6 @@ class IATournerAngle:
         self.CR=controleur
         self.en_cours=False
         self.v=vitesse
-        self.delta_t=1./100
 
     def start(self):
         self.CR.resetDistanceParcourue()
@@ -82,13 +84,13 @@ class IATournerAngle:
         
     def update(self, delta_t):
         #Calcul de l'angle parcouru
-        self.CR.update(delta_t)
         if self.stop():
             self.en_cours=False
             self.CR.stop()
             self.CR.resetAngleParcourue()
 
         else:
+            self.CR.update()
             self.CR.tournerDroite(self.v)
 
 
@@ -147,7 +149,6 @@ class IAseq:
             self.CR=controleur
             self.ia_list=liste
             self.en_cours=False
-            self.delta_t=1./100
             self.ia_en_cours=0
             
         def start(self):
