@@ -6,9 +6,9 @@ from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
 from time import sleep
 
 
-delta_simu=100#taux rafraichissement des données de la simu
-delta_affich=100 #taux de rafraichissement de l'affichage
-delta_ia=0.0001
+delta_simu=600#taux rafraichissement des données de la simu
+delta_affich=60 #taux de rafraichissement de l'affichage
+delta_ia=0.001
 
 simulation=Simulation(delta_simu)
 simulation.addSimulation(0) #ajouter des obstcales a l'environnement
