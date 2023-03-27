@@ -22,9 +22,6 @@ class Robot:
     self._orientation=0 #(radians)
     self.capteur=Capteur(0) #Capteur du robot
 
-    # self.MOTOR_LEFT=0 #dps
-    # self.MOTOR_RIGHT=0 #dps
-
 
     self.MOTOR_LEFT_Offset=0
     self.MOTOR_RIGHT_Offset=0
@@ -78,20 +75,6 @@ class Robot:
      self._angle_parcouru=a
 
 
-  # def set_motor_dps(self, port, dps):
-  #   """
-  #   Fixe la vitesse d'un moteur en nombre de degres par seconde
-  #   :port: une constante moteur,  MOTOR_LEFT ou MOTOR_RIGHT (ou les deux MOTOR_LEFT+MOTOR_RIGHT).
-  #   :dps: la vitesse cible en nombre de degres par seconde
-  #   """
-
-  #   if(port==self.MOTOR_RIGHT):
-  #     self.MOTOR_RIGHT=dps
-  #   if(port==self.MOTOR_LEFT):
-  #     self.MOTOR_LEFT=dps
-  #   if(port==(self.MOTOR_RIGHT,self.MOTOR_LEFT)):
-  #     self.MOTOR_RIGHT=dps
-  #     self.MOTOR_LEFT=dps
 
 
   def deplacer(self, intervalle_temps):
@@ -111,20 +94,6 @@ class Robot:
         newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #calcul vitesse lineare 
         self._x += newV * math.cos(self._orientation)
         self._y += newV * math.sin(self._orientation)
-
-        # v=(self.vitesseRoueGauche + self.vitesseRoueDroite) / 2 #vitesse lineaire
-        # w=(self.vitesseRoueDroite - self.vitesseRoueGauche) / self.WHEEL_BASE_WIDTH #vitesse angulaire
-
-
-        # distance_parcourue_droite = self.vitesseRoueDroite* intervalle_temps
-        # distance_parcourue_gauche = self.vitesseRoueGauche * intervalle_temps
-
-        # newOrientation = (distance_parcourue_droite - distance_parcourue_gauche) / self.WHEEL_BASE_WIDTH
-        # self.orientation += newOrientation
-
-        # newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #recalcul vitesse lineare parcourue par le robot
-        # self.x += newV * math.cos(self.orientation)
-        # self.y += newV * math.sin(self.orientation)
 
   def setVitesse(self,Vr,Vg):
     """set la vitesse des roues
@@ -244,41 +213,6 @@ class Environnement :
     @property
     def robotRayon(self):
       return self._robot.rayon
-
-
-    def estMur(self,x,y,rayon):
-        '''
-        Vérifie si les coordonée x et y sont dans l'enceinte de l'environnement. 
-        :param x: coordonné réelle
-        :param y: coordonné réelle
-        :return False si on est dans l’environnement 
-        :return True si on se prend un mur
-        '''
-        if ((x+rayon>=self._coordsmax[0]) or (y+rayon>=self._coordsmax[1]) or (x-rayon<=0) or (y-rayon<=0)):
-            return True
-        return False
-    
-    def estRobot(self,x, y,r):
-        """Verifie si les coordonnées passées en parametre se trouve sur la surface du robot
-        :param x: coordonnées en x
-        :param y: coordonnées en y
-        :param r:rayon en mm
-        """
-        if(self.robotX+self.robotRayon>=x-r and self.robotX-self.robotRayon<=x+r and self.robotY+self.robotRayon>=y-r and self.robotY-self.robotRayon<=y+r):
-            return True
-
-    def estObstacle(self, x, y,r):
-        '''Verfie s'il y a un obstacle dans l'environnement avec les mêmes coordonnées
-        :param x: coordonnées en x
-        :param y: coordonnées en y
-        :param r:rayon en mm
-        :returns: True s'il existe déjà un obstacle avec les mêmes coordonnées, False sinon
-        '''
-        for i in self.ensemble_obstacles:
-            if i.x+i.rayon>=x-r and i.x-i.rayon<=x+r and i.y+i.rayon>=y-r and i.y-i.rayon<=y+r:
-                return True
-        return False
-
     
     def addObstacle(self,x,y,h,d,rayon):
         """Créer et dépose l'obstacle s'il n'y a pas déjà un objet dans la case avec les mêmes coordonnées en faisant appel à la fonction estObstacle
@@ -311,7 +245,7 @@ def calculDistance(objet1, objet2):
     '''
 
     return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2))
-    # return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2) - (objet1.rayon + objet2.rayon) )
+
 
 
        

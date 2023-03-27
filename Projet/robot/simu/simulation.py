@@ -98,8 +98,7 @@ class Simulation :
             return self.coordAlea()  
         else:
             return (x,y)
-            
-
+        
     def addSimulation(self,nbObstacles):
         '''Depose nbObstacles obstacles dans des positions aléatoires dans l'environnement
         :param nbObstacles: nombre d'obstacles a déposer
