@@ -94,7 +94,6 @@ class Simulation :
         self.fin=time()
         self.temps_total=self.fin-self.deb
         self.deb=self.fin
-        print(self.temps_total)
         self._robot.deplacer(self.temps_total)
         if(self._environnement.detectCollision()):
             self.stop_simu()
