@@ -7,7 +7,7 @@ from time import sleep
 
 
 simulation=Simulation(100)
-simulation.addSimulation(5) #ajouter des obstcales a l'environnement
+simulation.addSimulation(0) #ajouter des obstcales a l'environnement
 
 #ajout du controleur
 
