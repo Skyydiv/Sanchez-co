@@ -22,13 +22,18 @@ ia1=Ia_Avancer_tout_droit(300,200,cr)
 
 #ia pour tourner 
 iaa=IATournerAngle(cr,90,200)
+iaaa=IATournerAngle(cr,120,200)
+iae=IATournerAngle(cr,144,200)
 
 #ia seq 
 iaseq=IAseq(cr,[ia1,iaa,ia1,iaa,ia1,iaa,ia1,iaa])
 iaseq2=IAseq(cr,[ia1,iaa,ia1,iaa,ia1,iaa,ia1])
 iaseq3=IAseq(cr,[iaseq,iaseq2])
+iaseq4=IAseq(cr,[ia1,iaaa,ia1,iaaa,ia1,iaaa]) #Tracer un triangle équilateral
+iaseq5=IAseq(cr,[ia1,iae,ia1,iae,ia1,iae,ia1,iae,ia1,iae]) #Tracer une étoile
 
-iaboucle=BoucleIA(cr,iaseq3,delta_ia)
+
+iaboucle=BoucleIA(cr,iaseq5,delta_ia)
 iaboucle.start()
 
 #iacarre=IAcarre(cr,100,100,200,delta_ia)
