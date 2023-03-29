@@ -18,9 +18,10 @@ simulation.addSimulation(0) #ajouter des obstcales a l'environnement
 cr=ControleurRobotVirtuel(simulation.robot)
 
 ia1=Ia_Avancer_tout_droit(100,100,cr)
+iacarre=IAcarre(cr,100,100,200,delta_ia)
 iaa=IATournerAngle(cr,90,200)
 iaseq=IAseq(cr,[ia1,iaa,ia1,iaa,ia1,iaa,ia1])
-iaboucle=BoucleIA(cr,iaseq,delta_ia)
+iaboucle=BoucleIA(cr,iacarre,delta_ia)
 iaboucle.start()
 
 #iacarre=IAcarre(cr,100,100,200,delta_ia)
