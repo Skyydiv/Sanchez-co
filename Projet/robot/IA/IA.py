@@ -91,25 +91,24 @@ class IATournerAngle:
             self.CR.tournerDroite(self.v)
             
 
-class IAevitecrash:
+#class IAevitecrash:
     """
     sous-classe de l'IA permettant permettant d'eviter au robot de se crash 
     """
-    def __init__(self,controleur, v):
-        self.CR=controleur
-        self.tourner=IATournerAngle(controleur,90,v)
-        self.en_cours=False
+ #   def __init__(self,controleur, v):
+  #      self.CR=controleur
+#        self.tourner=IATournerAngle(controleur,90,v)
+ #       self.en_cours=False
+  #      
+   # def start(self):
+    #    self.CR.resetDistanceParcourue()
+     #   self.en_cours=True
+      #  self.CR.tournerDroite(self.v)
+       # 
+    ##   #On ne s'arrête que si on l'a depassé l'angle 
+      #  return self.CR.AngleParcouru > abs(self.angle) 
         
-    def start(self):
-        self.CR.resetDistanceParcourue()
-        self.en_cours=True
-        self.CR.tournerDroite(self.v)
-        
-    def stop(self):
-        #On ne s'arrête que si on l'a depassé l'angle 
-        return self.CR.AngleParcouru > abs(self.angle) 
-        
-    def update(self, delta_t):
+    #def update(self, delta_t):
         
 
 
