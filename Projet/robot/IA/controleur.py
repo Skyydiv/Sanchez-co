@@ -155,18 +155,24 @@ class ControleurRobotVraieVie(Controleur):
         """
         self._angleParcouru=a
 
-    def calculAngleParcouru(self,delta_t):
+    def calculAngleParcouru(self):
         """
         calcul l'angle parcouru par le robot en radians
         :return: angle parcouru par le robot en radians
         """
+        #recuperation de la position des moteurs
         pos=self.robot.get_motor_position()
+        #calcul de la position du moteur gauche
         posL=(pos[0]-self.angle_parcouru_offset[0])/360 * self.robot.WHEEL_DIAMETER * math.pi
+        #calcul de la position du moteur droit
         posR=(pos[1]-self.angle_parcouru_offset[1])/360 * self.robot.WHEEL_DIAMETER * math.pi
 
-        angle= (posR-posL)/self.robot.WHEEL_BASE_WIDTH
+        #calcul de l'angle parcouru
+        angle=(posR-posL)/self.robot.WHEEL_BASE_WIDTH
 
+        #mise a jour de l'offset
         self.angle_parcouru_offset=(pos[0],pos[1])
+        #mise a jour de l'angle parcouru
         self._angleParcouru+=angle
         
         return angle
