@@ -210,15 +210,15 @@ class IAcarre:
         self.en_cours=False
         
     def start(self):
-            self.iaboucle.start()
-            self.en_cours=True
+        self.iaboucle.start()
+        self.en_cours=True
             
             
     def stop(self):
-            self.en_cours=False
-            return
+        self.en_cours=False
+        return
         
     def update(self, delta_t):
-            return self.iaboucle.update(delta_t)
+        return 
             
         
