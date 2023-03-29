@@ -167,6 +167,8 @@ class ControleurRobotVraieVie(Controleur):
         angle= (posR-posL)/self.robot.WHEEL_BASE_WIDTH
 
         self.angle_parcouru_offset=(pos[0],pos[1])
+        self._angleParcouru+=angle
+        
         return angle
     
     @property
