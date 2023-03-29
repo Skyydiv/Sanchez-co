@@ -1,7 +1,7 @@
 from tkinter import *
 from robot.affichage import View
 from robot.simu.simulation import Simulation
-from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq
+from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, IAcarre
 from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
 from time import sleep
 
@@ -17,7 +17,6 @@ simulation.addSimulation(0) #ajouter des obstcales a l'environnement
 
 cr=ControleurRobotVirtuel(simulation.robot)
 
-        
 ia1=Ia_Avancer_tout_droit(100,100,cr)
 iaa=IATournerAngle(cr,90,200)
 iaseq=IAseq(cr,[ia1,iaa,ia1,iaa,ia1,iaa,ia1])

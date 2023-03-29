@@ -219,6 +219,6 @@ class IAcarre:
             return
         
     def update(self, delta_t):
-            return
+            return self.iaboucle.update(delta_t)
             
         
