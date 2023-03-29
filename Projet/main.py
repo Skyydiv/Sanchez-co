@@ -11,7 +11,7 @@ delta_affich=60 #taux de rafraichissement de l'affichage
 delta_ia=0.001
 
 simulation=Simulation(delta_simu)
-simulation.addSimulation(0) #ajouter des obstcales a l'environnement
+simulation.addSimulation(5) #ajouter des obstcales a l'environnement
 
 #ajout du controleur
 cr=ControleurRobotVirtuel(simulation.robot)
