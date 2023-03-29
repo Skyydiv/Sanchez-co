@@ -25,6 +25,7 @@ class View(Thread) :
         self.longueur=simulation.coordsXmax
         self.largeur=simulation.coordsYmax
 
+        self.robot_trajet=[]
 
         self.canv=Canvas(self.root, bg="black",highlightbackground='white',highlightthickness=4, height=self.largeur, width=self.longueur)
         self.canv.pack()
@@ -36,6 +37,7 @@ class View(Thread) :
         self.canv.delete("all") 
         self.drawRobot()
         self.drawObstacles()
+        self.drawRobotTrajet()
         self.root.after(self.delta,self.updateCanvas)
         
     
@@ -46,6 +48,13 @@ class View(Thread) :
         r=self.robot.rayon
         o=degrees(self.robot.orientation)
         self.canv.create_arc(x-r,y-r,x+r,y+r, start=45-o, extent=270,fill="yellow")
+
+        self.robot_trajet.append((x, y))
+        
+    def drawRobotTrajet(self):
+        '''dessine le trajet du robot'''
+        if len(self.robot_trajet) > 1:
+            self.canv.create_line(self.robot_trajet, fill='white')
 
     def drawObstacles(self):
         '''dessine l'ensemble des obstacles'''

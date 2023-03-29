@@ -54,8 +54,8 @@ class Controleur:
 class ControleurRobotVirtuel(Controleur):
     def __init__(self, robot):
         Controleur.__init__(self,robot)
-        self.distanceParcourue=0
-        self.AngleParcouru=0 #en radians
+        self._distanceParcourue=0
+        self._angleParcouru=0 #en radians
 
     def calculDistanceParcourue(self):
         """
@@ -64,7 +64,7 @@ class ControleurRobotVirtuel(Controleur):
         """
         d_gauche,d_droite=self.robot.get_distance_roue(self.temps_total)
         d=(d_gauche+d_droite)/2
-        self.distanceParcourue+=d
+        self._distanceParcourue+=d
         return d
 
     def setDistanceParcourue(self, dist_g,dist_d):
@@ -86,38 +86,35 @@ class ControleurRobotVirtuel(Controleur):
         calcul l'angle parcouru par le robot en radians
         :return: angle parcouru par le robot en radians
         """
-        #angleRobot=self.robot.angle
-
         angledif=(self.robot.get_distance_roue(self.temps_total)[1] - self.robot.get_distance_roue(self.temps_total)[0]) / self.robot.WHEEL_BASE_WIDTH
-        self.AngleParcouru+=angledif
+        self._angleParcouru+=angledif
     
-    def getDistanceParcourue(self):
+    @property
+    def distanceParcourue(self):
         """
         :return : la distance parcourue par le robot depuis la derniere remise a 0
         """
-        return self.distanceParcourue
+        return self._distanceParcourue
     
-    def getAngleParcouru(self):
+    @property
+    def angleParcouru(self):
         """
         :return : l'angle parcouru par le robot depuis la derniere remise a 0
         """
-        return self.AngleParcouru
+        return self._angleParcouru
 
-
-    # def __getattr__(self, name):
-    #     return getattr(self.robot, name)
     
     def resetDistanceParcourue(self):
-        self.distanceParcourue=0
+        self._distanceParcourue=0
 
     def resetAngleParcourue(self):
-        self.AngleParcouru=0
+        self._angleParcouru=0
     
 class ControleurRobotVraieVie(Controleur):
     def __init__(self, robot):
         Controleur.__init__(self,robot)
-        self.distanceParcourue=0
-        self.AngleParcouru=0 #en radians
+        self._distanceParcourue=0
+        self._angleParcouru=0 #en radians
         self.distance_parcourue_roue_gauche=0
         self.distance_parcourue_roue_droite=0
         self.angle_parcouru_offset=(0,0)
@@ -139,7 +136,7 @@ class ControleurRobotVraieVie(Controleur):
         self.offset_motor_encoder(self.MOTOR_RIGHT, self.read_encoders()[1])
 
         #mis a jour de la distance parcourue totale
-        self.distanceParcourue+=d
+        self._distanceParcourue+=d
 
         return d 
     
@@ -156,37 +153,47 @@ class ControleurRobotVraieVie(Controleur):
         """fixe l'angle parcouru par le robot
         :param a: distance parcourue par le robot en degre
         """
-        self.AngleParcouru=a
+        self._angleParcouru=a
 
-    def calculAngleParcouru(self,delta_t):
+    def calculAngleParcouru(self):
         """
         calcul l'angle parcouru par le robot en radians
         :return: angle parcouru par le robot en radians
         """
+        #recuperation de la position des moteurs
         pos=self.robot.get_motor_position()
+        #calcul de la position du moteur gauche
         posL=(pos[0]-self.angle_parcouru_offset[0])/360 * self.robot.WHEEL_DIAMETER * math.pi
+        #calcul de la position du moteur droit
         posR=(pos[1]-self.angle_parcouru_offset[1])/360 * self.robot.WHEEL_DIAMETER * math.pi
 
-        angle= (posR-posL)/self.robot.WHEEL_BASE_WIDTH
+        #calcul de l'angle parcouru
+        angle=(posR-posL)/self.robot.WHEEL_BASE_WIDTH
 
+        #mise a jour de l'offset
         self.angle_parcouru_offset=(pos[0],pos[1])
+        #mise a jour de l'angle parcouru
+        self._angleParcouru+=angle
+        
         return angle
     
-    def getDistanceParcourue(self):
+    @property
+    def distanceParcourue(self):
         """
         :return : la distance parcourue par le robot depuis la derniere remise a 0
         """
-        return self.distanceParcourue
+        return self._distanceParcourue
     
-    def getAngleParcouru(self):
+    @property
+    def angleParcouru(self):
         """
         :return : l'angle parcouru par le robot depuis la derniere remise a 0
         """
-        return self.AngleParcouru
+        return self._angleParcouru
 
     def __getattr__(self, name):
         return getattr(self.robot, name)
     
     
     def resetDistanceParcourue(self):
-        self.distanceParcourue=0
+        self._distanceParcourue=0

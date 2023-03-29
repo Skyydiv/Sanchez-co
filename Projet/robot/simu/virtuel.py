@@ -214,6 +214,26 @@ class Environnement :
     def robotRayon(self):
       return self._robot.rayon
     
+    def estMur(self,x,y,rayon):
+        '''
+        Vérifie si les coordonée x et y sont dans l'enceinte de l'environnement. 
+        :param x: coordonné réelle
+        :param y: coordonné réelle
+        :return False si on est dans l’environnement 
+        :return True si on se prend un mur
+        '''
+        return ((x+rayon>=self._coordsmax[0]) or (y+rayon>=self._coordsmax[1]) or (x-rayon<=0) or (y-rayon<=0))
+    
+    def estObstacle(self, x, y,r):
+        '''Verfie s'il y a un obstacle dans l'environnement avec les mêmes coordonnées
+        :param x: coordonnées en x
+        :param y: coordonnées en y
+        :param r:rayon en mm
+        :returns: True s'il existe déjà un obstacle avec les mêmes coordonnées, False sinon
+        '''
+        for i in self.ensemble_obstacles:
+            return (i.x+i.rayon>=x-r and i.x-i.rayon<=x+r and i.y+i.rayon>=y-r and i.y-i.rayon<=y+r)
+    
     def addObstacle(self,x,y,h,d,rayon):
         """Créer et dépose l'obstacle s'il n'y a pas déjà un objet dans la case avec les mêmes coordonnées en faisant appel à la fonction estObstacle
         :param x: Coordonnées x de l'obstacle qu'on va créer

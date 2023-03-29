@@ -41,7 +41,7 @@ class Ia_Avancer_tout_droit:
  
     def stop(self):
         # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
-        if (self.CR.getDistanceParcourue())>= self.goal:
+        if (self.CR.distanceParcourue)>= self.goal:
             return True 
         return False
     
@@ -77,7 +77,7 @@ class IATournerAngle:
         
     def stop(self):
         #On ne s'arrête que si on l'a depassé l'angle 
-        return self.CR.AngleParcouru > abs(self.angle) 
+        return self.CR.angleParcouru > abs(self.angle) 
         
     def update(self, delta_t):
         #Calcul de l'angle parcouru
@@ -89,6 +89,27 @@ class IATournerAngle:
         else:
             self.CR.update()
             self.CR.tournerDroite(self.v)
+            
+
+#class IAevitecrash:
+    """
+    sous-classe de l'IA permettant permettant d'eviter au robot de se crash 
+    """
+ #   def __init__(self,controleur, v):
+  #      self.CR=controleur
+#        self.tourner=IATournerAngle(controleur,90,v)
+ #       self.en_cours=False
+  #      
+   # def start(self):
+    #    self.CR.resetDistanceParcourue()
+     #   self.en_cours=True
+      #  self.CR.tournerDroite(self.v)
+       # 
+    ##   #On ne s'arrête que si on l'a depassé l'angle 
+      #  return self.CR.AngleParcouru > abs(self.angle) 
+        
+    #def update(self, delta_t):
+        
 
 
 class IAevitecrash:
@@ -141,6 +162,9 @@ class IAevitecrash:
         
         
 class IAseq:
+        """
+            sous classe d'IA permettant de lancer une liste d'IA à la suite
+         """
         
         def __init__(self,controleur,liste):
             self.CR=controleur
@@ -170,5 +194,31 @@ class IAseq:
                 
             else:
                 self.ia_list[self.ia_en_cours].update(delta_t)
+
+class IAcarre:
+    """
+        IA stratégie permettant permettant au robot de faire un carré
+    """
         
+    def __init__(self,controleur,vitesseAvance,vitesseAngle,distance,delta_t):
+        
+    
+        self.ia1=Ia_Avancer_tout_droit(distance,vitesseAvance,controleur)
+        self.iaa=IATournerAngle(controleur,90,vitesseAngle)
+        self.iaseq=IAseq(controleur,[self.ia1,self.iaa,self.ia1,self.iaa,self.ia1,self.iaa,self.ia1])
+        self.iaboucle=BoucleIA(controleur,self.iaseq,delta_t)
+        self.en_cours=False
+        
+    def start(self):
+        self.iaboucle.start()
+        self.en_cours=True
+            
+            
+    def stop(self):
+        self.en_cours=False
+        return
+        
+    def update(self, delta_t):
+        return 
+            
         

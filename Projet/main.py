@@ -1,34 +1,36 @@
 from tkinter import *
 from robot.affichage import View
 from robot.simu.simulation import Simulation
-from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq
+from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, IAcarre
 from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
 from time import sleep
 
 
-delta_simu=100#taux rafraichissement des données de la simu
-delta_affich=100 #taux de rafraichissement de l'affichage
-delta_ia=0.0001
+delta_simu=600#taux rafraichissement des données de la simu
+delta_affich=60 #taux de rafraichissement de l'affichage
+delta_ia=0.001
 
 simulation=Simulation(delta_simu)
-simulation.addSimulation(0) #ajouter des obstcales a l'environnement
+simulation.addSimulation(5) #ajouter des obstcales a l'environnement
 
 #ajout du controleur
-
 cr=ControleurRobotVirtuel(simulation.robot)
 
-        
 
-ia1=Ia_Avancer_tout_droit(200,100,cr)
-ia2=Ia_Avancer_tout_droit(500,300,cr)
-iaa=IATournerAngle(cr,90,100)
+#ia pour avancer tout droit 
+ia1=Ia_Avancer_tout_droit(300,200,cr)
+
+#ia pour tourner 
+iaa=IATournerAngle(cr,90,200)
+
+#ia seq 
 iaseq=IAseq(cr,[ia1,iaa,ia1,iaa,ia1,iaa,ia1])
-iaboucle=BoucleIA(cr,iaseq,delta_ia)
-iaboucle.start()
 
+#iaboucle=BoucleIA(cr,iaseq,delta_ia)
+#iaboucle.start()
 
-
-# iaboucle.start()
+iacarre=IAcarre(cr,100,100,200,delta_ia)
+iacarre.start()
 
 root = Tk() # initialiser la fenetre tkinter
 view=View(root, simulation,delta_affich)
