@@ -11,7 +11,7 @@ delta_affich=60 #taux de rafraichissement de l'affichage
 delta_ia=0.001
 
 simulation=Simulation(delta_simu)
-simulation.addSimulation(5) #ajouter des obstcales a l'environnement
+simulation.addSimulation(0) #ajouter des obstcales a l'environnement
 
 #ajout du controleur
 cr=ControleurRobotVirtuel(simulation.robot)
@@ -24,13 +24,15 @@ ia1=Ia_Avancer_tout_droit(300,200,cr)
 iaa=IATournerAngle(cr,90,200)
 
 #ia seq 
-iaseq=IAseq(cr,[ia1,iaa,ia1,iaa,ia1,iaa,ia1])
+iaseq=IAseq(cr,[ia1,iaa,ia1,iaa,ia1,iaa,ia1,iaa])
+iaseq2=IAseq(cr,[ia1,iaa,ia1,iaa,ia1,iaa,ia1])
+iaseq3=IAseq(cr,[iaseq,iaseq2])
 
-#iaboucle=BoucleIA(cr,iaseq,delta_ia)
-#iaboucle.start()
+iaboucle=BoucleIA(cr,iaseq3,delta_ia)
+iaboucle.start()
 
-iacarre=IAcarre(cr,100,100,200,delta_ia)
-iacarre.start()
+#iacarre=IAcarre(cr,100,100,200,delta_ia)
+#iacarre.start()
 
 root = Tk() # initialiser la fenetre tkinter
 view=View(root, simulation,delta_affich)
