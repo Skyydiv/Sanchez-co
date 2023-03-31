@@ -89,77 +89,8 @@ class IATournerAngle:
             self.CR.update()
             self.CR.tournerDroite(self.v)
             
-
-#class IAevitecrash:
-    """
-    sous-classe de l'IA permettant permettant d'eviter au robot de se crash 
-    """
- #   def __init__(self,controleur, v):
-  #      self.CR=controleur
-#        self.tourner=IATournerAngle(controleur,90,v)
- #       self.en_cours=False
-  #      
-   # def start(self):
-    #    self.CR.resetDistanceParcourue()
-     #   self.en_cours=True
-      #  self.CR.tournerDroite(self.v)
-       # 
-    ##   #On ne s'arrête que si on l'a depassé l'angle 
-      #  return self.CR.AngleParcouru > abs(self.angle) 
-        
-    #def update(self, delta_t):
-        
-
-
-class IAevitecrash:
-    """
-    sous-classe de l'IA permettant permettant d'eviter au robot de se crash 
-    """
-    def __init__(self, robot, v):
-        
-        self.robot = robot
-        self.running = False
-        self.v = v
-        self.parcouru_g = 0
-        self.parcouru_d = 0
-        #Calcul de la distance à l'obstacle le plus proche
-        self.distance = self.robot.capteur.getDistcapteur_distanceance()
-
-
-
-    def start(self):
-        if not self.running:
-            self.running = True
-            self.parcouru_g = 0
-            self.parcouru_d = 0
-            
-        
-
-    def stop(self):
-        #Avance vers l'obstacle/mur jusqu'à être à une distance de sécurité
-        return self.parcouru_g  - self.distance <= 1 or self.parcouru_d - self.distance <= 1
-
-    
-    def end(self):
-        self.robot.setVitesse(0,0)
-        self.parcouru_g = 0
-        self.parcouru_d = 0
-
-    def update(self, delta_t):
-        self.CR.update(delta_t)
-        if self.running:
-            parcouru_g, parcouru_d = self.robot.get_distance_roue(delta_t)
-            self.parcouru_g += parcouru_g
-            self.parcouru_d += parcouru_d
-            if self.stop(): 
-                self.end()
-                return
-            else:
-                self.robot.setVitesse(self.v,self.v)
    
-        
-        
-        
+    
 class IAseq:
         """
             sous classe d'IA permettant de lancer une liste d'IA à la suite
@@ -196,6 +127,7 @@ class IAseq:
                 self.ia_list[self.ia_en_cours].update(delta_t)
 
 
+
 def TracerCarre(controleur,distance,vitesse):
 
 
@@ -210,3 +142,37 @@ def TracerCarre(controleur,distance,vitesse):
     iacarre=IAseq(controleur,[ia1,iaa,ia1,iaa,ia1,iaa,ia1,iaa])
 
     return iacarre
+
+
+
+class IAIfThenElse:
+    """
+    sous classe d'IA évaluant une condition et ne faisant rien si elle est fausse
+    """
+    def __init__(self, controleur, condition, ia_then, ia_else=None):
+        self.CR = controleur
+        self.condition = condition
+        self.ia_then = ia_then
+        self.ia_else = ia_else
+        self.en_cours = False
+
+    def start(self):
+        self.en_cours = True
+        if self.condition():
+            self.current_ia = self.ia_then
+        else:
+            self.current_ia = self.ia_else
+        if self.current_ia:
+            self.current_ia.start()
+
+    def stop(self):
+        return not self.current_ia or not self.current_ia.en_cours
+
+    def update(self, delta_t):
+        if self.stop():
+            self.en_cours = False
+            if self.current_ia:
+                self.current_ia.stop()
+                self.current_ia = None
+        else:
+            self.current_ia.update(delta_t)
