@@ -191,34 +191,23 @@ class IAseq:
             if self.stop():
                 self.CR.stop()
                 self.en_cours=False
+                self.ia_en_cours=0
                 
             else:
                 self.ia_list[self.ia_en_cours].update(delta_t)
 
-class IAcarre:
-    """
-        IA stratégie permettant permettant au robot de faire un carré
-    """
-        
-    def __init__(self,controleur,vitesseAvance,vitesseAngle,distance,delta_t):
-        
-    
-        self.ia1=Ia_Avancer_tout_droit(distance,vitesseAvance,controleur)
-        self.iaa=IATournerAngle(controleur,90,vitesseAngle)
-        self.iaseq=IAseq(controleur,[self.ia1,self.iaa,self.ia1,self.iaa,self.ia1,self.iaa,self.ia1])
-        self.iaboucle=BoucleIA(controleur,self.iaseq,delta_t)
-        self.en_cours=False
-        
-    def start(self):
-        self.iaboucle.start()
-        self.en_cours=True
-            
-            
-    def stop(self):
-        self.en_cours=False
-        return
-        
-    def update(self, delta_t):
-        return 
-            
-        
+
+def TracerCarre(controleur,distance,vitesse):
+
+
+
+#ia pour avancer tout droit 
+    ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+
+#ia pour tourner 
+    iaa=IATournerAngle(controleur,90,vitesse)
+
+#ia seq 
+    iacarre=IAseq(controleur,[ia1,iaa,ia1,iaa,ia1,iaa,ia1,iaa])
+
+    return iacarre
