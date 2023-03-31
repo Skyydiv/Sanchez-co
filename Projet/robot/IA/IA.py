@@ -15,14 +15,13 @@ class BoucleIA(Thread):
         self.ia=ia
         self.delta_t=delta_t
 
+
     def run(self):
         self.ia.start()
-        self.controleur.running = True
         self.controleur.reset_time()
         while self.ia.en_cours:
             self.ia.update(self.controleur.temps_total)
             sleep(self.delta_t)
-        self.controleur.running = False
 
 class Ia_Avancer_tout_droit:
     
