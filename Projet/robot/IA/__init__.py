@@ -1,2 +1,2 @@
-from .IA import Ia_Avancer_tout_droit, IAseq, IATournerAngle,BoucleIA,TracerCarre,IAIfThenElse
+from .IA import Ia_Avancer_tout_droit, IAseq, IATournerAngle,BoucleIA,TracerCarre,IAIfThenElse,IAevitecrash
 

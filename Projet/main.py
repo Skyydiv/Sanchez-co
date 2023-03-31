@@ -1,7 +1,7 @@
 from tkinter import *
 from robot.affichage import View
 from robot.simu.simulation import Simulation
-from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, TracerCarre, IAIfThenElse
+from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, TracerCarre, IAIfThenElse,IAevitecrash
 from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
 from time import sleep
 
@@ -36,3 +36,5 @@ view=View(root, simulation,delta_affich)
 simulation.run_simu()
 root.mainloop()
 simulation.stop_simu()
+
+

@@ -176,3 +176,33 @@ class IAIfThenElse:
                 self.current_ia = None
         else:
             self.current_ia.update(delta_t)
+            
+class IAevitecrash:
+    """ 
+    sous classe d'IA permettant d'éviter un obstacle en tournant à droite
+    """
+    def __init__(self, controleur, distance_limite, vitesse):
+        self.CR = controleur
+        self.distance_limite = distance_limite
+        self.vitesse = vitesse
+        self.ia_tourner_droite = IATournerAngle(controleur, 90, vitesse)
+
+        def condition_proximite():
+            distance_obstacle = self.CR.get_distance()
+            return distance_obstacle <= self.distance_limite
+
+        self.ia_if_then_else = IAIfThenElse(condition_proximite, self.ia_tourner_droite, None)
+        self.en_cours = False
+
+    def start(self):
+        self.en_cours = True
+        self.ia_if_then_else.start()
+
+    def stop(self):
+        self.ia_if_then_else.stop()
+        self.en_cours = False
+
+    def update(self, delta_t):
+        self.ia_if_then_else.update(delta_t)
+        if not self.ia_if_then_else.en_cours:
+            self.stop()
