@@ -9,31 +9,16 @@ class Controleur:
         self.temps_total=0
 
     def setVitesseRoues(self, vitesseg, vitessed):
-        if self.__class__.__name__=="ControleurRobotVirtuel":
-            self.robot.setVitesse(vitesseg, vitessed)
-        else:
-            self.robot.set_motor_dps(self.robot.MOTOR_LEFT, vitesseg)
-            self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, vitessed)
+        self.robot.setVitesse(vitesseg, vitessed)
     
     def avancerToutDroit(self, v):
-        if self.__class__.__name__=="ControleurRobotVirtuel":
-            self.robot.setVitesse(v,v)
-        else:
-            self.robot.set_motor_dps(self.robot.MOTOR_LEFT+self.robot.MOTOR_RIGHT, v)
+        self.robot.setVitesse(v,v)
 
     def tournerDroite(self,v):
-        if self.__class__.__name__=="ControleurRobotVirtuel":
-            self.robot.setVitesse(v,-v)
-        else:
-            self.robot.set_motor_dps(self.robot.MOTOR_LEFT, v)
-            self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, -v)
+        self.robot.setVitesse(v,-v)
     
     def tournerGauche(self,v):
-        if  self.__class__.__name__=="ControleurRobotVirtuel":
-            self.robot.setVitesse(-v,v)
-        else:
-            self.robot.set_motor_dps(self.robot.MOTOR_LEFT, -v)
-            self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, v)
+        self.robot.setVitesse(-v,v)
 
     def stop(self):
         self.robot.stop()
@@ -118,6 +103,24 @@ class ControleurRobotVraieVie(Controleur):
         self.distance_parcourue_roue_gauche=0
         self.distance_parcourue_roue_droite=0
         self.angle_parcouru_offset=(0,0)
+
+    def setVitesseRoues(self, dpsg, dpsd):
+        self.robot.set_motor_dps(self.MOTOR_LEFT, dpsg)
+        self.robot.set_motor_dps(self.MOTOR_RIGHT, dpsd)
+
+    
+    def avancerToutDroit(self, dps):
+        self.robot.set_motor_dps(self.MOTOR_LEFT, dps)
+        self.robot.set_motor_dps(self.MOTOR_RIGHT, dps)
+
+
+    def tournerDroite(self,dps):
+        self.robot.set_motor_dps(self.MOTOR_LEFT, dps)
+        self.robot.set_motor_dps(self.MOTOR_RIGHT, -dps)
+    
+    def tournerGauche(self,dps):
+        self.robot.set_motor_dps(self.MOTOR_LEFT, -dps)
+        self.robot.set_motor_dps(self.MOTOR_RIGHT, dps)
 
     def calculDistanceParcourue(self):
         """
