@@ -3,7 +3,7 @@ import math
 from time import sleep
 from time import time
 from threading import Thread
-from .controleur import ControleurRobotVirtuel
+from .controleur import Controleur
 
 
 #plus de abstract
@@ -44,6 +44,29 @@ class Ia_Avancer_tout_droit:
             return True 
         return False
     
+class Ia_Cercle:
+    
+    def __init__(self, vg, vd, controleur):
+        self.CR=controleur
+        self.vg=vg
+        self.vd=vd
+        #calcule le rayon du cercle de rotation
+        self.r = ((self.CR.robot.WHEEL_BASE_WIDTH/2) * (self.vg + self.vd)) / abs(self.vd - self.vg)
+        #calcule le circonférence du cercle de rotation
+        self.goal=2*math.pi*self.r
+        self.en_cours=False
+       
+        
+    def start(self):
+        self.en_cours=True
+       
+ 
+    def stop(self):
+        # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
+        if (self.CR.distanceParcourue)>self.goal:
+            return True 
+        return False
+    
     
     def update(self, delta_t):
         if self.stop():
@@ -53,7 +76,7 @@ class Ia_Avancer_tout_droit:
             
         else:
             self.CR.update()
-            self.CR.avancerToutDroit(self.v)
+            self.CR.setVitesseRoues(self.vg, self.vd)
     
           
     
@@ -210,3 +233,10 @@ def TracerCarre(controleur,distance,vitesse):
     iacarre=IAseq(controleur,[ia1,iaa,ia1,iaa,ia1,iaa,ia1,iaa])
 
     return iacarre
+
+def TracerCercle(controleur,distance,vitesse):
+    
+        #ia pour avancer tout droit 
+        ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+    
+        return iacercle

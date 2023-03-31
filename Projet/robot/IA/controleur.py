@@ -7,6 +7,7 @@ class Controleur:
         self.deb=0
         self.fin=0
         self.temps_total=0
+        
 
     def setVitesseRoues(self, vitesseg, vitessed):
         self.robot.setVitesse(vitesseg, vitessed)
@@ -44,6 +45,8 @@ class ControleurRobotVirtuel(Controleur):
         Controleur.__init__(self,robot)
         self._distanceParcourue=0
         self._angleParcouru=0 #en radians
+        self._distanceParcourueGauche=0
+        self._distanceParcourueDroite=0
 
     def calculDistanceParcourue(self):
         """
@@ -51,6 +54,8 @@ class ControleurRobotVirtuel(Controleur):
         :return: la distance parcourue par le robot pour delta_t et met a jour la distance parcourue totale
         """
         d_gauche,d_droite=self.robot.get_distance_roue(self.temps_total)
+        self._distanceParcourueDroite+=d_droite
+        self._distanceParcourueGauche+=d_gauche
         d=(d_gauche+d_droite)/2
         self._distanceParcourue+=d
         return d
@@ -90,10 +95,25 @@ class ControleurRobotVirtuel(Controleur):
         :return : l'angle parcouru par le robot depuis la derniere remise a 0
         """
         return self._angleParcouru
-
+    
+    @property
+    def distanceParcourueGauche(self):
+        """
+        :return : la distance parcourue de la roue gauche par le robot depuis la derniere remise a 0
+        """
+        return self._distanceParcourueGauche
+    
+    @property
+    def distanceParcourueDroite(self):
+        """
+        :return : la distance parcourue de la roue droite par le robot depuis la derniere remise a 0
+        """
+        return self._distanceParcourueDroite
     
     def resetDistanceParcourue(self):
         self._distanceParcourue=0
+        self._distanceParcourueGauche=0
+        self._distanceParcourueDroite=0
 
     def resetAngleParcourue(self):
         self._angleParcouru=0
