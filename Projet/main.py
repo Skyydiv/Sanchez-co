@@ -31,7 +31,7 @@ Carre=TracerCarre(cr,300,200)
 iaseq=IAseq(cr,[Carre,Carre])
 
 
-iaboucle=BoucleIA(cr,ia2,delta_ia)
+iaboucle=BoucleIA(cr,iaseq,delta_ia)
 iaboucle.start()
 
 

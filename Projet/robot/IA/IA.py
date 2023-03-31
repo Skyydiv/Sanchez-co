@@ -37,7 +37,16 @@ class Ia_Avancer_tout_droit:
         self.en_cours=True
         self.CR.avancerToutDroit(self.v)
        
- 
+    def update(self, delta_t):
+        if self.stop():
+            self.CR.resetDistanceParcourue()
+            self.CR.stop()
+            self.en_cours=False
+            
+        else:
+            self.CR.update()
+            self.CR.avancerToutDroit(self.v)
+        
     def stop(self):
         # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
         if (self.CR.distanceParcourue)>= self.goal:
