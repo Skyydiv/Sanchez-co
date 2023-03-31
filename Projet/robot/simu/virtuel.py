@@ -23,8 +23,8 @@ class Robot:
     self.capteur=Capteur(0) #Capteur du robot
 
 
-    self.MOTOR_LEFT_Offset=0
-    self.MOTOR_RIGHT_Offset=0
+    #self.MOTOR_LEFT_Offset=0
+    #self.MOTOR_RIGHT_Offset=0
 
     self.vitesseRoueDroite=0 #degre par sec
     self.vitesseRoueGauche=0 #degre par sec
@@ -91,9 +91,9 @@ class Robot:
         newOrientation = (distance_parcourue_droite - distance_parcourue_gauche) / self.WHEEL_BASE_WIDTH
         self._orientation += newOrientation
 
-        newV = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #calcul vitesse lineare 
-        self._x += newV * math.cos(self._orientation)
-        self._y += newV * math.sin(self._orientation)
+        newD = (distance_parcourue_droite + distance_parcourue_gauche) / 2 #calcul vitesse lineare 
+        self._x += newD * math.cos(self._orientation)
+        self._y += newD * math.sin(self._orientation)
 
   def setVitesse(self,Vr,Vg):
     """set la vitesse des roues

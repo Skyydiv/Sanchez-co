@@ -11,7 +11,7 @@ class Simulation :
     
     SIMU_WIDTH=1500
     SIMU_HEIGHT=800
-    SIMU_PRECESION=5
+    SIMU_PRECESION=20
 
     def __init__(self,delta_t):
         '''Constructeur de la simulation qui initailise l'environnement et le robot 

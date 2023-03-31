@@ -24,6 +24,9 @@ class Controleur:
         self.robot.stop()
 
     def update(self):
+        """
+        update les distances et l'angle parcouru depuis le dernier appel de update
+        """
         self.fin=time.time()
         self.temps_total=self.fin-self.deb
         self.deb=self.fin
