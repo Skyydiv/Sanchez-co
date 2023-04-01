@@ -3,7 +3,8 @@ from tkinter import ttk
 
 from threading import Thread
 from math import degrees
-
+import math
+import random
 
 
 class View(Thread) :
@@ -47,9 +48,26 @@ class View(Thread) :
         y=self.robot.y
         r=self.robot.rayon
         o=degrees(self.robot.orientation)
-        self.canv.create_arc(x-r,y-r,x+r,y+r, start=45-o, extent=270,fill="yellow")
+        self.canv.create_arc(x-r,y-r,x+r,y+r, start=45-o, extent=270,fill="#FD6C9E")
 
         self.robot_trajet.append((x, y))
+        #création de 2 leds devant le robot selon son orientation (un a gauche et un à droite)
+        if (self.robot.led1==False and self.robot.led2==False):
+            color1='white'
+            color2='white'
+        elif (self.robot.led1==True and self.robot.led2==False):
+            color1='red'
+            color2='white'
+        elif (self.robot.led1==False and self.robot.led2==True):
+            color1='white'
+            color2='blue' 
+        else:
+            color1='red'
+            color2='blue'
+        self.canv.create_oval(x+r*math.cos(math.radians(o+45)),y+r*math.sin(math.radians(o+45)),x+r*math.cos(math.radians(o+45))+10,y+r*math.sin(math.radians(o+45))+10, fill=color1)
+        self.canv.create_oval(x+r*math.cos(math.radians(o-45)),y+r*math.sin(math.radians(o-45)),x+r*math.cos(math.radians(o-45))+10,y+r*math.sin(math.radians(o-45))+10, fill=color2)
+
+
         
     def drawRobotTrajet(self):
         '''dessine le trajet du robot'''

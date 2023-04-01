@@ -118,6 +118,10 @@ class ControleurRobotVirtuel(Controleur):
     def resetAngleParcourue(self):
         self._angleParcouru=0
     
+    def set_led(ID_led, statut):
+        self.robot.set_led(ID_led, statut)
+        
+    
 class ControleurRobotVraieVie(Controleur):
     def __init__(self, robot):
         Controleur.__init__(self,robot)

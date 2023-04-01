@@ -89,7 +89,7 @@ class Ia_Cercle:
     
           
     
-class IATournerAngle:
+class IATournerAngleDroite:
     """
     Classe IA pour tourner d'un certain angle a vers la droite
     """
@@ -103,6 +103,7 @@ class IATournerAngle:
 
     def start(self):
         self.CR.resetDistanceParcourue()
+        self.CR.resetAngleParcourue()
         self.en_cours=True
         self.CR.tournerDroite(self.v)
         
@@ -120,6 +121,38 @@ class IATournerAngle:
         else:
             self.CR.update()
             self.CR.tournerDroite(self.v)
+            
+class IATournerAngleGauche:
+    """
+    Classe IA pour tourner d'un certain angle a vers la droite
+    """
+    def __init__(self, controleur, angle, vitesse):
+        
+        self.angle = math.radians(angle) 
+        #on convertit les degrés passés en paramètre en radians pour les calculs
+        self.CR=controleur
+        self.en_cours=False
+        self.v=vitesse
+
+    def start(self):
+        self.CR.resetDistanceParcourue()
+        self.CR.resetAngleParcourue()
+        self.en_cours=True
+        self.CR.tournerGauche(self.v)
+    def stop(self):
+        #On ne s'arrête que si on l'a depassé l'angle 
+        return -(self.CR.angleParcouru)>  self.angle
+        
+    def update(self, delta_t):
+        #Calcul de l'angle parcouru
+        if self.stop():
+            self.en_cours=False
+            self.CR.stop()
+            self.CR.resetAngleParcourue()
+
+        else:
+            self.CR.update()
+            self.CR.tournerGauche(self.v)
             
 
 #class IAevitecrash:
@@ -142,6 +175,49 @@ class IATournerAngle:
     #def update(self, delta_t):
         
 
+class IA_led:
+    def __init__(self, distance, v, controleur):
+
+        self.goal = distance
+        self.v = v
+        self.en_cours=False
+        self.CR=controleur
+       
+        
+    def start(self):
+        self.en_cours=True
+        self.CR.robot.set_led(1,True)
+        self.CR.avancerToutDroit(self.v)
+       
+    def update(self, delta_t):
+        if self.stop():
+            self.CR.resetDistanceParcourue()
+            self.CR.stop()
+            self.en_cours=False
+            
+        else:
+            if self.CR.robot.led1==False and self.CR.robot.led2==False:
+                self.CR.robot.set_led(1,True)
+                self.CR.robot.set_led(2,True)
+
+            elif self.CR.robot.led1==True and self.CR.robot.led2==False:
+                self.CR.robot.set_led(1,False)
+                self.CR.robot.set_led(2,True)
+
+            elif self.CR.robot.led1==False and self.CR.robot.led2==True:
+                self.CR.robot.set_led(1,True)
+                self.CR.robot.set_led(2,False)
+            else:
+                self.CR.robot.set_led(2,False)
+                self.CR.robot.set_led(1,False)
+            self.CR.update()
+            self.CR.avancerToutDroit(self.v)
+        
+    def stop(self):
+        # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
+        if (self.CR.distanceParcourue)>= self.goal:
+            return True 
+        return False
 
 class IAevitecrash:
     """
@@ -236,16 +312,16 @@ def TracerCarre(controleur,distance,vitesse):
     ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
 
 #ia pour tourner 
-    iaa=IATournerAngle(controleur,90,vitesse)
+    iaa=IATournerAngleDroite(controleur,90,vitesse)
 
 #ia seq 
     iacarre=IAseq(controleur,[ia1,iaa,ia1,iaa,ia1,iaa,ia1,iaa])
 
     return iacarre
 
-def TracerCercle(controleur,distance,vitesse):
-    
-        #ia pour avancer tout droit 
-        ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
-    
-        return iacercle
+def Strategiemotif1(controleur,distance,vitesse):
+    ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+    ia2=IATournerAngleGauche(controleur,45,vitesse)
+    ia4=IATournerAngleDroite(controleur,90,vitesse)
+    iaseq=IAseq(controleur,[ia1,ia2,ia1,ia4,ia1,ia2,ia1])
+    return iaseq

@@ -14,9 +14,11 @@ class Robot:
     :param rayon: rayon de l'objet (en mm)
     '''
     self.rayon = rayon
+    self._led1=False
+    self._led2=False
 
-    self._x =100.1+self.rayon #pour être dans l'env
-    self._y = 100.1+self.rayon
+    self._x =200.1+self.rayon #pour être dans l'env
+    self._y = 200.1+self.rayon
 
     
     self._orientation=0 #(radians)
@@ -43,6 +45,16 @@ class Robot:
   def y(self):
     """Renvoie coordonnées y du robot"""
     return self._y
+
+  @property
+  def led1(self):
+    """Renvoie coordonnées x du robot"""
+    return self._led1
+  
+  @property
+  def led2(self):
+    """Renvoie coordonnées y du robot"""
+    return self._led2
   
   @property
   def orientation(self):
@@ -74,6 +86,15 @@ class Robot:
      :param a: angle parcouru en degre"""
      self._angle_parcouru=a
 
+  def set_led(self,num, statut):
+     """fixe l'etat des leds
+     :param led1: etat de la led1
+     :param led2: etat de la led2"""
+     if num==1:
+      self._led1=statut
+     else:
+      self._led2=statut
+     
 
 
 

@@ -1,7 +1,7 @@
 from tkinter import *
 from robot.affichage import View
 from robot.simu.simulation import Simulation
-from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, Ia_Cercle, TracerCarre
+from robot.IA import Ia_Avancer_tout_droit, IATournerAngleDroite,IATournerAngleGauche, BoucleIA, IAseq, Ia_Cercle, TracerCarre, IA_led,Strategiemotif1
 from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
 from time import sleep
 
@@ -21,17 +21,22 @@ cr=ControleurRobotVirtuel(simulation.robot)
 ia1=Ia_Avancer_tout_droit(300,200,cr)
 
 #ia pour tourner 
-iaa=IATournerAngle(cr,90,200)
+iaa=IATournerAngleDroite(cr,90,200)
+
+#ia led
+ialed=IA_led(300,200,cr)
 
 #ia vitessesdiff
 
-ia2=Ia_Cercle(200, 50,cr,)
+ia2=Ia_Cercle(50,200,cr,)
 #ia seq 
 Carre=TracerCarre(cr,300,200)
 iaseq=IAseq(cr,[Carre,Carre])
 
+motif1=Strategiemotif1(cr,300,200)
 
-iaboucle=BoucleIA(cr,iaseq,delta_ia)
+
+iaboucle=BoucleIA(cr, motif1,delta_ia)
 iaboucle.start()
 
 
