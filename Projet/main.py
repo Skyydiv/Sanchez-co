@@ -21,14 +21,15 @@ cr=ControleurRobotVirtuel(simulation.robot)
 simulation.robot.dessine(True)#choisir de desactiver ou non le crayon <---------------------------
 
 #ia pour avancer tout droit 
-ia1=Ia_Avancer_tout_droit(300,200,cr)
+ia=Ia_Avancer_tout_droit(100,200,cr)
 
 #ia pour tourner 
-iaa=IATournerAngle(cr,90,200)
-
+iaa=IATournerAngle(cr,40,200)
+ia1=IATournerAngle(cr,50,200)
 #ia seq 
 Carre=TracerCarre(cr,300,200)
-iaseq=IAseq(cr,[Carre,Carre])
+
+iaseq=IAseq(cr,[ia,iaa,ia,ia1,ia,iaa,ia,ia1,ia,iaa,ia,ia1,ia,iaa,ia,iaa])
 
 
 iaboucle=BoucleIA(cr,iaseq,delta_ia)
