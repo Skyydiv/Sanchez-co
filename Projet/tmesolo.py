@@ -89,7 +89,7 @@ def qt2_2():
     simulation.stop_simu()
 
 
-def qt2_3():
+def qt2_4():
     delta_simu=600
     delta_affich=60 
     delta_ia=0.001
