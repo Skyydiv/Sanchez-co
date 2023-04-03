@@ -15,8 +15,8 @@ class Robot:
     '''
     self.rayon = rayon
 
-    self._x =x #pour être dans l'env
-    self._y =y
+    self._x =x -rayon#pour être dans l'env
+    self._y =y-rayon
 
     
     self._orientation=0 #(radians)
@@ -33,6 +33,8 @@ class Robot:
     self._distance_parcourue_roue_droite=0 #en mm
 
     self._angle_parcouru=0 #(en degre)
+
+    self.crayon=False
 
   @property
   def x(self):
@@ -132,7 +134,7 @@ class Robot:
     return (distancerg, distancerd)
   
   def dessine(self,b):
-    return b
+    self.crayon=b
 
 
 class Obstacle :

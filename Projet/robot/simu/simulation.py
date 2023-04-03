@@ -13,7 +13,7 @@ class Simulation :
     SIMU_HEIGHT=800
     SIMU_PRECESION=20
 
-    def __init__(self,delta_t,x,y,b):
+    def __init__(self,delta_t,x,y):
         '''Constructeur de la simulation qui initailise l'environnement et le robot 
         :param environnement: environnement dans lequel se déroule la simulation
         '''
@@ -24,7 +24,7 @@ class Simulation :
         self.deb=0
         self.fin=0
         self.temps_total=0
-        self.crayon=self._robot.dessine(b)
+        self.crayon=False
     
     @property
     def environnement(self):
@@ -95,6 +95,7 @@ class Simulation :
         self.fin=time()
         self.temps_total=self.fin-self.deb
         self.deb=self.fin
+        self.crayon=self.robot.crayon
         self._robot.deplacer(self.temps_total)
         if(self._environnement.detectCollision()):
             self.stop_simu()

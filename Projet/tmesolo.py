@@ -1,10 +1,10 @@
 from tkinter import *
 from robot.affichage import View
 from robot.simu.simulation import Simulation
-from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, TracerCarre, TracerUn, TracerZero
+from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, TracerCarre, TracerUn, TracerZero, Tracer01
 from robot.IA.controleur import ControleurRobotVirtuel
 
-def q1_1():
+def qt1_1():
     delta_simu=600
     delta_affich=60 
 
@@ -25,8 +25,9 @@ def qt1_3():
     delta_affich=60 
     delta_ia=0.001
 
-    simulation=Simulation(delta_simu,500,500,False)
+    simulation=Simulation(delta_simu,500,500)
     simulation.addSimulation()
+    simulation.robot.dessine(True)
 
     #ajout du controleur
     cr=ControleurRobotVirtuel(simulation.robot)
@@ -48,13 +49,13 @@ def qt2_1():
     delta_affich=60 
     delta_ia=0.001
 
-    simulation=Simulation(delta_simu,200,200,True)
+    simulation=Simulation(delta_simu,200,200)
     simulation.addSimulation()
 
     #ajout du controleur
     cr=ControleurRobotVirtuel(simulation.robot)
 
-    UN=TracerUn(cr,300,200)
+    UN=TracerUn(cr,200,200)
 
     iaboucle=BoucleIA(cr,UN,delta_ia)
     iaboucle.start()
@@ -70,15 +71,38 @@ def qt2_2():
     delta_affich=60 
     delta_ia=0.001
 
-    simulation=Simulation(delta_simu,200,200,True)
+    simulation=Simulation(delta_simu,200,200)
     simulation.addSimulation()
 
     #ajout du controleur
     cr=ControleurRobotVirtuel(simulation.robot)
 
-    Zero=TracerZero(cr,100,300,200)
+    Zero=TracerZero(cr,100,200,200)
 
     iaboucle=BoucleIA(cr,Zero,delta_ia)
+    iaboucle.start()
+
+    root = Tk() # initialiser la fenetre tkinter
+    view=View(root, simulation,delta_affich)
+    simulation.run_simu()
+    root.mainloop()
+    simulation.stop_simu()
+
+
+def qt2_3():
+    delta_simu=600
+    delta_affich=60 
+    delta_ia=0.001
+
+    simulation=Simulation(delta_simu,200,200)
+    simulation.addSimulation()
+
+    #ajout du controleur
+    cr=ControleurRobotVirtuel(simulation.robot)
+
+    zeroUn=Tracer01(cr,100,200,200)
+
+    iaboucle=BoucleIA(cr,zeroUn,delta_ia)
     iaboucle.start()
 
     root = Tk() # initialiser la fenetre tkinter

@@ -97,6 +97,9 @@ class ControleurRobotVirtuel(Controleur):
 
     def resetAngleParcourue(self):
         self._angleParcouru=0
+
+    def activerCrayon(self, b):
+        self.robot.dessine(b)
     
 class ControleurRobotVraieVie(Controleur):
     def __init__(self, robot):
