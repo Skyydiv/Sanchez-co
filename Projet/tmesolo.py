@@ -42,4 +42,3 @@ def qt1_3():
     simulation.run_simu()
     root.mainloop()
     simulation.stop_simu()
-
