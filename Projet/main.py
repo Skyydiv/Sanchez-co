@@ -41,10 +41,10 @@ iaPour0=IAseq(cr,[ia,iaa90,ia1,iaa90,ia,iaa90,ia1])#strategie pour dessiner un 0
 iaseq=IAseq(cr,[ia,iaa,ia,ia1,ia,iaa,ia,ia1,ia,iaa,ia,ia1,ia,iaa,ia,iaa,ia])
 
 
-iaPour0puis1=IAseq(cr,[iaPour0,iaa90,ia1,iaPour1])
-
+iaPour0puis1=IAseq(cr,[iaPour0,iaa90,ia1,iaPour1,iaa90,iaa90,ia1,iaa90,ia,iaPour0,iaa90,ia1,iaPour1,iaa90,iaa90,ia1,iaa90,ia,iaPour0,iaa90,ia1,iaPour1,iaa90,iaa90,ia1,iaa90,ia,iaPour0])
 iaboucle=BoucleIA(cr,iaPour0puis1,delta_ia)
 iaboucle.start()
+
 
 
 root = Tk() # initialiser la fenetre tkinter
