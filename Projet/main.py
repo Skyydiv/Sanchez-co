@@ -13,6 +13,16 @@ delta_ia=0.000000000001
 simulation=Simulation(delta_simu)
 simulation.addSimulation(0) #ajouter des obstcales a l'environnement
 
+
+simulation.environnement.addObstacle(100,100,0,0,50)  #,x,y,h,d,rayon
+simulation.environnement.addObstacle(100,Simulation.SIMU_HEIGHT-100,0,0,50)
+simulation.environnement.addObstacle(simulation.SIMU_WIDTH-100,100,0,0,50)
+simulation.environnement.addObstacle(Simulation.SIMU_WIDTH-100,Simulation.SIMU_HEIGHT-100,0,0,50)
+
+simulation.robot.deposer(Simulation.SIMU_WIDTH/2,Simulation.SIMU_HEIGHT/2)
+
+
+
 #ajout du controleur
 cr=ControleurRobotVirtuel(simulation.robot)
 
@@ -28,8 +38,8 @@ Carre=TracerCarre(cr,300,200)
 iaseq=IAseq(cr,[Carre,Carre])
 
 
-iaboucle=BoucleIA(cr,iaseq,delta_ia)
-iaboucle.start()
+# iaboucle=BoucleIA(cr,iaseq,delta_ia)
+# iaboucle.start()
 
 
 root = Tk() # initialiser la fenetre tkinter

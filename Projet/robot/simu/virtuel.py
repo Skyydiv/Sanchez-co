@@ -1,6 +1,7 @@
 import math
 from .capteur import Capteur
 
+
 class Robot:
 
   WHEEL_BASE_WIDTH=117 # distance (mm) de la roue gauche a la roue droite.
@@ -73,6 +74,10 @@ class Robot:
      """fixe l'angle_parcouru a un angle a
      :param a: angle parcouru en degre"""
      self._angle_parcouru=a
+
+  def deposer(self,x,y):
+     self._x=x
+     self._y=y
 
 
 

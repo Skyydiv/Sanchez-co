@@ -1,7 +1,7 @@
 from time import sleep
 import random
 from threading import Thread
-from .virtuel import Environnement
+from robot.simu.virtuel import Environnement
 from .virtuel import Robot 
 from time import time
 
