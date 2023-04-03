@@ -1,5 +1,6 @@
-import math
+from math import *
 from .capteur import Capteur
+import random
 
 class Robot:
 
@@ -33,6 +34,8 @@ class Robot:
     self._distance_parcourue_roue_droite=0 #en mm
 
     self._angle_parcouru=0 #(en degre)
+    self.crayon_actif = False
+
 
   @property
   def x(self):
@@ -73,6 +76,7 @@ class Robot:
      """fixe l'angle_parcouru a un angle a
      :param a: angle parcouru en degre"""
      self._angle_parcouru=a
+    
 
 
 
@@ -130,6 +134,17 @@ class Robot:
     rotationrd = (self.vitesseRoueDroite * delta_t)
     distancerd = (math.pi * self.WHEEL_DIAMETER/2 * rotationrd) / 180
     return (distancerg, distancerd)
+
+  def dessine(self, b):
+        self.crayon_actif = b
+        
+  def placerEmetteur(self, x, y):
+        self.emetteur = Emetteur(x, y)
+        
+  def getSignal(self):
+        if self.emetteur is None:
+            return None
+        return self.emetteur.getDistance(self.x, self.y)
 
 
 class Obstacle :
@@ -266,7 +281,46 @@ def calculDistance(objet1, objet2):
 
     return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2))
 
+    
+      
+class Emetteur:
+    def __init__(self, x, y, vitesse, vmax):
+        self.x = x
+        self.y = y
+        self.vitesse = vitesse
+        self.vmax = vmax
+        self.temps_inactif = 0
+        self.emetteur_actif = True
+        
+    def getDistance(self, x, y):
+        dx = self.x - x
+        dy = self.y - y
+        return sqrt(dx*dx + dy*dy)
+      
+    def bouger(self, rx, ry, delta_t, xlim, ylim):
+        vx = rx - self.x
+        vy = ry - self.y
+        dist = sqrt(vx**2 + vy**2)
+        if self.emetteur_actif:
+          if dist > 0:
+            vx /= dist
+            vy /= dist
 
+            vitesse_emetteur = min(self.vitesse, dist/2)
 
-       
+            self.x += vitesse_emetteur * vx * delta_t
+            self.y += vitesse_emetteur * vy * delta_t
+
+            if self.x < 0 or self.x > xlim or self.y < 0 or self.y > ylim:
+                angle = random.uniform(0, 2*pi)
+                self.x = max(0, min(xlim, self.x + 10*cos(angle)))
+                self.y = max(0, min(ylim, self.y + 10*sin(angle)))
+        else:
+            self.temps_inactif += delta_t
+            if self.temps_inactif >= 5:
+                self.emetteur_actif = True
+                self.temps_inactif = 0
+                
+            
+
 

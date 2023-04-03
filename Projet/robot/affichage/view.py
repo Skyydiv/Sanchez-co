@@ -42,9 +42,9 @@ class View(Thread) :
         
     
     def drawRobot(self):
-        '''dessine le Robot'''
-        x=self.robot.x
-        y=self.robot.y
+        '''dessine le Robot au milieu'''
+        x=self.longueur / 2
+        y=self.largeur / 2
         r=self.robot.rayon
         o=degrees(self.robot.orientation)
         self.canv.create_arc(x-r,y-r,x+r,y+r, start=45-o, extent=270,fill="yellow")
@@ -58,11 +58,21 @@ class View(Thread) :
 
     def drawObstacles(self):
         '''dessine l'ensemble des obstacles'''
+        # 30 est le rayon de l'obstacle
+        self.canv.create_oval(-30,-30,30,30, fill='#FFA500') 
+        self.canv.create_oval(self.longueur-30,-30,self.longueur+30,30, fill='#FFA500')  
+        self.canv.create_oval(-30,self.largeur-30,30,self.largeur+30, fill='#FFA500') 
+        self.canv.create_oval(self.longueur-30,self.largeur-30,self.longueur+30,self.largeur+30, fill='#FFA500')  
         for obs in self.obstacles:
             x=obs.x
             y=obs.y
             r=obs.rayon
-            self.canv.create_oval(x-r,y-r,x+r,y+r, fill='white')
+            self.canv.create_oval(x-r,y-r,x+r,y+r, fill='#FFA500')
+            
+    def drawRobotTrajet(self):
+        '''dessine le trajet du robot'''
+        if len(self.robot_trajet) > 1 and self.robot.crayon_actif:
+            self.canv.create_line(self.robot_trajet, fill='white')
 
 
 

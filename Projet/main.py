@@ -1,7 +1,7 @@
 from tkinter import *
 from robot.affichage import View
 from robot.simu.simulation import Simulation
-from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, TracerCarre, IAIfThenElse,IAevitecrash
+from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, TracerCarre, IAIfThenElse,IAevitecrash, TracerHexagone
 from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
 from time import sleep
 
@@ -11,7 +11,7 @@ delta_affich=1 #taux de rafraichissement de l'affichage
 delta_ia=0.000000000001
 
 simulation=Simulation(delta_simu)
-simulation.addSimulation(0) #ajouter des obstcales a l'environnement
+simulation.addSimulation(10) #ajouter des obstcales a l'environnement
 
 #ajout du controleur
 cr=ControleurRobotVirtuel(simulation.robot)
@@ -25,6 +25,7 @@ iaa=IATournerAngle(cr,90,200)
 
 #ia seq 
 Carre=TracerCarre(cr,300,200)
+Hexa=TracerHexagone(cr,300,200)
 iaseq=IAseq(cr,[Carre,Carre])
 
 

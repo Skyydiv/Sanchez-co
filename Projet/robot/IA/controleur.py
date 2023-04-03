@@ -22,6 +22,10 @@ class Controleur:
 
     def stop(self):
         self.robot.stop()
+        
+    
+    def dessine(self, b):
+        self.robot.crayon_actif = b
 
     def update(self):
         """
@@ -37,6 +41,9 @@ class Controleur:
     def reset_time(self):
         self.deb=time.time()
         self.temps_total=0
+        
+    def robotlimites(self):
+        return self.robot.x==1000 or self.robot.y == 1000 #Faux mais pour tester si le robot est à la limite de l'env
 
 
 class ControleurRobotVirtuel(Controleur):

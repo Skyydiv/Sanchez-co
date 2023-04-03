@@ -1,9 +1,11 @@
 from abc import ABC, abstractmethod
 import math
+from math import *
 from time import sleep
 from time import time
 from threading import Thread
 from .controleur import ControleurRobotVirtuel
+import random
 
 
 #plus de abstract
@@ -206,3 +208,122 @@ class IAevitecrash:
         self.ia_if_then_else.update(delta_t)
         if not self.ia_if_then_else.en_cours:
             self.stop()
+            
+            
+    from math import pi, cos, sin
+
+def TracerHexagone(controleur,distance,vitesse):
+
+    controleur.dessine(True)
+
+#ia pour avancer tout droit 
+    ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+
+#ia pour tourner 
+    iaa=IATournerAngle(controleur,pi/3,vitesse)
+
+    ias1=IAseq(controleur,[ia1,iaa,ia1,iaa,ia1,iaa])
+    
+    controleur.dessine(False)
+    
+    ias2=IAseq(controleur,[ia1,iaa,ia1,iaa,ia1,iaa])
+    
+    iaseq=IAseq(controleur,[ias1,ias2])
+
+    return iaseq
+
+
+def TracerZero(controleur,distance,vitesse):
+
+
+    controleur.dessine(True)
+    
+#ia pour avancer tout droit 
+    ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+    ia2=Ia_Avancer_tout_droit(distance*3,vitesse,controleur)
+
+#ia pour tourner 
+    iaa=IATournerAngle(controleur,90,vitesse)
+
+#ia seq 
+    iazero=IAseq(controleur,[ia1,iaa,ia2,iaa,ia1,iaa,ia2,iaa])
+
+    controleur.dessine(False)
+    
+    return iazero
+
+
+
+def TracerUn(controleur,distance,vitesse):
+    
+    controleur.dessine(True)
+#ia pour avancer tout droit 
+    ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+
+#ia pour tourner 
+    iaa=IATournerAngle(controleur,90,vitesse)
+
+#ia seq 
+    iaun=IAseq(controleur,[iaa,ia1])
+    
+    controleur.dessine(False)
+
+    return iaun
+
+
+def TracerZeroUn(controleur,distance,vitesse):
+    
+#ia pour avancer tout droit 
+    ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+
+    iazero = TracerZero(controleur,distance,vitesse)
+    iaun = TracerUn(controleur,distance,vitesse)
+
+#ia seq 
+    iaseq=IAseq(controleur,[iazero,ia1,iaun])
+
+    return iaseq
+
+
+def TracerZeroUnNonStop(controleur,distance,vitesse):
+    
+#ia pour avancer tout droit 
+    iazeroun = TracerZeroUn(controleur,distance,vitesse)
+    ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+    
+        # création d'une liste vide
+    ma_liste = []
+
+    # boucle pour ajouter des éléments à la liste
+    while not(controleur.robotlimites()):
+        ma_liste.append(iazeroun)
+        ma_liste.append(ia1)
+        
+#ia seq 
+    iaseq=IAseq(controleur,ma_liste)
+
+    return iaseq
+
+def atteindre_emetteur(robot, controleur, vitesse, emetteur):
+        while True:
+            # tourner le robot de façon aléatoire
+            ma_liste = []
+            angle = random.randint(0, 360)
+            iaa=IATournerAngle(controleur,angle,vitesse)
+            
+            # récupérer la distance entre le robot et l'émetteur
+            distance = robot.recepteur.getSignal()
+            
+            if distance < 10: # seuil de distance pour atteindre l'émetteur
+                print("Le robot a atteint l'émetteur !")
+                break
+            
+            ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+            
+            iaseq=IAseq(controleur,[iaa,ia1])
+            
+            return iaseq
+            
+
+
+
