@@ -13,7 +13,7 @@ class Simulation :
     SIMU_HEIGHT=800
     SIMU_PRECESION=20
 
-    def __init__(self,delta_t,x,y):
+    def __init__(self,delta_t,x,y,b):
         '''Constructeur de la simulation qui initailise l'environnement et le robot 
         :param environnement: environnement dans lequel se déroule la simulation
         '''
@@ -24,6 +24,7 @@ class Simulation :
         self.deb=0
         self.fin=0
         self.temps_total=0
+        self.crayon=self._robot.dessine(b)
     
     @property
     def environnement(self):

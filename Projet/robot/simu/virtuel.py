@@ -130,6 +130,9 @@ class Robot:
     rotationrd = (self.vitesseRoueDroite * delta_t)
     distancerd = (math.pi * self.WHEEL_DIAMETER/2 * rotationrd) / 180
     return (distancerg, distancerd)
+  
+  def dessine(self,b):
+    return b
 
 
 class Obstacle :

@@ -39,4 +39,5 @@ import tmesolo
 # root.mainloop()
 # simulation.stop_simu()
 
-tmesolo.q1_1()
+# tmesolo.qt1_3()
+tmesolo.qt1_3()

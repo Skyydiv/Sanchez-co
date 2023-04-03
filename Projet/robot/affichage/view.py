@@ -37,7 +37,8 @@ class View(Thread) :
         self.canv.delete("all") 
         self.drawRobot()
         self.drawObstacles()
-        self.drawRobotTrajet()
+        if(self.sim.crayon):
+            self.drawRobotTrajet()
         self.root.after(self.delta,self.updateCanvas)
         
     
