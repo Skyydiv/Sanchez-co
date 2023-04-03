@@ -48,8 +48,8 @@ class View(Thread) :
         r=self.robot.rayon
         o=degrees(self.robot.orientation)
         self.canv.create_arc(x-r,y-r,x+r,y+r, start=45-o, extent=270,fill="yellow")
-
-        self.robot_trajet.append((x, y))
+        if self.robot.lever==False:
+            self.robot_trajet.append((x, y))
         
     def drawRobotTrajet(self):
         '''dessine le trajet du robot'''
@@ -62,7 +62,7 @@ class View(Thread) :
             x=obs.x
             y=obs.y
             r=obs.rayon
-            self.canv.create_oval(x-r,y-r,x+r,y+r, fill='white')
+            self.canv.create_oval(x-r,y-r,x+r,y+r, fill='#FFA500')
 
 
 

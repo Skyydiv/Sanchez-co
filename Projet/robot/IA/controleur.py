@@ -38,6 +38,10 @@ class Controleur:
         self.deb=time.time()
         self.temps_total=0
 
+    def dessine(self, b: bool):
+        """dessine le trajet le robot lorsqu'il est abaissé"""
+        self.robot.setlever(b)
+
 
 class ControleurRobotVirtuel(Controleur):
     def __init__(self, robot):

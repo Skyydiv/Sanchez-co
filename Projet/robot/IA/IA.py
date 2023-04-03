@@ -53,6 +53,10 @@ class Ia_Avancer_tout_droit:
             
         else:
             self.CR.update()
+            if self.CR.robot.lever==True:
+                self.CR.dessine(False)
+            else:
+                self.CR.dessine(True)
             self.CR.avancerToutDroit(self.v)
     
           
@@ -87,6 +91,10 @@ class IATournerAngle:
 
         else:
             self.CR.update()
+            if self.CR.robot.lever==True:
+                self.CR.dessine(False)
+            else:
+                self.CR.dessine(True)
             self.CR.tournerDroite(self.v)
             
 
@@ -155,6 +163,7 @@ class IAevitecrash:
                 self.end()
                 return
             else:
+                
                 self.robot.setVitesse(self.v,self.v)
    
         
@@ -193,7 +202,13 @@ class IAseq:
                 self.ia_en_cours=0
                 
             else:
+                if self.CR.robot.lever==True:
+                    self.CR.dessine(False)
+                else:
+                    self.CR.dessine(True)
                 self.ia_list[self.ia_en_cours].update(delta_t)
+
+
 
 
 def TracerCarre(controleur,distance,vitesse):
@@ -210,3 +225,37 @@ def TracerCarre(controleur,distance,vitesse):
     iacarre=IAseq(controleur,[ia1,iaa,ia1,iaa,ia1,iaa,ia1,iaa])
 
     return iacarre
+
+def Hexagone(controleur,distance,vitesse):
+    ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+    iaa=IATournerAngle(controleur,60,vitesse)
+    if controleur.robot.lever==True:
+        controleur.robot.setlever(False)
+    else:
+        controleur.robot.setlever(True)
+    hexagone=IAseq(controleur, [ia1,iaa])
+    return hexagone
+
+def dessineRectangle(controleur, distance, vitesse):
+    controleur.dessine(False)
+    ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+    ia2=Ia_Avancer_tout_droit(2*distance,vitesse,controleur)
+    iaa=IATournerAngle(controleur,90,vitesse)
+    rectangle=IAseq(controleur, [ia1,iaa,ia2,iaa,ia1,iaa,ia2,iaa])
+    return rectangle
+
+def dessineDroite(controleur, distance, vitesse):
+    controleur.dessine(False)
+    ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+    iaa=IATournerAngle(controleur,90,vitesse)
+    droite=IAseq(controleur,[iaa,ia1])
+    return droite
+
+def dessineRectangleDroite(controleur, distance, vitesse):
+    controleur.dessine(False)
+    ia1=dessineRectangle(controleur, distance, vitesse)
+    ia2=dessineDroite(controleur, 2 * distance, vitesse)
+    ia=Ia_Avancer_tout_droit(2*distance,vitesse,controleur)
+    motif = IAseq(controleur, [ia1, ia, ia2])
+    return motif
+

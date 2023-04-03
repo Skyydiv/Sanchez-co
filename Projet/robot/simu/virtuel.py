@@ -2,7 +2,7 @@ import math
 from .capteur import Capteur
 
 class Robot:
-
+  
   WHEEL_BASE_WIDTH=117 # distance (mm) de la roue gauche a la roue droite.
   WHEEL_DIAMETER=66.5 # diametre de la roue (mm)
   WHEEL_BASE_CIRCUMFERENCE =WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
@@ -14,11 +14,12 @@ class Robot:
     :param rayon: rayon de l'objet (en mm)
     '''
     self.rayon = rayon
+    self._lever=True
+    self._capteur=Capteur(self.x+rayon, self.y, 5)
 
-    self._x =100.1+self.rayon #pour être dans l'env
-    self._y = 100.1+self.rayon
+    self._x=100.1+rayon #coordonnées x du robot
+    self._y=100.1+rayon #coordonnées y du robot
 
-    
     self._orientation=0 #(radians)
     self.capteur=Capteur(0) #Capteur du robot
 
@@ -50,6 +51,13 @@ class Robot:
     return self._orientation
   
   @property
+  def lever(self):
+    return self._lever
+  
+  def setlever(self,b):
+    self._lever=b
+
+  @property
   def distance_parcourue_roue_gauche(self):
     """Renvoie la distance parcourue par la roue gauche"""
     return self._distance_parcourue_roue_gauche
@@ -74,6 +82,9 @@ class Robot:
      :param a: angle parcouru en degre"""
      self._angle_parcouru=a
 
+  def getSignal(self):
+    """Renvoie le signal du capteur"""
+    return self._capteur.getSignal()
 
 
 
@@ -131,6 +142,49 @@ class Robot:
     distancerd = (math.pi * self.WHEEL_DIAMETER/2 * rotationrd) / 180
     return (distancerg, distancerd)
 
+class Emetteur:
+  """Classe représentant un émetteur"""
+  def __init__(self,x, y,rayon):
+    self._x=x
+    self._y=y
+    self._rayon=rayon
+
+  @property
+  def x(self):
+    """Renvoie coordonnées x du robot"""
+    return self._x
+  
+  @property
+  def y(self):
+    """Renvoie coordonnées y du robot"""
+    return self._y
+  
+  @property
+  def rayon(self):
+    """Renvoie le rayon du capteur"""
+    return self._rayon
+     
+class Capteur:
+  """Classe représentant un capteur"""
+  def __init__(self,x, y,rayon):
+    self._x=x
+    self._y=y
+    self._rayon=rayon
+
+  @property
+  def x(self):
+    """Renvoie coordonnées x du robot"""
+    return self._x
+  
+  @property
+  def y(self):
+    """Renvoie coordonnées y du robot"""
+    return self._y
+
+  @property
+  def rayon(self):
+    """Renvoie le rayon du capteur"""
+    return self._rayon
 
 class Obstacle :
   '''Obstacle qui peuvent être présent dans l'environnement'''

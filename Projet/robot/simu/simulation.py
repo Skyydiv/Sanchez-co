@@ -115,6 +115,20 @@ class Simulation :
         for i in range(nbObstacles) :
             newCoord=self.coordAlea()
             self._environnement.addObstacle(newCoord[0],newCoord[1],1,0,30)
+    
+    def addObstacle4coins(self,rayon):
+        '''Depose un obstacle aux 4 coins de l'environnement
+        :param x: coordonnée x de l'obstacle
+        :param y: coordonnée y de l'obstacle
+        :param angle: angle de l'obstacle
+        :param rayon: rayon de l'obstacle
+        '''
+        self._environnement.addObstacle(0+rayon,0+rayon,0,0,rayon)
+        self._environnement.addObstacle(0+rayon,self.coordsYmax+rayon,0,0,rayon)
+        self._environnement.addObstacle(self.coordsXmax+rayon,0-rayon,0,0,rayon)
+        self._environnement.addObstacle(self.coordsXmax+rayon,self.coordsYmax+rayon,0,0,rayon)
+
+        
 
     def stop_simu(self):
         '''Methode qui permet l'arrêt de la simulation'''
