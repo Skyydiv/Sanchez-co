@@ -45,6 +45,11 @@ class ControleurRobotVirtuel(Controleur):
         self._distanceParcourue=0
         self._angleParcouru=0 #en radians
 
+
+    
+    def dessineRobot(self,b):
+        self.robot.dessine(b)
+        
     def calculDistanceParcourue(self):
         """
         :param delta_t: un intervalle de temps 

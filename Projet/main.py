@@ -22,17 +22,28 @@ simulation.robot.dessine(True)#choisir de desactiver ou non le crayon <---------
 
 #ia pour avancer tout droit 
 ia=Ia_Avancer_tout_droit(100,200,cr)
+ia1=Ia_Avancer_tout_droit(300,200,cr)
 
 #ia pour tourner 
-iaa=IATournerAngle(cr,40,200)
-ia1=IATournerAngle(cr,50,200)
+iaa40=IATournerAngle(cr,40,200)
+iaa50=IATournerAngle(cr,50,200)
+iaa90=IATournerAngle(cr,90,200)
 #ia seq 
 Carre=TracerCarre(cr,300,200)
 
-iaseq=IAseq(cr,[ia,iaa,ia,ia1,ia,iaa,ia,ia1,ia,iaa,ia,ia1,ia,iaa,ia,iaa])
+
+iaPour1=IAseq(cr,[iaa90,ia1])#strategie pour dessiner un 1
 
 
-iaboucle=BoucleIA(cr,iaseq,delta_ia)
+iaPour0=IAseq(cr,[ia,iaa90,ia1,iaa90,ia,iaa90,ia1])#strategie pour dessiner un 0
+
+
+iaseq=IAseq(cr,[ia,iaa,ia,ia1,ia,iaa,ia,ia1,ia,iaa,ia,ia1,ia,iaa,ia,iaa,ia])
+
+
+iaPour0puis1=IAseq(cr,[iaPour0,iaa90,ia1,iaPour1])
+
+iaboucle=BoucleIA(cr,iaPour0puis1,delta_ia)
 iaboucle.start()
 
 

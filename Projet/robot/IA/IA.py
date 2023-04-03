@@ -31,11 +31,12 @@ class Ia_Avancer_tout_droit:
         self.v = v
         self.en_cours=False
         self.CR=controleur
-       
+     
         
     def start(self):
         self.en_cours=True
         self.CR.avancerToutDroit(self.v)
+    
        
  
     def stop(self):
@@ -54,7 +55,7 @@ class Ia_Avancer_tout_droit:
         else:
             self.CR.update()
             self.CR.avancerToutDroit(self.v)
-    
+  
           
     
 class IATournerAngle:
@@ -194,6 +195,7 @@ class IAseq:
                 
             else:
                 self.ia_list[self.ia_en_cours].update(delta_t)
+
 
 
 def TracerCarre(controleur,distance,vitesse):
