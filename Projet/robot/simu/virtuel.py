@@ -14,11 +14,9 @@ class Robot:
     :param rayon: rayon de l'objet (en mm)
     '''
     self.rayon = rayon
-    self._led1=False
-    self._led2=False
 
-    self._x =200.1+self.rayon #pour être dans l'env
-    self._y = 200.1+self.rayon
+    self._x =100.1+self.rayon #pour être dans l'env
+    self._y = 100.1+self.rayon
 
     
     self._orientation=0 #(radians)
@@ -45,16 +43,6 @@ class Robot:
   def y(self):
     """Renvoie coordonnées y du robot"""
     return self._y
-
-  @property
-  def led1(self):
-    """Renvoie coordonnées x du robot"""
-    return self._led1
-  
-  @property
-  def led2(self):
-    """Renvoie coordonnées y du robot"""
-    return self._led2
   
   @property
   def orientation(self):
@@ -86,15 +74,6 @@ class Robot:
      :param a: angle parcouru en degre"""
      self._angle_parcouru=a
 
-  def set_led(self,num, statut):
-     """fixe l'etat des leds
-     :param led1: etat de la led1
-     :param led2: etat de la led2"""
-     if num==1:
-      self._led1=statut
-     else:
-      self._led2=statut
-     
 
 
 
@@ -179,7 +158,31 @@ class Obstacle :
   def y(self):
     """Renvoie coordonnées y de l'obstacle"""
     return self._y
+
+class Gemme :
+  '''Gemme qui peuvent être présentes dans l'environnement'''
+    
+  def __init__(self,x,y,h,d,rayon):
+      '''Construteur de l'objet Gemme, représenter par un cercle , qui initialise les coordonnées, la hauteur, et la distance du sol et le rayon.
+      :param x: coordonnée des abscisses (en cm)
+      :param y: coordonnée des ordonnées (en cm)
+      :param h: hauteur de la gemme (en cm)
+      :paran d: distance du sol (en cm)
+      :param rayon: rayon de la gemme
+      '''
+      self._x=x
+      self._y=y
       
+  @property
+  def x(self):
+    """Renvoie coordonnées x de la gemme"""
+    return self._x
+    
+  @property
+  def y(self):
+    """Renvoie coordonnées y de la gemme"""
+    return self._y   
+
 class Environnement :
     ''' L'environnement dans lequel se trouve le Robot'''
 
@@ -195,6 +198,8 @@ class Environnement :
         self._robot=robot
         self._precision=precision
         self._ensemble_obstacles= set()
+        self._ensemble_gemmes= set()
+        self._gemmes_ramassees= 0
 
     @property
     def robot(self):
@@ -215,6 +220,11 @@ class Environnement :
     def ensemble_obstacles(self):
        """Renvoie l'ensemble des obstacles de l'environnement"""
        return self._ensemble_obstacles
+    
+    @property
+    def ensemble_gemmes(self):
+        """Renvoie l'ensemble des gemmes de l'environnement"""
+        return self._ensemble_gemmes
         
     @property
     def precision(self):
@@ -234,6 +244,14 @@ class Environnement :
     @property
     def robotRayon(self):
       return self._robot.rayon
+    
+    @property
+    def gemmes_ramassees(self):
+      return self._gemmes_ramassees
+    
+    def reset_gemmes_ramassees(self):
+      self._gemmes_ramassees=0
+    
     
     def estMur(self,x,y,rayon):
         '''
@@ -266,6 +284,23 @@ class Environnement :
             self._ensemble_obstacles.add(Obstacle(x,y,h,d,rayon))
         return
     
+    def addGemme(self,x,y):
+        """Créer et dépose la gemme s'il n'y a pas déjà un objet dans la case avec les mêmes coordonnées en faisant appel à la fonction estObstacle
+        :param x: Coordonnées x de la gemme qu'on va créer
+        :param y: Coordonnées y de la gemme qu'on va créer
+        """
+        if not (self.estObstacle(x,y,0) and self.estMur(x,y,0) and self.estRobot):
+          self._ensemble_gemmes.add(Gemme(x,y))
+    
+    def removeGemme(self,x,y):
+        """Supprime la gemme de l'ensemble des gemmes si elle existe
+        :param x: Coordonnées x de la gemme qu'on va supprimer
+        :param y: Coordonnées y de la gemme qu'on va supprimer
+        """
+        for gemme in self._ensemble_gemmes:
+            if gemme.x==x and gemme.y==y:
+                self._ensemble_gemmes.remove(gemme)
+  
     def detectCollision(self):
         '''
         Detecte si il y a une collision (un crash) entre le robot et un obstacle avec une precision
@@ -275,6 +310,21 @@ class Environnement :
            if(dist - self.robotRayon - obs.rayon <= self._precision):  #verifie si la distance entre les 2 objets est inferieure a la somme des rayons
               return True
         return False
+    
+    def collecteGemme(self):
+        '''
+        Collecte le gemme si le robot est sur une gemme
+        '''
+        for gemme in self._ensemble_gemmes:
+          dist=calculDistance(self._robot,gemme)
+          if(dist - self.robotRayon - gemme.rayon == 0):
+            self._gemmes_ramassees+=1
+            print("Gemme ramassée !")
+            self.removeGemme(gemme.x,gemme.y)
+            return True
+        return False
+    
+           
     
 def calculDistance(objet1, objet2):
     '''

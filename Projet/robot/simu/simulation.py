@@ -116,6 +116,14 @@ class Simulation :
             newCoord=self.coordAlea()
             self._environnement.addObstacle(newCoord[0],newCoord[1],1,0,30)
 
+    def addGemmes(self,nbGemmes):
+        '''Depose nbGemmes gemmes dans des positions aléatoires dans l'environnement
+        :param nbGemmes: nombre de gemmes a déposer
+        '''
+        for i in range(nbGemmes) :
+            newCoord=self.coordAlea()
+            self._environnement.addGemme(newCoord[0],newCoord[1])
+    
     def stop_simu(self):
         '''Methode qui permet l'arrêt de la simulation'''
         self._en_cours=False
