@@ -108,14 +108,15 @@ class Simulation :
         else:
             return (x,y)
         
-    def addSimulation(self,nbObstacles):
+    def addSimulation(self):
         '''Depose nbObstacles obstacles dans des positions aléatoires dans l'environnement
         :param nbObstacles: nombre d'obstacles a déposer
         '''
-        for i in range(nbObstacles) :
-            newCoord=self.coordAlea()
-            self._environnement.addObstacle(newCoord[0],newCoord[1],1,0,30)
-
+        
+        self._environnement.addObstacle(50,50,1,0,30)
+        self._environnement.addObstacle(1450,50,1,0,30)
+        self._environnement.addObstacle(50,750,1,0,30)
+        self._environnement.addObstacle(1450,750,1,0,30)
     def stop_simu(self):
         '''Methode qui permet l'arrêt de la simulation'''
         self._en_cours=False

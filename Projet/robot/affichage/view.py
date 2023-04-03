@@ -62,7 +62,7 @@ class View(Thread) :
             x=obs.x
             y=obs.y
             r=obs.rayon
-            self.canv.create_oval(x-r,y-r,x+r,y+r, fill='white')
+            self.canv.create_oval(x-r,y-r,x+r,y+r, fill='orange')
 
 
 
