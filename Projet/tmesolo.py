@@ -55,7 +55,7 @@ def qt2_1():
     #ajout du controleur
     cr=ControleurRobotVirtuel(simulation.robot)
 
-    UN=TracerUn(cr,200,200)
+    UN=TracerUn(cr,200,200,True)
 
     iaboucle=BoucleIA(cr,UN,delta_ia)
     iaboucle.start()
@@ -77,7 +77,7 @@ def qt2_2():
     #ajout du controleur
     cr=ControleurRobotVirtuel(simulation.robot)
 
-    Zero=TracerZero(cr,100,200,200)
+    Zero=TracerZero(cr,100,200,200,True)
 
     iaboucle=BoucleIA(cr,Zero,delta_ia)
     iaboucle.start()

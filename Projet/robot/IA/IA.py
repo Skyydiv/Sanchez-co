@@ -211,14 +211,15 @@ def TracerCarre(controleur,distance,vitesse):
 
     return iacarre
 
-def TracerUn(controleur,distance,vitesse):
-    controleur.activerCrayon(True)
+def TracerUn(controleur,distance,vitesse,dessin):
+    controleur.activerCrayon(dessin)
     ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
     iaa=IATournerAngle(controleur,90,vitesse)
     iaUN=IAseq(controleur,[iaa,ia1])
     return iaUN
 
-def TracerZero(controleur,distance1,distance2,vitesse):
+def TracerZero(controleur,distance1,distance2,vitesse,dessin):
+    controleur.activerCrayon(dessin)
     ia1=Ia_Avancer_tout_droit(distance1,vitesse,controleur)
     ia2=Ia_Avancer_tout_droit(distance2,vitesse,controleur)
     iaa=IATournerAngle(controleur,90,vitesse)
@@ -227,7 +228,8 @@ def TracerZero(controleur,distance1,distance2,vitesse):
 
 
 def Tracer01(controleur,distance1,distance2,vitesse):
-    UN=TracerUn(controleur,distance2,vitesse)
-    Zero=TracerZero(controleur,distance1, distance2,vitesse)
-    iaseq=IAseq(controleur,[Zero,UN])
+    UN=TracerUn(controleur,distance2,vitesse,True)
+    Zero=TracerZero(controleur,distance1, distance2,vitesse,True)
+    ia1=Ia_Avancer_tout_droit((distance1+distance1),vitesse,controleur)
+    iaseq=IAseq(controleur,[Zero,ia1,UN])
     return iaseq
