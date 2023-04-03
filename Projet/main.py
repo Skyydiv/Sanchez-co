@@ -1,7 +1,7 @@
 from tkinter import *
 from robot.affichage import View
 from robot.simu.simulation import Simulation
-from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, TracerCarre,launchChangeCondition
+from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, TracerCarre,launchChangeCondition,Hexagon,lunchDessinHex
 from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
 from time import sleep
 
@@ -20,7 +20,7 @@ simulation.environnement.addObstacle(simulation.SIMU_WIDTH-100,100,0,0,50)
 simulation.environnement.addObstacle(Simulation.SIMU_WIDTH-100,Simulation.SIMU_HEIGHT-100,0,0,50)
 
 simulation.robot.deposer(Simulation.SIMU_WIDTH/2,Simulation.SIMU_HEIGHT/2)
-
+# simulation.robot.dessine(True)
 
 
 #ajout du controleur
@@ -38,9 +38,15 @@ Carre=TracerCarre(cr,300,200)
 iaseq=IAseq(cr,[Carre,Carre])
 
 # simulation.robot.dessine(False)
-launchChangeCondition(simulation.robot)
 
-iaboucle=BoucleIA(cr,iaseq,delta_ia)
+
+
+
+#ia hexa
+hex=Hexagon(cr,150,500)
+lunchDessinHex(simulation.robot,2)
+
+iaboucle=BoucleIA(cr,hex,delta_ia)
 iaboucle.start()
 
 

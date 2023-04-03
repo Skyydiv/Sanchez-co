@@ -83,7 +83,7 @@ class Robot:
      self._y=y
 
   def dessine(self,b):
-     self.lever=b
+     self.lever=not(b)
 
 
   def deplacer(self, intervalle_temps):

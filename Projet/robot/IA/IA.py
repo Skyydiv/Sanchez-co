@@ -197,21 +197,25 @@ class IAseq:
 
 
 def TracerCarre(controleur,distance,vitesse):
-
-
-
 #ia pour avancer tout droit 
     ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
-
 #ia pour tourner 
     iaa=IATournerAngle(controleur,90,vitesse)
-
 #ia seq 
     iacarre=IAseq(controleur,[ia1,iaa,ia1,iaa,ia1,iaa,ia1,iaa])
-
     return iacarre
 
 
+
+def Hexagon(controleur,distance,vitesse):
+    fw=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+    d=IATournerAngle(controleur,30,vitesse)
+    turn=IATournerAngle(controleur,120,vitesse)
+    seq1=IAseq(controleur,[fw,d, fw, turn,fw,d])
+    seq2=IAseq(controleur,[fw,d, fw, turn,fw,d])
+
+    seq=IAseq(controleur,[seq1,seq2])
+    return seq
 
 def launchChangeCondition(robot):
     changeConditionTH=Thread(target=changeConditio, args=[robot], daemon=True)
@@ -221,3 +225,13 @@ def changeConditio(robot):
     sleep(5)
     # print("change")
     robot.dessine(False)
+
+def lunchDessinHex(robot,timer):
+    changeConditionTH=Thread(target=changeConditio, args=[robot,timer], daemon=True)
+    changeConditionTH.start()
+
+
+
+def changeConditio(robot,timer):
+        sleep(timer)
+        robot.dessine(True)
