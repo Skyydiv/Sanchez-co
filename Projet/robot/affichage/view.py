@@ -55,7 +55,7 @@ class View(Thread) :
     def drawRobotTrajet(self):
         '''dessine le trajet du robot'''
         if len(self.robot_trajet) > 1:
-            self.canv.create_line(self.robot_trajet, fill='white')
+            self.canv.create_line(self.robot_trajet, fill='white', width=5)
 
     def drawObstacles(self):
         '''dessine l'ensemble des obstacles'''

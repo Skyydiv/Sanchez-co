@@ -1,7 +1,7 @@
 from tkinter import *
 from robot.affichage import View
 from robot.simu.simulation import Simulation
-from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, TracerCarre
+from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, TracerCarre,TracerUn
 from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
 from time import sleep
 import tmesolo
@@ -40,4 +40,6 @@ import tmesolo
 # simulation.stop_simu()
 
 # tmesolo.qt1_3()
-tmesolo.qt1_3()
+# tmesolo.qt1_3()
+
+tmesolo.qt2_1()
