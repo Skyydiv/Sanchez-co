@@ -235,3 +235,10 @@ def lunchDessinHex(robot,timer):
 def changeConditio(robot,timer):
         sleep(timer)
         robot.dessine(True)
+
+
+def strat_un(controleur,distance,vitesse):
+    f=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+    d=IATournerAngle(controleur,100,100)
+    seq=IAseq(controleur,[d,f])
+    return seq
