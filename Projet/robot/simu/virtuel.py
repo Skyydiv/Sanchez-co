@@ -35,6 +35,9 @@ class Robot:
 
     self._angle_parcouru=0 #(en degre)
 
+
+    self.lever=True
+
   @property
   def x(self):
     """Renvoie coordonnées x du robot"""
@@ -79,7 +82,8 @@ class Robot:
      self._x=x
      self._y=y
 
-
+  def dessine(self,b):
+     self.lever=b
 
 
   def deplacer(self, intervalle_temps):

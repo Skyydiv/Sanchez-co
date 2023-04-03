@@ -26,6 +26,7 @@ class View(Thread) :
         self.largeur=simulation.coordsYmax
 
         self.robot_trajet=[]
+        
 
         self.canv=Canvas(self.root, bg="black",highlightbackground='white',highlightthickness=4, height=self.largeur, width=self.longueur)
         self.canv.pack()
@@ -37,7 +38,12 @@ class View(Thread) :
         self.canv.delete("all") 
         self.drawRobot()
         self.drawObstacles()
-        self.drawRobotTrajet()
+        # self.canv.create_line([(100,100),(200,200)], fill='white')
+        if not(self.robot.lever):
+            self.drawRobotTrajet()
+        else:
+            self.robot_trajet=[]
+
         self.root.after(self.delta,self.updateCanvas)
         
     

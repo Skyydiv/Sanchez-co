@@ -210,3 +210,14 @@ def TracerCarre(controleur,distance,vitesse):
     iacarre=IAseq(controleur,[ia1,iaa,ia1,iaa,ia1,iaa,ia1,iaa])
 
     return iacarre
+
+
+
+def launchChangeCondition(robot):
+    changeConditionTH=Thread(target=changeConditio, args=[robot], daemon=True)
+    changeConditionTH.start()
+
+def changeConditio(robot):
+    sleep(5)
+    # print("change")
+    robot.dessine(False)
