@@ -14,6 +14,8 @@ class Robot:
     :param rayon: rayon de l'objet (en mm)
     '''
     self.rayon = rayon
+    
+    self.crayon=True#crayon pour le dessin <-------------------------
 
     self._x =100.1+self.rayon #pour être dans l'env
     self._y = 100.1+self.rayon
@@ -73,10 +75,12 @@ class Robot:
      """fixe l'angle_parcouru a un angle a
      :param a: angle parcouru en degre"""
      self._angle_parcouru=a
-
-
-
-
+     
+  def dessine(self,b):#methode de dessin<----------------------------------
+      """rajoute ou non le crayin en fonction du bool passé en param"""
+      self.crayon=b
+     
+     
   def deplacer(self, intervalle_temps):
         """deplace le robot dans un intervalle de temps
         :param intervalle_temps: intervalle de temps dans lequel le robot avance"""
@@ -130,6 +134,10 @@ class Robot:
     rotationrd = (self.vitesseRoueDroite * delta_t)
     distancerd = (math.pi * self.WHEEL_DIAMETER/2 * rotationrd) / 180
     return (distancerg, distancerd)
+
+    
+
+    
 
 
 class Obstacle :

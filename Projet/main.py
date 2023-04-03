@@ -17,6 +17,9 @@ simulation.addSimulation() #ajouter des obstcales a l'environnement
 cr=ControleurRobotVirtuel(simulation.robot)
 
 
+
+simulation.robot.dessine(True)#choisir de desactiver ou non le crayon <---------------------------
+
 #ia pour avancer tout droit 
 ia1=Ia_Avancer_tout_droit(300,200,cr)
 

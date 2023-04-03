@@ -53,7 +53,7 @@ class View(Thread) :
         
     def drawRobotTrajet(self):
         '''dessine le trajet du robot'''
-        if len(self.robot_trajet) > 1:
+        if len(self.robot_trajet) > 1 and self.robot.crayon==True:
             self.canv.create_line(self.robot_trajet, fill='white')
 
     def drawObstacles(self):

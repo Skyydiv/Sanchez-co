@@ -113,7 +113,7 @@ class Simulation :
         :param nbObstacles: nombre d'obstacles a déposer
         '''
         
-        self._environnement.addObstacle(50,50,1,0,30)
+        self._environnement.addObstacle(50,50,1,0,30)#ajout des 4 obstacle <-------------------------------
         self._environnement.addObstacle(1450,50,1,0,30)
         self._environnement.addObstacle(50,750,1,0,30)
         self._environnement.addObstacle(1450,750,1,0,30)
