@@ -13,11 +13,11 @@ class Simulation :
     SIMU_HEIGHT=800
     SIMU_PRECESION=20
 
-    def __init__(self,delta_t):
+    def __init__(self,delta_t,x,y):
         '''Constructeur de la simulation qui initailise l'environnement et le robot 
         :param environnement: environnement dans lequel se déroule la simulation
         '''
-        self._robot=Robot(Robot.WHEEL_BASE_WIDTH/2) # initialiser le robot        
+        self._robot=Robot(Robot.WHEEL_BASE_WIDTH/2,x,y) # initialiser le robot        
         self._environnement=Environnement([Simulation.SIMU_WIDTH,Simulation.SIMU_HEIGHT],self._robot,Simulation.SIMU_PRECESION) # initialiser l'environment
         self._delta_t=delta_t
         self.en_cours=False
@@ -108,13 +108,18 @@ class Simulation :
         else:
             return (x,y)
         
-    def addSimulation(self,nbObstacles):
+    def addSimulation(self):
         '''Depose nbObstacles obstacles dans des positions aléatoires dans l'environnement
         :param nbObstacles: nombre d'obstacles a déposer
         '''
-        for i in range(nbObstacles) :
-            newCoord=self.coordAlea()
-            self._environnement.addObstacle(newCoord[0],newCoord[1],1,0,30)
+        # for i in range(nbObstacles) :
+        #     newCoord=self.coordAlea()
+        #     self._environnement.addObstacle(newCoord[0],newCoord[1],1,0,30)
+
+        self._environnement.addObstacle(60,60,1,0,30)
+        self._environnement.addObstacle(1500-60,60,1,0,30)
+        self._environnement.addObstacle(60,800-60,1,0,30)
+        self._environnement.addObstacle(1500-60,800-60,1,0,30)
 
     def stop_simu(self):
         '''Methode qui permet l'arrêt de la simulation'''
