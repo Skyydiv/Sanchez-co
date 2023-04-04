@@ -1,6 +1,6 @@
 from robot.simu.simulation import Simulation
 from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, TracerCarre
-from robot.affichage import View
+from robot.affichage import View,View3D
 from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
 from tkinter import *
 
@@ -18,7 +18,7 @@ def creation_application(strategie,nb_obstacle,context,delta_simu,delta_affichag
     """
     simulation=creation_Simu(delta_simu,nb_obstacle)
     controlleur=creation_controleur(simulation,context)
-    ia_boucle=creation_strategie(strategie,controlleur,delta_ia)
+    ia_boucle=creation_strategie(strategie,controlleur,delta_ia,monde)
     affichage=creation_affichage(simulation,delta_affichage,monde) #en 2D couple (view,root) 
     start_simu(ia_boucle,simulation,affichage,monde)
 
@@ -37,6 +37,8 @@ def start_simu(ia_boucle,simulation,affichage,monde):
     if (monde=="2D"):
         view,root=affichage
         root.mainloop()
+    if (monde=="3D"):
+        affichage.run()
 
 def creation_Simu(delta_simu, nb_obstacle):
     """Fonction permettant de créer une simulation
@@ -63,8 +65,8 @@ def creation_affichage(simulation,delta_affichage,monde):
     """
     if (monde=="2D"):
         affichage=creation_affichage2D(simulation,delta_affichage)
-    # elif (monde=="3D"):
-    #     affichage=create_affichage3D(simulation,delta_affichage)
+    elif (monde=="3D"):
+        affichage=creation_affichage3D(simulation,delta_affichage)
     return affichage
 
 def creation_affichage2D(simulation,delta_affichage):
@@ -81,12 +83,15 @@ def creation_affichage2D(simulation,delta_affichage):
     affichage=(view,root)
     return affichage
 
-# def creation_affichage3D(simulation,delta_affichage):
-#     '''
-#     créer l'affichage 3D
-#     '''
-#     affichage=View3D(simulation,delta_affichage)
-#     return affichage
+def creation_affichage3D(simulation,delta_affichage):
+    '''
+    créer l'affichage 3D
+    '''
+    simulation.robot._x=-10 #sera supprimer par la suite
+    simulation.robot._y=-7  
+
+    affichage=View3D(simulation,delta_affichage)
+    return affichage
 
 def creation_controleur(simulation,context):
     """Fonction permettant de créer un controleur
@@ -103,7 +108,7 @@ def creation_controleur(simulation,context):
         controlleur=ControleurRobotVraieVie(simulation.robot)
     return controlleur
 
-def creation_strategie(strategie,controlleur,delta_ia):
+def creation_strategie(strategie,controlleur,delta_ia,monde):
     """Fonction permettant de créer une strategie
 
     Args:
@@ -114,10 +119,16 @@ def creation_strategie(strategie,controlleur,delta_ia):
     
     """
     
-    if (strategie=="tourner"): 
-        ia=IATournerAngle(controlleur,90,200)
+    vitesse= 200
+    distance=300
+    if (monde=="3D"): #sera supprimer par la suite, monde aussi
+        vitesse/=15
+        distance/=15
+        
+    if (strategie=="tourner"):
+        ia=IATournerAngle(controlleur,90,vitesse)
     elif (strategie=="carre"):
-        ia=TracerCarre(controlleur,300,200)
+        ia=TracerCarre(controlleur,distance,vitesse)
     elif (strategie=="avancer"):
-        ia=Ia_Avancer_tout_droit(300,200,controlleur)
+        ia=Ia_Avancer_tout_droit(distance,vitesse,controlleur)
     return BoucleIA(controlleur,ia,delta_ia)

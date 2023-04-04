@@ -1,4 +1,5 @@
 from .view import View
+from .view3D import View3D
 from tkinter import *
 from robot.simu import simulation
 
