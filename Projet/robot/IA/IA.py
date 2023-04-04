@@ -10,7 +10,7 @@ from .controleur import ControleurRobotVirtuel
 class BoucleIA(Thread):
     
     def __init__(self, controleur, ia,delta_t):
-        Thread.__init__(self)
+        Thread.__init__(self,daemon=True)
         self.controleur = controleur
         self.ia=ia
         self.delta_t=delta_t
