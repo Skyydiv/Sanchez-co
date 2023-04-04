@@ -196,18 +196,26 @@ class IAseq:
                 self.ia_list[self.ia_en_cours].update(delta_t)
 
 
+
 def TracerCarre(controleur,distance,vitesse):
 
 
 
 #ia pour avancer tout droit 
     ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+    
 
 #ia pour tourner 
     iaa=IATournerAngle(controleur,90,vitesse)
 
+#ia pour eviter un crash
+    iaec = IAevitecrash(controleur, 5, ia1, iaa)
+
+
+
+
 #ia seq 
-    iacarre=IAseq(controleur,[ia1,iaa,ia1,iaa,ia1,iaa,ia1,iaa])
+    iacarre=IAseq(controleur,[iaec,iaa,iaec,iaa,iaec,iaa,iaec,iaa])
 
     return iacarre
 
@@ -249,22 +257,23 @@ class IAevitecrash:
     """ 
     sous classe d'IA permettant d'éviter un obstacle en tournant à droite
     """
-    def __init__(self, controleur, distance_limite, vitesse):
+
+    def __init__(self, controleur, distance_min, ia_avancer, ia_tourner):
         self.CR = controleur
-        self.distance_limite = distance_limite
-        self.vitesse = vitesse
-        self.ia_tourner_droite = IATournerAngle(controleur, 90, vitesse)
-
-        def condition_proximite():
-            distance_obstacle = self.CR.get_distance()
-            return distance_obstacle <= self.distance_limite
-
-        self.ia_if_then_else = IAIfThenElse(condition_proximite, self.ia_tourner_droite, None)
+        self.distance_min = distance_min
+        self.ia_avancer = ia_avancer
+        self.ia_tourner = ia_tourner
         self.en_cours = False
 
+    def is_near_obstacle(self):
+        distance = self.controleur.get_distance()
+        return distance <= self.distance_min
+
     def start(self):
+        ia_if_then_else = IAIfThenElse(self.controleur, self.is_near_obstacle, self.ia_tourner, self.ia_avancer)
+        ia_if_then_else.start()
         self.en_cours = True
-        self.ia_if_then_else.start()
+
 
     def stop(self):
         self.ia_if_then_else.stop()

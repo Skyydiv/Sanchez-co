@@ -5,6 +5,17 @@ from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
 from tkinter import *
 
 def creation_application(strategie,nb_obstacle,context,delta_simu,delta_affichage,delta_ia,monde):
+    """Fontion permettant de créer une application avec les paramètres donnés
+
+    Args:
+        strategie : strategie de l'IA
+        nb_obstacle : nombre d'obstacle dans l'environnement
+        context : contexte de l'application (virtuel ou réel)
+        delta_simu : pas de temps de la simulation
+        delta_affichage : pas de temps de l'affichage
+        delta_ia : pas de temps de l'IA
+        monde : monde de l'application (2D ou 3D)
+    """
     simulation=creation_Simu(delta_simu,nb_obstacle)
     controlleur=creation_controleur(simulation,context)
     ia_boucle=creation_strategie(strategie,controlleur,delta_ia)
@@ -13,6 +24,14 @@ def creation_application(strategie,nb_obstacle,context,delta_simu,delta_affichag
 
 
 def start_simu(ia_boucle,simulation,affichage,monde):
+    """Fonction permettant de lancer une application
+
+    Args:
+        ia_boucle : boucle de l'IA
+        simulation : simulation de l'application
+        affichage : affichage de l'application
+        monde : monde de l'application (2D ou 3D)
+    """
     ia_boucle.start()
     simulation.run_simu()
     if (monde=="2D"):
@@ -20,11 +39,28 @@ def start_simu(ia_boucle,simulation,affichage,monde):
         root.mainloop()
 
 def creation_Simu(delta_simu, nb_obstacle):
+    """Fonction permettant de créer une simulation
+
+    Args:
+        delta_simu : pas de temps de la simulation
+        nb_obstacle : nombre d'obstacle dans l'environnement
+
+
+    """
     simulation=Simulation(delta_simu)
     simulation.addSimulation(nb_obstacle) #ajouter des obstcales a l'environnement
     return simulation
 
 def creation_affichage(simulation,delta_affichage,monde):
+    """Fonction permettant de créer un affichage
+    
+    Args:
+        simulation : simulation de l'application
+        delta_affichage : pas de temps de l'affichage
+        monde : monde de l'application (2D ou 3D)
+        
+        
+    """
     if (monde=="2D"):
         affichage=creation_affichage2D(simulation,delta_affichage)
     # elif (monde=="3D"):
@@ -32,6 +68,14 @@ def creation_affichage(simulation,delta_affichage,monde):
     return affichage
 
 def creation_affichage2D(simulation,delta_affichage):
+    """Fonction permettant de créer un affichage 2D
+
+    Args:
+        simulation : simulation de l'application
+        delta_affichage : pas de temps de l'affichage
+
+    
+    """
     root = Tk()
     view=View(root,simulation,delta_affichage)
     affichage=(view,root)
@@ -42,6 +86,14 @@ def creation_affichage2D(simulation,delta_affichage):
 #     return affichage
 
 def creation_controleur(simulation,context):
+    """Fonction permettant de créer un controleur
+
+    Args:
+        simulation : simulation de l'application
+        context : contexte de l'application (virtuel ou réel)
+
+    
+    """
     if (context=="virtuel"):
         controlleur=ControleurRobotVirtuel(simulation.robot)
     elif (context=="reel"):
@@ -49,8 +101,17 @@ def creation_controleur(simulation,context):
     return controlleur
 
 def creation_strategie(strategie,controlleur,delta_ia):
+    """Fonction permettant de créer une strategie
+
+    Args:
+        strategie : strategie de l'IA
+        controlleur : controleur de l'application
+        delta_ia : pas de temps de l'IA
+
     
-    if (strategie=="tourner"):
+    """
+    
+    if (strategie=="tourner"): 
         ia=IATournerAngle(controlleur,90,200)
     elif (strategie=="carre"):
         ia=TracerCarre(controlleur,300,200)
