@@ -206,7 +206,7 @@ def TracerCarre(controleur,distance,vitesse):
     
 
 #ia pour tourner 
-    iaa=IATournerAngle(controleur,90,vitesse)
+    iaa=IATournerAngle(controleur,90,vitesse*3)
 
 #ia pour eviter un crash
     iaec = IAevitecrash(controleur, 5, ia1, iaa)
