@@ -88,6 +88,12 @@ class ControleurRobotVirtuel(Controleur):
         """
         angledif=(self.robot.get_distance_roue(self.temps_total)[1] - self.robot.get_distance_roue(self.temps_total)[0]) / self.robot.WHEEL_BASE_WIDTH
         self._angleParcouru+=angledif
+        
+    def get_distance_obstacle(self):
+        """ 
+        retourne la distance a l'obstacle le plus proche d'un obstacle
+        """
+        return self.robot.get_distance_obstacle()
     
 
     

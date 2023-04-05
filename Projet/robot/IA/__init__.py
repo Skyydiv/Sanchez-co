@@ -8,7 +8,7 @@ delta_ia=0.000000000001
 cr=ControleurRobotVirtuel(simulation.robot)
 
 #ia pour avancer tout droit 
-ia1=Ia_Avancer_tout_droit(300,200,cr)
+ia10=Ia_Avancer_tout_droit(300,200,cr)
 #ia pour tourner 
 iaa=IATournerAngle(cr,90,200)
 #ia seq 
