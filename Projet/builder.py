@@ -128,7 +128,7 @@ def creation_strategie(strategie,controlleur,delta_ia,monde):
     if (strategie=="tourner"):
         ia=IATournerAngle(controlleur,90,vitesse)
     elif (strategie=="carre"):
-        ia=TracerCarre(controlleur,distance,vitesse,Simulation.environnement)
+        ia=TracerCarre(controlleur,distance,vitesse)
     elif (strategie=="avancer"):
         ia=Ia_Avancer_tout_droit(distance,vitesse,controlleur)
     return BoucleIA(controlleur,ia,delta_ia)
