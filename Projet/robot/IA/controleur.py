@@ -40,6 +40,9 @@ class Controleur:
 
 
 class ControleurRobotVirtuel(Controleur):
+    """
+    classe controleur pour le robot virtuel
+    """
     def __init__(self, robot):
         Controleur.__init__(self,robot)
         self._distanceParcourue=0
@@ -108,12 +111,27 @@ class ControleurRobotVirtuel(Controleur):
 
     
     def resetDistanceParcourue(self):
+        """ 
+        fonction qui remet a 0 la distance parcourue par le robot
+        """
         self._distanceParcourue=0
 
     def resetAngleParcourue(self):
+        """ 
+        fonction qui remet a 0 l'angle parcouru par le robot
+        """
         self._angleParcouru=0
+        
+    def get_distance_obstacle(self,environnement):
+        """ 
+        fonction qui renvoie la distance entre le robot et l'obstacle le plus proche
+        """
+        return environnement.get_distance_obstacle()
     
 class ControleurRobotVraieVie(Controleur):
+    """ 
+    classe qui permet de controler le robot en vrai vie
+    """
     def __init__(self, robot):
         Controleur.__init__(self,robot)
         self._distanceParcourue=0
