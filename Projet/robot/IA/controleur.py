@@ -9,19 +9,19 @@ class Controleur:
         self.temps_total=0
 
     def setVitesseRoues(self, vitesseg, vitessed):
-        self.robot.setVitesse(vitesseg, vitessed)
+        self.setVitesseRoues(vitesseg, vitessed)
     
     def avancerToutDroit(self, v):
-        self.robot.setVitesse(v,v)
+        self.avancerToutDroit(v)
 
     def tournerDroite(self,v):
-        self.robot.setVitesse(v,-v)
+        self.tournerDroite(v)
     
     def tournerGauche(self,v):
-        self.robot.setVitesse(-v,v)
+        self.tournerGauche(v)
 
     def stop(self):
-        self.robot.stop()
+        self.stop()
 
     def update(self):
         """
@@ -44,6 +44,21 @@ class ControleurRobotVirtuel(Controleur):
         Controleur.__init__(self,robot)
         self._distanceParcourue=0
         self._angleParcouru=0 #en radians
+
+    def setVitesseRoues(self, vitesseg, vitessed):
+        self.robot.setVitesse(vitesseg, vitessed)
+    
+    def avancerToutDroit(self, v):
+        self.robot.setVitesse(v,v)
+
+    def tournerDroite(self,v):
+        self.robot.setVitesse(v,-v)
+    
+    def tournerGauche(self,v):
+        self.robot.setVitesse(-v,v)
+
+    def stop(self):
+        self.robot.stop()
 
     def calculDistanceParcourue(self):
         """

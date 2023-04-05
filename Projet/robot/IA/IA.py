@@ -210,3 +210,67 @@ def TracerCarre(controleur,distance,vitesse):
     iacarre=IAseq(controleur,[ia1,iaa,ia1,iaa,ia1,iaa,ia1,iaa])
 
     return iacarre
+
+
+
+class IAIfThenElse:
+    """
+    sous classe d'IA évaluant une condition et ne faisant rien si elle est fausse
+    """
+    def __init__(self, controleur, condition, ia_then, ia_else=None):
+        self.CR = controleur
+        self.condition = condition
+        self.ia_then = ia_then
+        self.ia_else = ia_else
+        self.en_cours = False
+
+    def start(self):
+        self.en_cours = True
+        if self.condition():
+            self.current_ia = self.ia_then
+        else:
+            self.current_ia = self.ia_else
+        if self.current_ia:
+            self.current_ia.start()
+
+    def stop(self):
+        return not self.current_ia or not self.current_ia.en_cours
+
+    def update(self, delta_t):
+        if self.stop():
+            self.en_cours = False
+            if self.current_ia:
+                self.current_ia.stop()
+                self.current_ia = None
+        else:
+            self.current_ia.update(delta_t)
+            
+class IAevitecrash:
+    """ 
+    sous classe d'IA permettant d'éviter un obstacle en tournant à droite
+    """
+    def __init__(self, controleur, distance_limite, vitesse):
+        self.CR = controleur
+        self.distance_limite = distance_limite
+        self.vitesse = vitesse
+        self.ia_tourner_droite = IATournerAngle(controleur, 90, vitesse)
+
+        def condition_proximite():
+            distance_obstacle = self.CR.get_distance()
+            return distance_obstacle <= self.distance_limite
+
+        self.ia_if_then_else = IAIfThenElse(condition_proximite, self.ia_tourner_droite, None)
+        self.en_cours = False
+
+    def start(self):
+        self.en_cours = True
+        self.ia_if_then_else.start()
+
+    def stop(self):
+        self.ia_if_then_else.stop()
+        self.en_cours = False
+
+    def update(self, delta_t):
+        self.ia_if_then_else.update(delta_t)
+        if not self.ia_if_then_else.en_cours:
+            self.stop()
