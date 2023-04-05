@@ -209,22 +209,16 @@ class IAEviteCrash:
             
             
 
-def TracerCarre(controleur,distance,vitesse,environnement):
+def TracerCarre(controleur,distance,vitesse):
     """
     strategie de base pour tracer un carre
     """
-    
-
-
 
 #ia pour avancer tout droit 
     ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
     
 #ia pour tourner 
     iaa=IATournerAngle(controleur,90,vitesse*3)
-
-#ia pour eviter un crash
-    iaec = IAEviteCrash(controleur,ia1,environnement)
 
 #ia seq 
     iacarre=IAseq(controleur,[ia1,iaa,ia1,iaa,ia1,iaa,ia1,iaa])
