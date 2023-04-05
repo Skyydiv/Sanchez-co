@@ -1,6 +1,6 @@
 from robot.simu.simulation import Simulation
 from robot.IA import Ia_Avancer_tout_droit, IATournerAngle, BoucleIA, IAseq, TracerCarre,IAIfThenElse,IAEviteCrash
-from robot.affichage import View
+from robot.affichage import View, View3D
 from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
 from tkinter import *
 
