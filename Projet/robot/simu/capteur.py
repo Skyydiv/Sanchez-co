@@ -20,7 +20,7 @@ def intersectionDroites(a1, b1, c1, a2, b2, c2):
         x = (b1*c2 - b2*c1) / (a1*b2 - a2*b1)
         y = (a2*c1 - a1*c2) / (a1*b2 - a2*b1)
         return (x, y)
-
+    
 
 def intersectionDroiteCercle(a, b, c, h, k, r):
     """

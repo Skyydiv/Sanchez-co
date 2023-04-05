@@ -1,6 +1,6 @@
-from .IA import Ia_Avancer_tout_droit, IAseq, IATournerAngle, IAevitecrash,BoucleIA,TracerCarre,IAIfThenElse,IAevitecrash
+from .IA import Ia_Avancer_tout_droit, IAseq, IATournerAngle,BoucleIA,TracerCarre,IAEviteCrash,IAIfThenElse
 from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
-from robot.simu import simulation
+from robot.simu import Simulation
 
 # delta_ia=0.000000000001
 
