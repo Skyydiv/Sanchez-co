@@ -227,6 +227,6 @@ def TracerCarre(controleur,distance,vitesse,environnement):
     iaec = IAEviteCrash(controleur,ia1,environnement)
 
 #ia seq 
-    iacarre=IAseq(controleur,[iaec,iaa,iaec,iaa,iaec,iaa,iaec,iaa])
+    iacarre=IAseq(controleur,[ia1,iaa,ia1,iaa,ia1,iaa,ia1,iaa])
 
     return iacarre
