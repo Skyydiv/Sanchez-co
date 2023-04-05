@@ -62,6 +62,9 @@ class Controleur:
 
 
 class ControleurRobotVirtuel(Controleur):
+    """
+    classe controleur pour le robot virtuel
+    """
     def __init__(self, robot):
         Controleur.__init__(self,robot)
 
@@ -86,8 +89,12 @@ class ControleurRobotVirtuel(Controleur):
         angledif=(self.robot.get_distance_roue(self.temps_total)[1] - self.robot.get_distance_roue(self.temps_total)[0]) / self.robot.WHEEL_BASE_WIDTH
         self._angleParcouru+=angledif
     
+
     
 class ControleurRobotVraieVie(Controleur):
+    """ 
+    classe qui permet de controler le robot en vrai vie
+    """
     def __init__(self, robot):
         Controleur.__init__(self,robot)
         self.angle_parcouru_offset=(0,0)

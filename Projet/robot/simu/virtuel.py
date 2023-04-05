@@ -254,6 +254,23 @@ class Environnement :
            if(dist - self.robotRayon - obs.rayon <= self._precision):  #verifie si la distance entre les 2 objets est inferieure a la somme des rayons
               return True
         return False
+      
+    def get_distance_obstacle(self):
+        """
+        Renvoie la distance à l'obstacle le plus proche.
+        
+        """
+        min_distance = 0
+
+        for obstacle in self.obstacles:
+            distance = calculDistance(self, obstacle)
+            if distance < min_distance:
+                min_distance = distance
+
+        return min_distance
+
+
+          
     
 def calculDistance(objet1, objet2):
     '''
@@ -265,8 +282,5 @@ def calculDistance(objet1, objet2):
     '''
 
     return math.sqrt(math.pow(objet1.x-objet2.x,2)+ math.pow(objet1.y-objet2.y,2))
-
-
-
-       
-
+  
+   
