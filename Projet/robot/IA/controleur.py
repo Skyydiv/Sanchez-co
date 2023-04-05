@@ -108,16 +108,12 @@ class ControleurRobotVraieVie(Controleur):
         calcul la distance parcourue par les roues du robot depuis le dernier appel de la fonction
         :return: la distance parcourue par le robot en mm et met a jour la distance parcourue totale
         """
-        motor_pos=self.get_motor_position()
+        motor_pos=(self.read_encoders()[0],self.read_encoders()[1])
 
         #calcul la distance parcorue en mm
         distancerg = motor_pos[0]/360 * self.WHEEL_CIRCUMFERENCE
         distancerd = motor_pos[1]/360 * self.WHEEL_CIRCUMFERENCE
         d=(distancerg + distancerd)/2
-
-        #Remet l'offset a 0 pour le prochain appel
-        self.offset_motor_encoder(self.MOTOR_LEFT, self.read_encoders()[0])
-        self.offset_motor_encoder(self.MOTOR_RIGHT, self.read_encoders()[1])
 
         #mis a jour de la distance parcourue totale
         self._distanceParcourue+=d
