@@ -2,7 +2,7 @@ from .view import View
 # from .view3D import View3D
 from tkinter import *
 
-delta_affich=1 #taux de rafraichissement de l'affichage
+delta_affich=10 #taux de rafraichissement de l'affichage
 
 def create_aff2D(simulation):
     """Creer l'affichage 2D de la simulation souhaitée

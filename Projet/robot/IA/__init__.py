@@ -1,7 +1,7 @@
 from .IA import Ia_Avancer_tout_droit, IAseq, IATournerAngle,BoucleIA,TracerCarre,IAEviteCrash,IAIfThenElse
 from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
 
-delta_ia=0.000000000001
+delta_ia=0.001
 
 def get_AvancerToutDroit(cr,dist,v):
     """

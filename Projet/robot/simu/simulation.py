@@ -87,7 +87,7 @@ class Simulation :
         self.reset_time()
         while self._en_cours:
             self.update1pas()
-            sleep(1./self._delta_t) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
+            sleep(self._delta_t) #arrête l'execution chaque pas et rentre de nouveau dans la boucle (en gros fais la boucle  chaque 1 pas)
 
 
     def update1pas(self): 
