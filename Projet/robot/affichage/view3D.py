@@ -17,7 +17,8 @@ class View3D(ShowBase):
     def __init__(self,simulation,delta_affichage):
 
         ShowBase.__init__(self)
-      
+        
+
         self.simu=simulation
         self.robot=simulation.robot
         self.delta_affichage=delta_affichage/100000
@@ -52,19 +53,20 @@ class View3D(ShowBase):
 
 
         #CAMERA
-
-        # Add the spinCameraTask procedure to the task manager.
-        self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
         
+        #ajout d'une tache camera pour avoir une vue FPS
+        self.taskMgr.add(self.spinCameraTaskFPS, "SpinCameraTaskFPS")
+        
+        #ajout d'une tache camera pour avoir une vue TPS
+        #self.taskMgr.add(self.spinCameraTaskTPS, "SpinCameraTaskTPS")
 
 
         #crée un thread pour lancer la fonction updatePos: changer la position du robot
         self.updatePosTH=threading2.Thread(name="updatePosRob",target=self.updatePosRob,args=[],daemon=True)
         print("POSTH",self.updatePosTH.name)
         self.updatePosTH.start()
-
         
-
+      
     #fonction pour déplacement
     def updatePosRob(self):
         while True:
@@ -78,22 +80,35 @@ class View3D(ShowBase):
     #fonction pour caméra
     # Define a procedure to move the camera.
     #set les valeurs de la caméra (position et orientation)
-    def spinCameraTask(self, task):
+    def spinCameraTaskFPS(self, task):
+    
+    # Définir la position de la caméra directement derrière le panda
+        camX = self.robot.x - (5.0 * sin(self.robot.orientation))
+        camY = self.robot.y + (5.0 * cos(self.robot.orientation))
+        camZ = 2
+        self.camera.setPos(camX, camY, camZ)
+    
+    # Orienter la caméra vers l'avant en utilisant l'orientation actuelle du panda
+        lookAtX = self.robot.y - (10.0 * sin(self.robot.orientation))
+        lookAtY = self.robot.x + (10.0 * cos(self.robot.orientation))
+        lookAtZ = 2
+        self.camera.lookAt(lookAtX, lookAtY, lookAtZ)
+    
+        return Task.cont
+    
+
+    #fonction pour caméra
+    # Define a procedure to move the camera.
+    #set les valeurs de la caméra (position et orientation)
+    def spinCameraTaskTPS(self, task):
         # pos=self.camera.getPos()
         # print(pos)
 
         # hpr=self.camera.getHpr()
         # print(hpr)
 
-        # self.camera.setPos(4.54429, 45.0254, 31.4798)
-        # self.camera.setHpr(176.418, -31.9264, -2.79153)
-
-        self.camera.setPos(0, -35, 30)
-        self.camera.setHpr(0, -40, 0)
-
-
-        return Task.cont
-
-
-
-
+       self.camera.setPos(0, -35, 30)
+       self.camera.setHpr(0, -40, 0)
+       return Task.cont
+    
+    

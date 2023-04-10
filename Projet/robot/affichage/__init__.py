@@ -1,5 +1,5 @@
 from .view import View
-# from .view3D import View3D
+from .view3D import View3D
 from tkinter import *
 
 delta_affich=10 #taux de rafraichissement de l'affichage
@@ -11,3 +11,13 @@ def create_aff2D(simulation):
     root = Tk() # initialiser la fenetre tkinter
     View(root, simulation,delta_affich)
     return root
+
+def create_aff3D(simulation):
+    '''
+    créer l'affichage 3D
+    '''
+    simulation.robot._x=-10 #sera supprimer par la suite
+    simulation.robot._y=-7  
+
+    affichage=View3D(simulation,delta_affich)
+    return affichage
