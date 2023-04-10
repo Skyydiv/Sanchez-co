@@ -22,7 +22,7 @@ class View3D(ShowBase):
         self.simu=simulation
         self.robot=simulation.robot
         self.delta_affichage=delta_affichage/100000
-
+        
         #GRAPHICS
 
             #SCENE
@@ -52,12 +52,12 @@ class View3D(ShowBase):
         self.pandaActor.loop("walk")
 
 
-        #CAMERA
+        #CAMERA-------------------------------------------------------------------------------------------------------------------------------------------------------
         
-        #ajout d'une tache camera pour avoir une vue FPS
+        #ajout d'une tache camera pour avoir une vue FPS---------------------------------------------------------------------------------------------------------------
         self.taskMgr.add(self.spinCameraTaskFPS, "SpinCameraTaskFPS")
         
-        #ajout d'une tache camera pour avoir une vue TPS
+        #ajout d'une tache camera pour avoir une vue TPS---------------------------------------------------------------------------------------------------------------
         #self.taskMgr.add(self.spinCameraTaskTPS, "SpinCameraTaskTPS")
 
 
@@ -69,10 +69,10 @@ class View3D(ShowBase):
       
     #fonction pour déplacement
     def updatePosRob(self):
+        
         while True:
             self.pandaActor.setPos(self.robot.x,self.robot.y,0)
             sleep(self.delta_affichage)
-
 
 
 
@@ -82,21 +82,24 @@ class View3D(ShowBase):
     #set les valeurs de la caméra (position et orientation)
     def spinCameraTaskFPS(self, task):
     
-    # Définir la position de la caméra directement derrière le panda
+   # Définir la position de la caméra directement derrière le panda
         camX = self.robot.x - (5.0 * sin(self.robot.orientation))
         camY = self.robot.y + (5.0 * cos(self.robot.orientation))
         camZ = 2
         self.camera.setPos(camX, camY, camZ)
-    
-    # Orienter la caméra vers l'avant en utilisant l'orientation actuelle du panda
-        lookAtX = self.robot.y - (10.0 * sin(self.robot.orientation))
-        lookAtY = self.robot.x + (10.0 * cos(self.robot.orientation))
+        
+        # Orienter la caméra vers l'avant en utilisant l'orientation actuelle du panda
+        lookAtX = self.robot.x + (10.0 * cos(self.robot.orientation))
+        lookAtY = self.robot.y + (10.0 * sin(self.robot.orientation))
         lookAtZ = 2
         self.camera.lookAt(lookAtX, lookAtY, lookAtZ)
-    
+        
+        self.camera.setP(0)
+        
         return Task.cont
-    
 
+    
+    
     #fonction pour caméra
     # Define a procedure to move the camera.
     #set les valeurs de la caméra (position et orientation)
@@ -110,5 +113,4 @@ class View3D(ShowBase):
        self.camera.setPos(0, -35, 30)
        self.camera.setHpr(0, -40, 0)
        return Task.cont
-    
     
