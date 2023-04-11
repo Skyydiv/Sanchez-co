@@ -1,4 +1,4 @@
-from math import pi, sin, cos
+from math import pi, sin, cos, degrees
 
 
 from direct.showbase.ShowBase import ShowBase
@@ -58,7 +58,7 @@ class View3D(ShowBase):
         self.taskMgr.add(self.spinCameraTaskFPS, "SpinCameraTaskFPS")
         
         #ajout d'une tache camera pour avoir une vue TPS---------------------------------------------------------------------------------------------------------------
-        #self.taskMgr.add(self.spinCameraTaskTPS, "SpinCameraTaskTPS")
+        # self.taskMgr.add(self.spinCameraTaskTPS, "SpinCameraTaskTPS")
 
 
         #crée un thread pour lancer la fonction updatePos: changer la position du robot
@@ -72,6 +72,7 @@ class View3D(ShowBase):
         
         while True:
             self.pandaActor.setPos(self.robot.x,self.robot.y,0)
+            self.pandaActor.setHpr(degrees(self.robot.orientation)+90,0,0)
             sleep(self.delta_affichage)
 
 
@@ -83,8 +84,19 @@ class View3D(ShowBase):
     def spinCameraTaskFPS(self, task):
     
    # Définir la position de la caméra directement derrière le panda
-        camX = self.robot.x - (5.0 * cos(self.robot.orientation))
-        camY = self.robot.y + (5.0 * sin(self.robot.orientation))
+        # camX = self.robot.x + ( cos(self.robot.orientation)+0.8)
+        # camY = self.robot.y + (sin(self.robot.orientation)+0.8)
+        # camZ = 2
+        # self.camera.setPos(camX, camY, camZ)
+        
+        # # Orienter la caméra vers l'avant en utilisant l'orientation actuelle du panda
+        # lookAtX = self.robot.x + (10.0 * cos(self.robot.orientation))
+        # lookAtY = self.robot.y + (10.0 * sin(self.robot.orientation))
+        # lookAtZ = 2
+        # self.camera.lookAt(lookAtX, lookAtY, lookAtZ)
+        
+        camX = self.robot.x + (2*cos(self.robot.orientation))
+        camY = self.robot.y + (2*sin(self.robot.orientation))
         camZ = 2
         self.camera.setPos(camX, camY, camZ)
         
@@ -93,6 +105,7 @@ class View3D(ShowBase):
         lookAtY = self.robot.y + (10.0 * sin(self.robot.orientation))
         lookAtZ = 2
         self.camera.lookAt(lookAtX, lookAtY, lookAtZ)
+        
         
         return Task.cont
 

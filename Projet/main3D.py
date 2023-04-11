@@ -14,11 +14,12 @@ iaseq=get_Seq_IA(cr,2,strategie)
 #Le client decide quelle stratgie lancer
 iaboucle=get_IABoucle(cr,iaseq)
 
-# #TESTER POUR VOIR COMMENT LANCER UNE IASEQ D'UNE LISTE D'IA
+# #TESTER POUR VOIR COMMENT LANCER UNE IASEQ D'UNE LISTE D'IAx²
 # strategie1=get_AvancerToutDroit(cr,300,200)
 # strategie2=get_TournerAngle(cr,90,200)
 # iaseq=get_Seq_list(cr,3,[strategie1,strategie2])
 # iaboucle=get_IABoucle(cr,iaseq)
+
 
 iaboucle.start()
 simulation.run_simu()
