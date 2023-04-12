@@ -1,5 +1,4 @@
 import math
-from .capteur import Capteur
 
 class Robot:
 
@@ -13,14 +12,20 @@ class Robot:
     '''Constructeur de la classe Robot,représentation sous forme de cercle avec des coordonnées par défaut le coin haut gauche (rayon+0.1, rayon+0.1) 
     :param rayon: rayon de l'objet (en mm)
     '''
+    SIMU_WIDTH=1500
+    SIMU_HEIGHT=800
+    SIMU_PRECESION=20
+    
     self.rayon = rayon
+    self.environnement=Environnement([SIMU_WIDTH,SIMU_HEIGHT],self,SIMU_PRECESION) # initialiser l'environment
+    
 
     self._x =100.1+self.rayon #pour être dans l'env
     self._y = 100.1+self.rayon
 
     
     self._orientation=0 #(radians)
-    self.capteur=Capteur(0) #Capteur du robot
+
 
 
     #self.MOTOR_LEFT_Offset=0
@@ -130,6 +135,10 @@ class Robot:
     rotationrd = (self.vitesseRoueDroite * delta_t)
     distancerd = (math.pi * self.WHEEL_DIAMETER/2 * rotationrd) / 180
     return (distancerg, distancerd)
+  
+  def get_distance_obstacle(self):
+    """Renvoie la distance de l'obstacle le plus proche"""
+    return self.environnement.get_distance_obstacle()
 
 
 class Obstacle :
@@ -251,7 +260,7 @@ class Environnement :
         '''
         for obs in self._ensemble_obstacles:
            dist=calculDistance(self._robot,obs)
-           if(dist - self.robotRayon - obs.rayon <= self._precision):  #verifie si la distance entre les 2 objets est inferieure a la somme des rayons
+           if(dist - self.robot.rayon - obs.rayon <= self._precision):  #verifie si la distance entre les 2 objets est inferieure a la somme des rayons
               return True
         return False
       
@@ -260,11 +269,11 @@ class Environnement :
         Renvoie la distance à l'obstacle le plus proche.
         
         """
-        min_distance = 0
+        min_distance = 2000
 
-        for obstacle in self.obstacles:
+        for obstacle in self._ensemble_obstacles:
             distance = calculDistance(self, obstacle)
-            if distance < min_distance:
+            if (distance - self.robot.rayon - obstacle.rayon) < min_distance:
                 min_distance = distance
 
         return min_distance

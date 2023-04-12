@@ -122,8 +122,8 @@ def creation_strategie(strategie,controlleur,delta_ia,monde):
     vitesse= 200
     distance=300
     if (monde=="3D"): #sera supprimer par la suite, monde aussi
-        vitesse/=15
-        distance/=15
+        vitesse/=20
+        distance/=20
         
     if (strategie=="tourner"):
         ia=IATournerAngle(controlleur,90,vitesse)
