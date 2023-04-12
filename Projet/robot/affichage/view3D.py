@@ -83,19 +83,8 @@ class View3D(ShowBase):
     #set les valeurs de la caméra (position et orientation)
     def spinCameraTaskFPS(self, task):
     
-   # Définir la position de la caméra directement derrière le panda
-        # camX = self.robot.x + ( cos(self.robot.orientation)+0.8)
-        # camY = self.robot.y + (sin(self.robot.orientation)+0.8)
-        # camZ = 2
-        # self.camera.setPos(camX, camY, camZ)
-        
-        # # Orienter la caméra vers l'avant en utilisant l'orientation actuelle du panda
-        # lookAtX = self.robot.x + (10.0 * cos(self.robot.orientation))
-        # lookAtY = self.robot.y + (10.0 * sin(self.robot.orientation))
-        # lookAtZ = 2
-        # self.camera.lookAt(lookAtX, lookAtY, lookAtZ)
-        
-        camX = self.robot.x + (2*cos(self.robot.orientation))
+        # Définir la position de la caméra directement derrière le panda
+        camX = self.robot.x + ( 2*cos(self.robot.orientation))
         camY = self.robot.y + (2*sin(self.robot.orientation))
         camZ = 2
         self.camera.setPos(camX, camY, camZ)
@@ -115,12 +104,7 @@ class View3D(ShowBase):
     # Define a procedure to move the camera.
     #set les valeurs de la caméra (position et orientation)
     def spinCameraTaskTPS(self, task):
-        # pos=self.camera.getPos()
-        # print(pos)
-
-        # hpr=self.camera.getHpr()
-        # print(hpr)
-
+    
        self.camera.setPos(0, -35, 30)
        self.camera.setHpr(0, -40, 0)
        return Task.cont
