@@ -3,7 +3,7 @@ from robot.IA import ControleurRobotVirtuel,get_Tracerarre, get_AvancerToutDroit
 from robot.affichage import create_aff2D
 
 #le client fait son choix avec le nombre d'obstacle
-simulation=create_simu(0)
+simulation=create_simu(5)
 root=create_aff2D(simulation)
 cr=ControleurRobotVirtuel(simulation.robot)  #initialiser le controleur  virtuel
 

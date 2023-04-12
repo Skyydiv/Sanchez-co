@@ -272,11 +272,12 @@ class Environnement :
         min_distance = 2000
 
         for obstacle in self._ensemble_obstacles:
-            distance = calculDistance(self, obstacle)
-            if (distance - self.robot.rayon - obstacle.rayon) < min_distance:
+            distance = calculDistance(self, obstacle) - self.robot.rayon - obstacle.rayon
+            if distance < min_distance:
                 min_distance = distance
 
         return min_distance
+
 
 
           

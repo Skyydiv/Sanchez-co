@@ -170,34 +170,32 @@ class IAIfThenElse:
                 self.ia_else.update(delta_t)
 
     def stop(self):
-        if self.ia_then.en_cours:
-            self.ia_then.stop()
-        if self.ia_else and self.ia_else.en_cours:
-            self.ia_else.stop()
-        self.en_cours = False
+        if (self.ia_then and self.ia_then.en_cours):
+            return self.ia_then.stop()
+        if (self.ia_else and self.ia_else.en_cours):
+            return self.ia_else.stop()
 
             
             
             
 class IAEviteCrash:
     """
-    Sous-classe d'IA pour avancer tout droit et s'arrêter si le robot se trouve à 5 cm ou moins d'un obstacle
+    Sous-classe d'IA pour avancer tout droit et tourner de 90 degrés si le robot se trouve à 5 cm ou moins d'un obstacle
     """
-    def __init__(self, controleur, ia_avancer,ia_tourner):
+    def __init__(self, controleur, ia_avancer, ia_tourner):
         self.CR = controleur
         self.distance_limite = 5
         self.en_cours = False
         self.ia_avancer = ia_avancer
-        self.ia_tourner=ia_tourner
+        self.ia_tourner = IATournerAngle(controleur, 90, ia_avancer.v)
 
         def condition_proximite():
             distance_obstacle = self.CR.get_distance_obstacle()
             print("Distance obstacle : " + str(distance_obstacle) + " cm")
             return distance_obstacle <= self.distance_limite
 
-        self.ia_if_then_else = IAIfThenElse(controleur, condition_proximite, ia_tourner, ia_avancer)
+        self.ia_if_then_else = IAIfThenElse(controleur, condition_proximite, self.ia_tourner, ia_avancer)
 
-   
     def start(self):
         self.en_cours = True
         self.ia_if_then_else.start()
@@ -214,6 +212,9 @@ class IAEviteCrash:
         if not self.ia_if_then_else.en_cours:
             self.stop()
 
+
+
+
             
             
             
@@ -224,15 +225,18 @@ def TracerCarre(controleur,distance,vitesse):
     """
 
 #ia pour avancer tout droit 
-    ia10=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+    ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
     
 #ia pour tourner 
     iaa=IATournerAngle(controleur,90,vitesse)
     
 #ia pour eviter les obstacles
-    # ia1=IAEviteCrash(controleur,ia10,iaa)
+    ia10=IAEviteCrash(controleur,ia1,iaa)
 
 #ia seq 
     iacarre=IAseq(controleur,[ia10,iaa,ia10,iaa,ia10,iaa,ia10,iaa])
 
     return iacarre
+
+
+
