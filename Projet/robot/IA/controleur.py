@@ -106,24 +106,23 @@ class ControleurRobotVraieVie(Controleur):
         self.angle_parcouru_offset=(0,0)
 
     def set_Vitesse(self, dpsg, dpsd):
-        self.robot.set_motor_dps(self.MOTOR_LEFT, dpsg)
-        self.robot.set_motor_dps(self.MOTOR_RIGHT, dpsd)
+        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dpsg)
+        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dpsd)
  
     def calculDistanceParcourue(self):
         """
         calcul la distance parcourue par les roues du robot depuis le dernier appel de la fonction
         :return: la distance parcourue par le robot en mm et met a jour la distance parcourue totale
         """
-        motor_pos=self.get_motor_position()
+        motor_pos=self.robot.get_motor_position()
 
         #calcul la distance parcorue en mm
-        distancerg = motor_pos[0]/360 * self.WHEEL_CIRCUMFERENCE
-        distancerd = motor_pos[1]/360 * self.WHEEL_CIRCUMFERENCE
+        distancerg = motor_pos[0]/360 * self.robot.WHEEL_CIRCUMFERENCE
+        distancerd = motor_pos[1]/360 * self.robot.WHEEL_CIRCUMFERENCE
         d=(distancerg + distancerd)/2
 
         #Remet l'offset a 0 pour le prochain appel
-        self.offset_motor_encoder(self.MOTOR_LEFT, self.read_encoders()[0])
-        self.offset_motor_encoder(self.MOTOR_RIGHT, self.read_encoders()[1])
+        motor_pos=(self.robot.read_encoders()[0],self.robot.read_encoders()[1])
 
         #mis a jour de la distance parcourue totale
         self._distanceParcourue+=d
@@ -136,19 +135,16 @@ class ControleurRobotVraieVie(Controleur):
         calcul l'angle parcouru par le robot en radians
         :return: angle parcouru par le robot en radians
         """
-        #recuperation de la position des moteurs
-        pos=self.robot.get_motor_position()
-        #calcul de la position du moteur gauche
-        posL=(pos[0]-self.angle_parcouru_offset[0])/360 * self.robot.WHEEL_DIAMETER * math.pi
-        #calcul de la position du moteur droit
-        posR=(pos[1]-self.angle_parcouru_offset[1])/360 * self.robot.WHEEL_DIAMETER * math.pi
+        motor_pos=self.robot.get_motor_position()
 
-        #calcul de l'angle parcouru
-        angle=(posR-posL)/self.robot.WHEEL_BASE_WIDTH
+        #calcul la distance parcorue en mm
+        distancerg = motor_pos[0]/360 * self.robot.WHEEL_CIRCUMFERENCE
+        distancerd = motor_pos[1]/360 * self.robot.WHEEL_CIRCUMFERENCE
 
-        #mise a jour de l'offset
-        self.angle_parcouru_offset=(pos[0],pos[1])
-        #mise a jour de l'angle parcouru
+        angle=(distancerd-distancerg)/self.robot.WHEEL_BASE_WIDTH
+
+        motor_pos=(self.robot.read_encoders()[0],self.robot.read_encoders()[1])
+
         self._angleParcouru+=angle
         
         return angle
