@@ -225,13 +225,13 @@ def TracerCarre(controleur,distance,vitesse):
     """
 
 #ia pour avancer tout droit 
-    ia1=Ia_Avancer_tout_droit(distance,vitesse,controleur)
+    ia10=Ia_Avancer_tout_droit(distance,vitesse,controleur)
     
 #ia pour tourner 
     iaa=IATournerAngle(controleur,90,vitesse)
     
 #ia pour eviter les obstacles
-    ia10=IAEviteCrash(controleur,ia1,iaa)
+    # ia10=IAEviteCrash(controleur,ia1,iaa)
 
 #ia seq 
     iacarre=IAseq(controleur,[ia10,iaa,ia10,iaa,ia10,iaa,ia10,iaa])
