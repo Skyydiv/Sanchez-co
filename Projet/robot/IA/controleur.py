@@ -141,7 +141,7 @@ class ControleurRobotVraieVie(Controleur):
         distancerg = motor_pos[0]/360 * self.robot.WHEEL_CIRCUMFERENCE
         distancerd = motor_pos[1]/360 * self.robot.WHEEL_CIRCUMFERENCE
 
-        angle=(distancerd-distancerg)/self.robot.WHEEL_BASE_WIDTH
+        angle=(distancerg-distancerd)/self.robot.WHEEL_BASE_WIDTH
 
         motor_pos=(self.robot.read_encoders()[0],self.robot.read_encoders()[1])
 
