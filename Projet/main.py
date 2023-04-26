@@ -8,7 +8,7 @@ root=create_aff2D(simulation)
 cr=ControleurRobotVirtuel(simulation.robot)  #initialiser le controleur  virtuel
 
 #le client fait son choix de la strategie qui souhaite executé
-strategie=get_Tracerarre(cr,300,400)
+strategie=get_Tracerarre(cr,400,400)
 #De plus, le client decide s'il veut repeter cette startegie plusieurs fois,avec le nombre de repetition
 iaseq=get_Seq_IA(cr,2,strategie)
 #Le client decide quelle stratgie lancer
