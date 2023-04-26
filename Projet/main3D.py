@@ -8,9 +8,9 @@ affichage=create_aff3D(simulation)
 cr=ControleurRobotVirtuel(simulation.robot)  #initialiser le controleur  virtuel
 
 #le client fait son choix de la strategie qui souhaite executé
-strategie=get_Tracerarre(cr,20,50)
+strategie=get_Tracerarre(cr,20,40)
 #De plus, le client decide s'il veut repeter cette startegie plusieurs fois,avec le nombre de repetition
-iaseq=get_Seq_IA(cr,2,strategie)
+iaseq=get_Seq_IA(cr,1,strategie)
 #Le client decide quelle stratgie lancer
 iaboucle=get_IABoucle(cr,iaseq)
 

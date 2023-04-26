@@ -77,7 +77,7 @@ class Simulation :
     def run_simu(self):
         """lance la simulation"""
         self._en_cours=True
-        threadSimu=Thread(target=self.boucle)
+        threadSimu=Thread(target=self.boucle,daemon=True)
         threadSimu.start()
 
     def boucle(self):
