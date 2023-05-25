@@ -12,12 +12,14 @@ def create_aff2D(simulation):
     View(root, simulation,delta_affich)
     return root
 
-def create_aff3D(simulation):
+def create_aff3D(simulation,vue="haut"):
     '''
     créer l'affichage 3D
+    :param simulation: simulation souhaitée
+    :param vue: vue souhaitée (haut ou fps)
     '''
     simulation.robot._x=-10 #sera supprimer par la suite
     simulation.robot._y=-7  
 
-    affichage=View3D(simulation,delta_affich)
+    affichage=View3D(simulation,delta_affich,vue)
     return affichage
