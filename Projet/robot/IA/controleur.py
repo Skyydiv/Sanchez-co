@@ -11,18 +11,34 @@ class Controleur:
         self._angleParcouru=0 #en radians
 
     def setVitesseRoues(self, vitesseg, vitessed):
+        """
+        :param vitesseg: vitesse de la roue gauche
+        :param vitessed: vitesse de la roue droite
+        """
         self.set_Vitesse(vitesseg, vitessed)
     
     def avancerToutDroit(self, v):
+        """
+        :param v: vitesse de la roue gauche et droite
+        """
         self.set_Vitesse(v,v)
 
     def tournerDroite(self,v):
+        """
+        :param v: vitesse de rotation
+        """
         self.set_Vitesse(v,-v)
     
     def tournerGauche(self,v):
+        """
+        :param v: vitesse de rotation
+        """
         self.set_Vitesse(-v,v)
 
     def stop(self):
+        """
+        arrete le robot
+        """
         self.robot.stop()
 
     def update(self):
@@ -37,6 +53,9 @@ class Controleur:
         self.calculAngleParcouru()
 
     def reset_time(self):
+        """
+        remet le temps a 0
+        """
         self.deb=time.time()
         self.temps_total=0
 
@@ -55,9 +74,15 @@ class Controleur:
         return self._angleParcouru
      
     def resetDistanceParcourue(self):
+        """
+        remet la distance parcourue a 0
+        """
         self._distanceParcourue=0
 
     def resetAngleParcourue(self):
+        """
+        remet l'angle parcouru a 0
+        """
         self._angleParcouru=0
 
 
@@ -106,6 +131,11 @@ class ControleurRobotVraieVie(Controleur):
         self.angle_parcouru_offset=(0,0)
 
     def set_Vitesse(self, dpsg, dpsd):
+        """
+        met a jour la vitesse des roues du robot    
+        :param dpsg: vitesse de la roue gauche en degres par seconde
+        :param dpsd: vitesse de la roue droite en degres par seconde
+        """
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dpsg)
         self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dpsd)
  
