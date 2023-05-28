@@ -1,12 +1,14 @@
-from robot.IA import ControleurRobotVraieVie,get_Tracerarre, get_AvancerToutDroit, get_TournerAngle,get_IABoucle,get_Seq_IA,get_Seq_list
-from robot2IN013 import Robot2IN013 as robot
+from robot.IA import *
+from robot2IN013 import Robot2IN013
 
-#le client fait son choix avec le nombre d'obstacle
-cr=ControleurRobotVraieVie(robot)  #initialiser le controleur  vrai vie
+robot=Robot2IN013()
 
-#le client fait son choix de la strategie qui souhaite executé
-strategie=get_Tracerarre(cr,300,200)
-#De plus, le client decide s'il veut repeter cette startegie plusieurs fois,avec le nombre de repetition
-iaseq=get_Seq_IA(cr,2,strategie)
-#Le client decide quelle stratgie lancer
-iaboucle=get_IABoucle(cr,iaseq)
+
+cr=ControleurRobotVraieVie(robot)  
+
+ia=Ia_Avancer_tout_droit(500,100,cr)
+ia2=IATournerAngle(cr,90,100)
+iaseq=IAseq(cr,[ia,ia2,ia,ia2,ia,ia2,ia,ia2])
+iaboucle=BoucleIA(cr,iaseq,0.4)
+
+iaboucle.start()

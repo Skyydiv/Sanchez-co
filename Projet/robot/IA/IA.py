@@ -13,7 +13,7 @@ class BoucleIA(Thread):
     """
     
     def __init__(self, controleur, ia,delta_t):
-        Thread.__init__(self,daemon=True)
+        Thread.__init__(self)
         self.controleur = controleur
         self.ia=ia
         self.delta_t=delta_t
@@ -23,7 +23,7 @@ class BoucleIA(Thread):
         self.ia.start()
         self.controleur.reset_time()
         while self.ia.en_cours:
-            self.ia.update(self.controleur.temps_total)
+            self.ia.update()
             sleep(self.delta_t)
 
 class Ia_Avancer_tout_droit:
@@ -40,22 +40,21 @@ class Ia_Avancer_tout_droit:
        
         
     def start(self):
+        self.CR.reset()
         self.en_cours=True
         self.CR.avancerToutDroit(self.v)
        
  
     def stop(self):
         # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
-        if (self.CR.distanceParcourue)>= self.goal:
-            return True 
-        return False
+        return self.CR.distanceParcourue>= self.goal
     
     
-    def update(self, delta_t):
+    def update(self):
         if self.stop():
-            self.CR.resetDistanceParcourue()
-            self.CR.stop()
             self.en_cours=False
+            self.CR.stop()
+            self.CR.resetDistanceParcourue()
             
         else:
             self.CR.update()
@@ -76,7 +75,7 @@ class IATournerAngle:
         self.v=vitesse
 
     def start(self):
-        self.CR.resetDistanceParcourue()
+        self.CR.reset()
         self.en_cours=True
         self.CR.tournerDroite(self.v)
         
@@ -125,14 +124,14 @@ class IAseq:
                     return False
             return False
         
-        def update(self, delta_t):
+        def update(self):
             if self.stop():
                 self.CR.stop()
                 self.en_cours=False
                 self.ia_en_cours=0
                 
             else:
-                self.ia_list[self.ia_en_cours].update(delta_t)
+                self.ia_list[self.ia_en_cours].update()
 
 
 class IAIfThenElse:

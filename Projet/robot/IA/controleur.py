@@ -84,7 +84,12 @@ class Controleur:
         remet l'angle parcouru a 0
         """
         self._angleParcouru=0
-
+        
+    def reset(self):
+        self.robot.offset_motor_encoder(self.robot.MOTOR_LEFT,self.read_encoders()[0])
+        self.robot.offset_motor_encoder(self.robot.MOTOR_RIGHT,self.read_encoders()[1])
+        self._angleParcouru=0
+        self._distanceParcourue=0
 
 class ControleurRobotVirtuel(Controleur):
     """
@@ -171,7 +176,7 @@ class ControleurRobotVraieVie(Controleur):
         distancerg = motor_pos[0]/360 * self.robot.WHEEL_CIRCUMFERENCE
         distancerd = motor_pos[1]/360 * self.robot.WHEEL_CIRCUMFERENCE
 
-        angle=(distancerg-distancerd)/self.robot.WHEEL_BASE_WIDTH
+        angle=abs(distancerg-distancerd)/self.robot.WHEEL_BASE_WIDTH
 
         motor_pos=(self.robot.read_encoders()[0],self.robot.read_encoders()[1])
 
