@@ -91,6 +91,7 @@ class Simulation :
 
 
     def update1pas(self): 
+        """Met a jour les coordonnées du robot depuis le dernier appel de la fonction deplacer, arrête la simulation en cas de collision"""
         self.fin=time()
         self.temps_total=self.fin-self.deb
         self.deb=self.fin

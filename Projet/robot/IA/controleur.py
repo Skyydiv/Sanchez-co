@@ -3,6 +3,8 @@ import time
 
 class Controleur:
     def __init__(self, robot):
+        """Constructeur dela classe mere
+        :param robot : robot contrôlé"""
         self.robot=robot
         self.deb=0
         self.fin=0
@@ -94,9 +96,16 @@ class ControleurRobotVirtuel(Controleur):
     classe controleur pour le robot virtuel
     """
     def __init__(self, robot):
+        """Constructeur de la classe fille pour le robot virtuel
+        :param robot : robot virtuel contrôlé"""
         Controleur.__init__(self,robot)
 
     def set_Vitesse(self,vitesseg, vitessed):
+        """
+        regle la vitesse des roues du robot    
+        :param vitesseg: vitesse de la roue gauche en degres par seconde
+        :param vitessed: vitesse de la roue droite en degres par seconde
+        """
         self.robot.setVitesse(vitesseg,vitessed)
         
     def calculDistanceParcourue(self):
@@ -130,6 +139,8 @@ class ControleurRobotVraieVie(Controleur):
     classe qui permet de controler le robot en vrai vie
     """
     def __init__(self, robot):
+        """Constructeur de la classe fille pour le robot réel
+        :param robot : robot virtuel contrôlé"""
         Controleur.__init__(self,robot)
         self.angle_parcouru_offset=(0,0)
 
