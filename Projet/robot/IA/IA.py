@@ -83,7 +83,7 @@ class IATournerAngle:
         #On ne s'arrête que si on l'a depassé l'angle 
         return self.CR.angleParcouru > abs(self.angle) 
         
-    def update(self, delta_t):
+    def update(self):
         #Calcul de l'angle parcouru
         if self.stop():
             self.en_cours=False

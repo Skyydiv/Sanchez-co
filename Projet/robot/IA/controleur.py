@@ -86,8 +86,6 @@ class Controleur:
         self._angleParcouru=0
         
     def reset(self):
-        self.robot.offset_motor_encoder(self.robot.MOTOR_LEFT,self.read_encoders()[0])
-        self.robot.offset_motor_encoder(self.robot.MOTOR_RIGHT,self.read_encoders()[1])
         self._angleParcouru=0
         self._distanceParcourue=0
 
@@ -184,6 +182,11 @@ class ControleurRobotVraieVie(Controleur):
         
         return angle
     
+    def reset(self):
+        self.robot.offset_motor_encoder(self.robot.MOTOR_LEFT,self.read_encoders()[0])
+        self.robot.offset_motor_encoder(self.robot.MOTOR_RIGHT,self.read_encoders()[1])
+        self._angleParcouru=0
+        self._distanceParcourue=0
     def __getattr__(self, name):
         return getattr(self.robot, name)
     
