@@ -116,7 +116,7 @@ class ControleurRobotVirtuel(Controleur):
         calcul l'angle parcouru par le robot en radians
         :return: angle parcouru par le robot en radians
         """
-        angledif=(self.robot.get_distance_roue(self.temps_total)[1] - self.robot.get_distance_roue(self.temps_total)[0]) / self.robot.WHEEL_BASE_WIDTH
+        angledif=abs((self.robot.get_distance_roue(self.temps_total)[0] - self.robot.get_distance_roue(self.temps_total)[1])) / self.robot.WHEEL_BASE_WIDTH
         self._angleParcouru+=angledif
         
     def get_distance_obstacle(self):

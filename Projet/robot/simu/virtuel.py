@@ -260,7 +260,7 @@ class Environnement :
         '''
         for obs in self._ensemble_obstacles:
            dist=calculDistance(self._robot,obs)
-           if(dist - self.robot.rayon - obs.rayon <= self._precision):  #verifie si la distance entre les 2 objets est inferieure a la somme des rayons
+           if((dist - self.robot.rayon - obs.rayon <= self._precision) or self.estMur(self.robot.x, self.robot.y, self.robot.rayon) ):  #verifie si la distance entre les 2 objets est inferieure a la somme des rayons ou il crash un mur
               return True
         return False
       
