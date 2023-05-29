@@ -87,6 +87,9 @@ class Controleur:
         self._angleParcouru=0
         
     def reset(self):
+        """
+        remet la distance parcouru et l'angle parcourur par le robot a 0
+        """
         self._angleParcouru=0
         self._distanceParcourue=0
 
@@ -127,7 +130,7 @@ class ControleurRobotVirtuel(Controleur):
         
     def get_distance_obstacle(self):
         """ 
-        retourne la distance a l'obstacle le plus proche d'un obstacle
+        retourn: la distance a l'obstacle le plus proche d'un obstacle
         """
         return self.robot.get_distance_obstacle()
     
@@ -193,6 +196,10 @@ class ControleurRobotVraieVie(Controleur):
         return angle
     
     def reset(self):
+        """
+        remet la distance parcouru et l'angle parcourur par le robot a 0 
+        remet a 0 la distance parcouru enregistré par la roue droite et roue gauche
+        """
         self.robot.offset_motor_encoder(self.robot.MOTOR_LEFT,self.read_encoders()[0])
         self.robot.offset_motor_encoder(self.robot.MOTOR_RIGHT,self.read_encoders()[1])
         self._angleParcouru=0
