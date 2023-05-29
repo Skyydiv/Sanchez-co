@@ -14,6 +14,12 @@ from direct.stdpy import threading2
 class View3D(ShowBase):
 
     def __init__(self,simulation,delta_affichage,vue):
+        """
+        Constructeur de la classe View3D
+        :param simulation: la simulation
+        :param delta_affichage: le temps entre chaque mise à jour de l'affichage
+        :param vue: la vue choisie (fps ou haut)
+        """
 
         ShowBase.__init__(self)
         
@@ -87,6 +93,9 @@ class View3D(ShowBase):
       
     #fonction pour déplacement
     def updatePosRob(self):
+        """
+        Met à jour la position du robot
+        """
         
         while True:
             self.pandaActor.setPos(self.robot.x,self.robot.y,0)
