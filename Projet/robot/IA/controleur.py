@@ -65,7 +65,7 @@ class Ia_Avancer_tout_droit:
        
  
     def stop(self):
-         """
+        """
         Vérifie si l'IA doit s'arrêter.
 
         Retourne :
@@ -76,7 +76,7 @@ class Ia_Avancer_tout_droit:
     
     
     def update(self):
-         """
+        """
         Met à jour l'IA pour avancer tout droit.
 
         Si la condition d'arrêt est vérifiée, arrête le robot et réinitialise la distance parcourue.
@@ -122,7 +122,7 @@ class IATournerAngle:
         self.CR.tournerDroite(self.v)
         
     def stop(self):
-         """
+        """
         Vérifie si l'IA doit s'arrêter.
 
         Retourne :
@@ -152,37 +152,37 @@ class IATournerAngle:
         
         
 class IAseq:
-         """
-            sous classe d'IA permettant de lancer une liste d'IA à la suite
-         """
+        """
+        sous classe d'IA permettant de lancer une liste d'IA à la suite
+        """
         
         def __init__(self,controleur,liste):
-        """
-        Constructeur de la classe.
+            """
+            Constructeur de la classe.
 
-        Paramètres :
-        - controleur : Objet controleur
-        - liste : Liste d'objets IA
-        """
+            Paramètres :
+            - controleur : Objet controleur
+            - liste : Liste d'objets IA
+            """
             self.CR=controleur
             self.ia_list=liste
             self.en_cours=False
             self.ia_en_cours=0
             
         def start(self):
-        """
-        Démarre l'exécution de la séquence d'IA.
-        """
+            """
+            Démarre l'exécution de la séquence d'IA.
+            """
             self.en_cours=True
             self.ia_list[self.ia_en_cours].start()
             
         def stop(self):
-        """
-        Vérifie si la séquence d'IA doit s'arrêter.
+            """
+            Vérifie si la séquence d'IA doit s'arrêter.
 
-        Retourne :
-        - True si toutes les IA de la séquence ont terminé, sinon False.
-        """
+            Retourne :
+            - True si toutes les IA de la séquence ont terminé, sinon False.
+            """
             if not (self.ia_list[self.ia_en_cours].en_cours):
                 self.ia_en_cours+=1
                 if self.ia_en_cours>=len(self.ia_list):
@@ -194,12 +194,12 @@ class IAseq:
             return False
         
         def update(self):
-        """
-        Met à jour la séquence d'IA.
+            """
+            Met à jour la séquence d'IA.
 
-        Si la séquence doit s'arrêter, arrête le contrôleur et réinitialise l'index de l'IA en cours.
-        Sinon, met à jour l'IA en cours.
-        """
+            Si la séquence doit s'arrêter, arrête le contrôleur et réinitialise l'index de l'IA en cours.
+            Sinon, met à jour l'IA en cours.
+            """
             if self.stop():
                 self.CR.stop()
                 self.en_cours=False
@@ -222,7 +222,7 @@ class IAIfThenElse:
         self.en_cours = False
 
     def start(self):
-         """
+        """
         Méthode exécutée lorsque la boucle d'intelligence artificielle démarre.
         """
         self.en_cours = True
