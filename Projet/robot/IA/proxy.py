@@ -1,4 +1,3 @@
-import math 
 import time
 
 class Controleur:

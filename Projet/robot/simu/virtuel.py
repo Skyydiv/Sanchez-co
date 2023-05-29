@@ -17,13 +17,10 @@ class Robot:
     SIMU_PRECESION=20
     
     self.rayon = rayon
-    self.environnement=Environnement([SIMU_WIDTH,SIMU_HEIGHT],self,SIMU_PRECESION) # initialiser l'environment
-    
 
     self._x =100.1+self.rayon #pour être dans l'env
     self._y = 100.1+self.rayon
 
-    
     self._orientation=0 #(radians)
 
     self.vitesseRoueDroite=0 #degre par sec
@@ -131,10 +128,6 @@ class Robot:
     distancerd = (math.pi * self.WHEEL_DIAMETER/2 * rotationrd) / 180
     return (distancerg, distancerd)
   
-  def get_distance_obstacle(self):
-    """Renvoie la distance de l'obstacle le plus proche"""
-    return self.environnement.get_distance_obstacle()
-
 
 class Obstacle :
   '''Obstacle qui peuvent être présent dans l'environnement'''
