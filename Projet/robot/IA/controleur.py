@@ -1,9 +1,8 @@
-from abc import ABC, abstractmethod
 import math
 from time import sleep
 from time import time
 from threading import Thread
-from .controleur import ControleurRobotVirtuel
+from .proxy import ControleurRobotVirtuel
 
 
 #plus de abstract
@@ -212,12 +211,6 @@ class IAEviteCrash:
             self.stop()
 
 
-
-
-            
-            
-            
-
 def TracerCarre(controleur,distance,vitesse):
     """
     strategie de base pour tracer un carre
@@ -229,7 +222,7 @@ def TracerCarre(controleur,distance,vitesse):
 #ia pour tourner 
     iaa=IATournerAngle(controleur,90,vitesse)
     
-#ia pour eviter les obstacles
-    # ia10=IAEviteCrash(controleur,ia1,iaa)
+#ia seq
+    iacarre=IAseq(controleur,[ia10,iaa,ia10,iaa,ia10,iaa,ia10,iaa])
 
-
+    return iacarre

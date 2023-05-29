@@ -1,5 +1,5 @@
-from .IA import Ia_Avancer_tout_droit, IAseq, IATournerAngle,BoucleIA,TracerCarre,IAEviteCrash,IAIfThenElse
-from robot.IA.controleur import ControleurRobotVirtuel, ControleurRobotVraieVie
+from .controleur import Ia_Avancer_tout_droit, IAseq, IATournerAngle,BoucleIA,TracerCarre
+from robot.IA.proxy import ControleurRobotVirtuel, ControleurRobotVraieVie
 
 delta_ia=0.0001
 
