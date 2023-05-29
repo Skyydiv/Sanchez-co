@@ -1,203 +1,241 @@
-import math 
-import time
+from abc import ABC, abstractmethod
+import math
+from time import sleep
+from time import time
+from threading import Thread
+from .controleur import ControleurRobotVirtuel
 
-class Controleur:
-    def __init__(self, robot):
-        """Constructeur dela classe mere
-        :param robot : robot contrôlé"""
-        self.robot=robot
-        self.deb=0
-        self.fin=0
-        self.temps_total=0
-        self._distanceParcourue=0
-        self._angleParcouru=0 #en radians
 
-    def setVitesseRoues(self, vitesseg, vitessed):
-        """
-        :param vitesseg: vitesse de la roue gauche
-        :param vitessed: vitesse de la roue droite
-        """
-        self.set_Vitesse(vitesseg, vitessed)
+#plus de abstract
+class BoucleIA(Thread):
+    """ 
+    Classe qui permet de lancer une boucle d'IA
+    """
     
-    def avancerToutDroit(self, v):
-        """
-        :param v: vitesse de la roue gauche et droite
-        """
-        self.set_Vitesse(v,v)
+    def __init__(self, controleur, ia,delta_t):
+        Thread.__init__(self)
+        self.controleur = controleur
+        self.ia=ia
+        self.delta_t=delta_t
 
-    def tournerDroite(self,v):
-        """
-        :param v: vitesse de rotation
-        """
-        self.set_Vitesse(v,-v)
+
+    def run(self):
+        self.ia.start()
+        self.controleur.reset_time()
+        while self.ia.en_cours:
+            self.ia.update()
+            sleep(self.delta_t)
+
+class Ia_Avancer_tout_droit:
+    """ 
+    sous classe de IA qui permet d'avancer tout droit
+    """
     
-    def tournerGauche(self,v):
+    def __init__(self, distance, v, controleur):
+
+        self.goal = distance
+        self.v = v
+        self.en_cours=False
+        self.CR=controleur
+       
+        
+    def start(self):
+        self.CR.reset()
+        self.en_cours=True
+        self.CR.avancerToutDroit(self.v)
+       
+ 
+    def stop(self):
+        # Si l'une des roues a parcouru plus que la distance à parcourir, arrêter le robot
+        return self.CR.distanceParcourue>= self.goal
+    
+    
+    def update(self):
+        if self.stop():
+            self.en_cours=False
+            self.CR.stop()
+            self.CR.resetDistanceParcourue()
+            
+        else:
+            self.CR.update()
+            self.CR.avancerToutDroit(self.v)
+    
+          
+    
+class IATournerAngle:
+    """
+    Classe IA pour tourner d'un certain angle a vers la droite
+    """
+    def __init__(self, controleur, angle, vitesse):
+        
+        self.angle = math.radians(angle) 
+        #on convertit les degrés passés en paramètre en radians pour les calculs
+        self.CR=controleur
+        self.en_cours=False
+        self.v=vitesse
+
+    def start(self):
+        self.CR.reset()
+        self.en_cours=True
+        self.CR.tournerDroite(self.v)
+        
+    def stop(self):
+        #On ne s'arrête que si on l'a depassé l'angle 
+        return self.CR.angleParcouru > abs(self.angle) 
+        
+    def update(self):
+        #Calcul de l'angle parcouru
+        if self.stop():
+            self.en_cours=False
+            self.CR.stop()
+            self.CR.resetAngleParcourue()
+
+        else:
+            self.CR.update()
+            self.CR.tournerDroite(self.v)
+            
+   
+        
+        
+        
+class IAseq:
         """
-        :param v: vitesse de rotation
-        """
-        self.set_Vitesse(-v,v)
+            sous classe d'IA permettant de lancer une liste d'IA à la suite
+         """
+        
+        def __init__(self,controleur,liste):
+            self.CR=controleur
+            self.ia_list=liste
+            self.en_cours=False
+            self.ia_en_cours=0
+            
+        def start(self):
+            self.en_cours=True
+            self.ia_list[self.ia_en_cours].start()
+            
+        def stop(self):
+            if not (self.ia_list[self.ia_en_cours].en_cours):
+                self.ia_en_cours+=1
+                if self.ia_en_cours>=len(self.ia_list):
+                    self.en_cours=False
+                    return True
+                else:
+                    self.ia_list[self.ia_en_cours].start()
+                    return False
+            return False
+        
+        def update(self):
+            if self.stop():
+                self.CR.stop()
+                self.en_cours=False
+                self.ia_en_cours=0
+                
+            else:
+                self.ia_list[self.ia_en_cours].update()
+
+
+class IAIfThenElse:
+    """
+    sous classe d'IA évaluant une condition et ne faisant rien si elle est fausse
+    """
+    def __init__(self, controleur, condition, ia_then, ia_else):
+        self.CR = controleur
+        self.condition = condition
+        self.ia_then = ia_then
+        self.ia_else = ia_else
+        self.en_cours = False
+
+    def start(self):
+        self.en_cours = True
+
+    def update(self, delta_t):
+        if not self.en_cours:
+            return
+
+        if self.condition():
+            print("Condition vraie - ia_then")
+            if self.ia_else and self.ia_else.en_cours:
+                self.ia_else.stop()
+            if not self.ia_then.en_cours:
+                self.ia_then.start()
+            self.ia_then.update(delta_t)
+        else:
+            print("Condition fausse - ia_else")
+            if self.ia_then.en_cours:
+                self.ia_then.stop()
+            if self.ia_else and not self.ia_else.en_cours:
+                self.ia_else.start()
+            if self.ia_else:
+                self.ia_else.update(delta_t)
 
     def stop(self):
-        """
-        arrete le robot
-        """
-        self.robot.stop()
+        if (self.ia_then and self.ia_then.en_cours):
+            return self.ia_then.stop()
+        if (self.ia_else and self.ia_else.en_cours):
+            return self.ia_else.stop()
 
-    def update(self):
-        """
-        update les distances et l'angle parcouru depuis le dernier appel de update
-        """
-        self.fin=time.time()
-        self.temps_total=self.fin-self.deb
-        self.deb=self.fin
-
-        self.calculDistanceParcourue()
-        self.calculAngleParcouru()
-
-    def reset_time(self):
-        """
-        remet le temps a 0
-        """
-        self.deb=time.time()
-        self.temps_total=0
-
-    @property
-    def distanceParcourue(self):
-        """
-        :return : la distance parcourue par le robot depuis la derniere remise a 0
-        """
-        return self._distanceParcourue
-    
-    @property
-    def angleParcouru(self):
-        """
-        :return : l'angle parcouru par le robot depuis la derniere remise a 0
-        """
-        return self._angleParcouru
-     
-    def resetDistanceParcourue(self):
-        """
-        remet la distance parcourue a 0
-        """
-        self._distanceParcourue=0
-
-    def resetAngleParcourue(self):
-        """
-        remet l'angle parcouru a 0
-        """
-        self._angleParcouru=0
-        
-    def reset(self):
-        self._angleParcouru=0
-        self._distanceParcourue=0
-
-class ControleurRobotVirtuel(Controleur):
+            
+            
+            
+class IAEviteCrash:
     """
-    classe controleur pour le robot virtuel
+    Sous-classe d'IA pour avancer tout droit et tourner de 90 degrés si le robot se trouve à 5 cm ou moins d'un obstacle
     """
-    def __init__(self, robot):
-        """Constructeur de la classe fille pour le robot virtuel
-        :param robot : robot virtuel contrôlé"""
-        Controleur.__init__(self,robot)
+    def __init__(self, controleur, ia_avancer, ia_tourner):
+        self.CR = controleur
+        self.distance_limite = 5
+        self.en_cours = False
+        self.ia_avancer = ia_avancer
+        self.ia_tourner = IATournerAngle(controleur, 90, ia_avancer.v)
 
-    def set_Vitesse(self,vitesseg, vitessed):
-        """
-        regle la vitesse des roues du robot    
-        :param vitesseg: vitesse de la roue gauche en degres par seconde
-        :param vitessed: vitesse de la roue droite en degres par seconde
-        """
-        self.robot.setVitesse(vitesseg,vitessed)
-        
-    def calculDistanceParcourue(self):
-        """
-        :param delta_t: un intervalle de temps 
-        :return: la distance parcourue par le robot pour delta_t et met a jour la distance parcourue totale
-        """
-        d_gauche,d_droite=self.robot.get_distance_roue(self.temps_total)
-        d=(d_gauche+d_droite)/2
-        self._distanceParcourue+=d
-        return d
- 
-    def calculAngleParcouru(self):
-        """
-        calcul l'angle parcouru par le robot en radians
-        :return: angle parcouru par le robot en radians
-        """
-        angledif=abs((self.robot.get_distance_roue(self.temps_total)[0] - self.robot.get_distance_roue(self.temps_total)[1])) / self.robot.WHEEL_BASE_WIDTH
-        self._angleParcouru+=angledif
-        
-    def get_distance_obstacle(self):
-        """ 
-        retourne la distance a l'obstacle le plus proche d'un obstacle
-        """
-        return self.robot.get_distance_obstacle()
-    
+        def condition_proximite():
+            distance_obstacle = self.CR.get_distance_obstacle()
+            print("Distance obstacle : " + str(distance_obstacle) + " cm")
+            return distance_obstacle <= self.distance_limite
 
-    
-class ControleurRobotVraieVie(Controleur):
-    """ 
-    classe qui permet de controler le robot en vrai vie
+        self.ia_if_then_else = IAIfThenElse(controleur, condition_proximite, self.ia_tourner, ia_avancer)
+
+    def start(self):
+        self.en_cours = True
+        self.ia_if_then_else.start()
+        print("IAEviteCrash a démarré.")
+
+    def stop(self):
+        self.ia_if_then_else.stop()
+        self.en_cours = False
+        print("IAEviteCrash a stop.")
+
+    def update(self, delta_t):
+        print("Distance à l'obstacle :", self.CR.get_distance_obstacle())
+        self.ia_if_then_else.update(delta_t)
+        if not self.ia_if_then_else.en_cours:
+            self.stop()
+
+
+
+
+            
+            
+            
+
+def TracerCarre(controleur,distance,vitesse):
     """
-    def __init__(self, robot):
-        """Constructeur de la classe fille pour le robot réel
-        :param robot : robot virtuel contrôlé"""
-        Controleur.__init__(self,robot)
-        self.angle_parcouru_offset=(0,0)
+    strategie de base pour tracer un carre
+    """
 
-    def set_Vitesse(self, dpsg, dpsd):
-        """
-        met a jour la vitesse des roues du robot    
-        :param dpsg: vitesse de la roue gauche en degres par seconde
-        :param dpsd: vitesse de la roue droite en degres par seconde
-        """
-        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dpsg)
-        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dpsd)
- 
-    def calculDistanceParcourue(self):
-        """
-        calcul la distance parcourue par les roues du robot depuis le dernier appel de la fonction
-        :return: la distance parcourue par le robot en mm et met a jour la distance parcourue totale
-        """
-        motor_pos=self.robot.get_motor_position()
-
-        #calcul la distance parcorue en mm
-        distancerg = motor_pos[0]/360 * self.robot.WHEEL_CIRCUMFERENCE
-        distancerd = motor_pos[1]/360 * self.robot.WHEEL_CIRCUMFERENCE
-        d=(distancerg + distancerd)/2
-
-        #Remet l'offset a 0 pour le prochain appel
-        motor_pos=(self.robot.read_encoders()[0],self.robot.read_encoders()[1])
-
-        #mis a jour de la distance parcourue totale
-        self._distanceParcourue+=d
-
-        return d 
+#ia pour avancer tout droit 
+    ia10=Ia_Avancer_tout_droit(distance,vitesse,controleur)
     
+#ia pour tourner 
+    iaa=IATournerAngle(controleur,90,vitesse)
     
-    def calculAngleParcouru(self):
-        """
-        calcul l'angle parcouru par le robot en radians
-        :return: angle parcouru par le robot en radians
-        """
-        motor_pos=self.robot.get_motor_position()
+#ia pour eviter les obstacles
+    # ia10=IAEviteCrash(controleur,ia1,iaa)
 
-        #calcul la distance parcorue en mm
-        distancerg = motor_pos[0]/360 * self.robot.WHEEL_CIRCUMFERENCE
-        distancerd = motor_pos[1]/360 * self.robot.WHEEL_CIRCUMFERENCE
+#ia seq 
+    iacarre=IAseq(controleur,[ia10,iaa,ia10,iaa,ia10,iaa,ia10,iaa])
 
-        angle=abs(distancerg-distancerd)/self.robot.WHEEL_BASE_WIDTH
+    return iacarre
 
-        motor_pos=(self.robot.read_encoders()[0],self.robot.read_encoders()[1])
 
-        self._angleParcouru+=angle
-        
-        return angle
-    
-    def reset(self):
-        self.robot.offset_motor_encoder(self.robot.MOTOR_LEFT,self.read_encoders()[0])
-        self.robot.offset_motor_encoder(self.robot.MOTOR_RIGHT,self.read_encoders()[1])
-        self._angleParcouru=0
-        self._distanceParcourue=0
-    def __getattr__(self, name):
-        return getattr(self.robot, name)
-    
+
