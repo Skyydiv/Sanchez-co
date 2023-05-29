@@ -232,10 +232,4 @@ def TracerCarre(controleur,distance,vitesse):
 #ia pour eviter les obstacles
     # ia10=IAEviteCrash(controleur,ia1,iaa)
 
-#ia seq 
-    iacarre=IAseq(controleur,[ia10,iaa,ia10,iaa,ia10,iaa,ia10,iaa])
-
-    return iacarre
-
-
 
