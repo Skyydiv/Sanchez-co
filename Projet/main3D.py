@@ -3,7 +3,8 @@ from robot.IA import ControleurRobotVirtuel,get_Tracerarre, get_AvancerToutDroit
 from robot.affichage import create_aff3D
 
 #le client fait son choix avec le nombre d'obstacle
-simulation=create_simu(4)
+simulation=create_simu(0)
+simulation.environnement.addObstacle(570,570,1,1,30)
 
 affichage=create_aff3D(simulation,"fps")  #initialiser l'affichage visualisation du fps
 #affichage=create_aff3D(simulation,"haut")  #initialiser l'affichage visualisation du dessus

@@ -18,7 +18,7 @@ class BoucleIA(Thread):
         - ia : Objet IA
         - delta_t : Intervalle de temps
         """
-        Thread.__init__(self)
+        Thread.__init__(self,daemon=True)
         self.controleur = controleur
         self.ia=ia
         self.delta_t=delta_t

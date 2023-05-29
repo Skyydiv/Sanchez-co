@@ -13,7 +13,7 @@ strategie=get_Tracerarre(cr,400,400)
 #De plus, le client decide s'il veut repeter cette startegie plusieurs fois,avec le nombre de repetition
 iaseq=get_Seq_IA(cr,2,strategie)
 #Le client decide quelle stratgie lancer
-iaboucle=get_IABoucle(cr,strategie1)
+iaboucle=get_IABoucle(cr,strategie)
 
 # #TESTER POUR VOIR COMMENT LANCER UNE IASEQ D'UNE LISTE D'IA
 # strategie1=get_AvancerToutDroit(cr,300,200)

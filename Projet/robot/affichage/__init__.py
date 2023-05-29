@@ -18,8 +18,8 @@ def create_aff3D(simulation,vue="haut"):
     :param simulation: simulation souhaitée
     :param vue: vue souhaitée (haut ou fps)
     '''
-    simulation.robot._x=-10 #sera supprimer par la suite
-    simulation.robot._y=-7  
+    simulation.robot._x=70 #sera supprimer par la suite
+    simulation.robot._y=70
 
     affichage=View3D(simulation,delta_affich,vue)
     return affichage
