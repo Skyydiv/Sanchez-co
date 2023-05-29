@@ -26,11 +26,6 @@ class Robot:
     
     self._orientation=0 #(radians)
 
-
-
-    #self.MOTOR_LEFT_Offset=0
-    #self.MOTOR_RIGHT_Offset=0
-
     self.vitesseRoueDroite=0 #degre par sec
     self.vitesseRoueGauche=0 #degre par sec
 
@@ -221,6 +216,7 @@ class Environnement :
     
     @property
     def robotRayon(self):
+      """Renvoie le rayon du robot de  l'environnement"""
       return self._robot.rayon
     
     def estMur(self,x,y,rayon):
@@ -256,12 +252,15 @@ class Environnement :
     
     def detectCollision(self):
         '''
-        Detecte si il y a une collision (un crash) entre le robot et un obstacle avec une precision
+        Detecte si il y a une collision (un crash) entre le robot et un obstacle avec une precision ou entre le robot et un mur
         '''
-        for obs in self._ensemble_obstacles:
-           dist=calculDistance(self._robot,obs)
-           if(dist - self.robot.rayon - obs.rayon <= self._precision):  #verifie si la distance entre les 2 objets est inferieure a la somme des rayons
-              return True
+        if(self.estMur(self.robotX, self.robotY, self.robotRayon)):
+          return True
+        else:
+          for obs in self._ensemble_obstacles:
+            dist=calculDistance(self._robot,obs)
+            if(dist - self.robot.rayon - obs.rayon <= self._precision):  #verifie si la distance entre les 2 objets est inferieure a la somme des rayons 
+                return True
         return False
       
     def get_distance_obstacle(self):
@@ -272,11 +271,12 @@ class Environnement :
         min_distance = 2000
 
         for obstacle in self._ensemble_obstacles:
-            distance = calculDistance(self, obstacle)
-            if (distance - self.robot.rayon - obstacle.rayon) < min_distance:
+            distance = calculDistance(self, obstacle) - self.robot.rayon - obstacle.rayon
+            if distance < min_distance:
                 min_distance = distance
 
         return min_distance
+
 
 
           
